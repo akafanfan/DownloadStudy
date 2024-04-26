@@ -146,33 +146,46 @@ class Douyin(object):
     # 传入 url 支持 https://www.iesdouyin.com 与 https://v.douyin.com
     # mode : post | like 模式选择 like为用户点赞 post为用户发布
     def getUserInfo(self, sec_uid, mode="post", count=35, number=0, increase=False):
+        # 打印用户id
         print('[  提示  ]:正在请求的用户 id = %s\r\n' % sec_uid)
+        # 如果用户id为空，则返回None
         if sec_uid is None:
             return None
+        # 如果number小于等于0，则numflag为False
         if number <= 0:
             numflag = False
         else:
             numflag = True
-
+        # 最大游标
         max_cursor = 0
+        # 作品列表
         awemeList = []
+        # 增量标志
         increaseflag = False
+        # 数量是否为0
         numberis0 = False
 
+        # 打印提示
         print("[  提示  ]:正在获取所有作品数据请稍后...\r")
         print("[  提示  ]:会进行多次请求，等待时间较长...\r\n")
         times = 0
+        # 循环
         while True:
             times = times + 1
             print("[  提示  ]:正在对 [主页] 进行第 " + str(times) + " 次请求...\r")
 
-            start = time.time()  # 开始时间
+            # 开始时间
+            start = time.time()
+            # 无限循环
             while True:
                 # 接口不稳定, 有时服务器不返回数据, 需要重新获取
                 try:
+                    # 根据模式选择接口
                     if mode == "post":
                         url = self.urls.USER_POST + utils.getXbogus(
-                            f'sec_user_id={sec_uid}&count={count}&max_cursor={max_cursor}&device_platform=webapp&aid=6383')
+                            f'sec_user_id={sec_uid}&max_cursor={max_cursor}&device_platform=webapp&aid=6383')
+                        # url = self.urls.USER_POST + utils.getXbogus(
+                        #     f'sec_user_id={sec_uid}&count={count}&max_cursor={max_cursor}&device_platform=webapp&aid=6383')
                     elif mode == "like":
                         url = self.urls.USER_FAVORITE_A + utils.getXbogus(
                             f'sec_user_id={sec_uid}&count={count}&max_cursor={max_cursor}&device_platform=webapp&aid=6383')
@@ -180,18 +193,22 @@ class Douyin(object):
                         print("[  错误  ]:模式选择错误, 仅支持post、like、mix, 请检查后重新运行!\r")
                         return None
 
+                    # 获取数据
                     res = requests.get(url=url, headers=douyin_headers)
+                    # 解析数据
                     datadict = json.loads(res.text)
                     print('[  提示  ]:本次请求返回 ' + str(len(datadict["aweme_list"])) + ' 条数据\r')
 
+                    # 如果没有数据，则结束
                     if datadict is not None and datadict["status_code"] == 0:
                         break
                 except Exception as e:
-                    end = time.time()  # 结束时间
+                    # 结束时间
+                    end = time.time()
+                    # 如果结束时间-开始时间大于超时时间，则提示
                     if end - start > self.timeout:
                         print("[  提示  ]:重复请求该接口" + str(self.timeout) + "s, 仍然未获取到数据")
                         return awemeList
-
 
             for aweme in datadict["aweme_list"]:
                 if self.database:
