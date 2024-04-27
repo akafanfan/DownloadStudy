@@ -126,6 +126,13 @@ def merge_to_mp4(dest_file, source_path, ts_list):
 
 
 def ready_download(url, title):
+    # 设置下载路径
+    down_path = path + title
+    # 判断文件是否存在
+    if os.path.exists(down_path + '.mp4'):
+        print('\033[31m' + '文件' + down_path + '已经存在不用重复下载:' + '\033[0m')
+        return
+
     # 禁止安全谁提示信息
     requests.packages.urllib3.disable_warnings()
     print()
@@ -136,9 +143,6 @@ def ready_download(url, title):
     except Exception as e:
         print('\033[31m' + 'm3u8文件资源连接失败！请检查m3u8文件地址并重试.错误代码:' + '\033[0m', e)
         return
-
-    # 设置下载路径
-    down_path = path + title
     # 设置是否加密标志
     decrypt = False
     # ts列表
