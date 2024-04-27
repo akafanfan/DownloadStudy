@@ -9,8 +9,8 @@ import requests
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor, wait, ALL_COMPLETED
 
-from apiproxy.douyin import douyin_headers
-from apiproxy.common import utils
+from douyin_download.apiproxy.douyin import douyin_headers
+from douyin_download.apiproxy.common import utils
 
 
 class Download(object):

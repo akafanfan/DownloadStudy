@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import apiproxy
-from apiproxy.common import utils
+from douyin_download import apiproxy
+from douyin_download.apiproxy.common import utils
 
 douyin_headers = {
     'User-Agent': apiproxy.ua,

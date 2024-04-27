@@ -11,7 +11,7 @@ import hashlib
 import base64
 import time
 
-import apiproxy
+from douyin_download import apiproxy
 
 
 class Utils(object):

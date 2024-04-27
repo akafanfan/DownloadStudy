@@ -8,10 +8,10 @@ import json
 import time
 import copy
 
-from apiproxy.douyin import douyin_headers
-from apiproxy.douyin.urls import Urls
-from apiproxy.douyin.result import Result
-from apiproxy.common import utils
+from douyin_download.apiproxy.douyin import douyin_headers
+from douyin_download.apiproxy.douyin.urls import Urls
+from douyin_download.apiproxy.douyin.result import Result
+from douyin_download.apiproxy.common import utils
 
 class DouyinApi(object):
     def __init__(self):

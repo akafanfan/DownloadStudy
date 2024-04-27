@@ -8,11 +8,11 @@ import json
 import time
 import copy
 
-from apiproxy.douyin import douyin_headers
-from apiproxy.douyin.urls import Urls
-from apiproxy.douyin.result import Result
-from apiproxy.douyin.database import DataBase
-from apiproxy.common import utils
+from douyin_download.apiproxy.douyin import douyin_headers
+from douyin_download.apiproxy.douyin.urls import Urls
+from douyin_download.apiproxy.douyin.result import Result
+from douyin_download.apiproxy.douyin.database import DataBase
+from douyin_download.apiproxy.common import utils
 
 
 class Douyin(object):

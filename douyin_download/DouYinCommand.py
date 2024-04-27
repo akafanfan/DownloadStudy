@@ -9,10 +9,10 @@ import json
 import yaml
 import time
 
-from apiproxy.douyin.douyin import Douyin
-from apiproxy.douyin.download import Download
-from apiproxy.douyin import douyin_headers
-from apiproxy.common import utils
+from douyin_download.apiproxy import Douyin
+from douyin_download.apiproxy.douyin.download import Download
+from douyin_download.apiproxy import douyin_headers
+from douyin_download.apiproxy import utils
 
 configModel = {
     "link": [],
