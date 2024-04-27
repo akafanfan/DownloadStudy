@@ -4,14 +4,14 @@ from bs4 import BeautifulSoup, Tag
 import re
 import json
 
+from model_download.demo3 import download_list
+
 url_head = 'https://91md.me'
 
 
 def main():
-    # play_list_url = 'https://91md.me/index.php/vod/search/page/2/wd/辛尤里.html'
-    url1 = 'https://91md.me/index.php/vod/play/id/8630/sid/1/nid/1'
-    list = ['https://t25.cdn2020.com/video/m3u8/2024/04/19/a6e0e6b4/index.m3u8,性爱女僕-辛尤里']
-
+    m3u8_list = ['https://t21.cdn2020.com/video/m3u8/2023/01/10/2ab0b007/index.m3u8,糖心Vlog.淫荡女仆随时供给主人中出-米胡桃']
+    download_list(m3u8_list)
 
 def main2():
     # play_list_url = 'https://91md.me/index.php/vod/search/page/2/wd/辛尤里.html'

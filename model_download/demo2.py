@@ -54,5 +54,5 @@ def download_by_N_m3u8DL(m3u8, title):
     subprocess.run(command,encoding='utf-8')
 
 if __name__ == '__main__':
-    download_by_N_m3u8DL('https://t25.cdn2020.com/video/m3u8/2024/04/19/a6e0e6b4/index.m3u8','性爱女僕-辛尤里')
+    download_by_N_m3u8DL('https://t25.cdn2020.com/video/m3u8/2024/04/19/a0ced79b/index.m3u8','糖心Vlog.茶艺师的销售淫技-情深叉喔')
     # download_m3u8_video('https://t25.cdn2020.com/video/m3u8/2024/04/19/a6e0e6b4/index.m3u8', '性爱女僕-辛尤里.mp4')

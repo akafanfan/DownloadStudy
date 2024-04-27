@@ -9,6 +9,7 @@ import requests
 import concurrent.futures
 from Crypto.Cipher import AES
 from concurrent.futures import as_completed
+import datetime
 
 # 请求头
 headers = {
@@ -101,29 +102,16 @@ def merge_to_mp4(dest_file, source_path, ts_list, delete=True):
         for file in ts_list:
             with open(source_path + "/" + file, 'rb') as fr:
                 fw.write(fr.read())
-            if delete:
-                os.remove(file)
+
+    # 合并完成后删除临时文件
+    if delete:
+        for file in ts_list:
+            file_path = os.path.join(source_path, file)
+            os.remove(file_path)
         print('合并完成！ 文件名：' + dest_file + '')
 
 
-def main():
-    url = "https://xxxx/hls/index.m3u8"  # 下载地址,通过 cmd 传入或输入
-
-    print('\n')
-    print('参数说明:脚本后面面添加 m3u8地址参数，如打开CMD(终端命令)模式输入：m3u8dl http://xxx.xxx.com/xxx.m3u8')
-    print('\n')
-    print('    如果m3u8地址访问不到，提示错误，多重复几次就好。前提是确认在线能观看可下载到m3u8文件。')
-    print('    下载中途不动了或者关机，可关闭取消下载，再次打开继续下载。')
-    print('    有些文件一次下载不到，需要多次执行下载。')
-    print('    等所有文件下载完后自动合成一个视频，注意看提示。')
-    print('\n')
-
-    if len(sys.argv) > 1:
-        url = (sys.argv[1])
-    else:
-        print('亲，没有添加m3u8地址,请在下方输入:')
-        url = input()
-
+def ready_download(url, title):
     # 禁止安全谁提示信息
     requests.packages.urllib3.disable_warnings()
 
@@ -136,7 +124,7 @@ def main():
         return
 
     # 设置下载路径
-    down_path = "tmp"
+    down_path = title + "tmp"
     # 设置是否加密标志
     decrypt = False
     # ts列表
@@ -166,9 +154,29 @@ def main():
         for future in as_completed(obj_list):
             data = future.result()
             # print('completed result:',data)
-        merge_to_mp4('finalvideo.mp4', down_path, ts_list)  # 合并ts文件
+        merge_to_mp4(title + '.mp4', down_path, ts_list)  # 合并ts文件
         times = time.time() - begin  # 记录线程完成时间
         print('总消耗时间:' + str(times) + '')
+
+
+def download_list(m3u8_list):
+    for str in m3u8_list:
+        list = str.split(',')
+        url = list[0]
+        title = list[1]
+
+        ready_download(url, title)
+
+
+def main():
+    url = ''
+
+    if len(sys.argv) > 1:
+        url = (sys.argv[1])
+    else:
+        print('亲，没有添加m3u8地址,请在下方输入:')
+        url = input()
+    # ready_download(url)
 
 
 if __name__ == "__main__":
