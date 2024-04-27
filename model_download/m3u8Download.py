@@ -1,23 +1,33 @@
 # 这是一个下载m3u8 视频资源的脚本   无指定序号版，根据资源数组排序 非ffmpeg合并版
 import os
 import re
-import sys
 import m3u8
-import glob
 import time
 import requests
 import concurrent.futures
 from Crypto.Cipher import AES
 from concurrent.futures import as_completed
+import glob
+import shutil
+import threading
 import datetime
+
+from model_download.CreateVideoThumbnail import create_new_video_with_thumbnails
 
 # 请求头
 headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.82 Safari/537.36',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (HTML, like Gecko) Chrome/99.0.4844.82 Safari/537.36',
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
     'Accept-Language': 'Zh-CN, zh;q=0.9, en-gb;q=0.8, en;q=0.7'
 }
 
+path = 'D:\\Desktop\\Temp\\'
+
+
+# 红色：\033[31m
+# 蓝色：\033[34m
+# 绿色：\033[32m
+# \033[0m
 
 # 判断是否为网站地址
 def reurl(url):
@@ -30,15 +40,15 @@ def reurl(url):
 
 
 # 获取密钥（针对有些m3u8文件中的视频需要key去解密下载的视频）
-def getKey(keystr, url):
-    keyinfo = str(keystr)
+def get_key(key_str, url):
+    keyinfo = str(key_str)
     method_pos = keyinfo.find('METHOD')
     comma_pos = keyinfo.find(",")
     method = keyinfo[method_pos:comma_pos].split('=')[1]
     uri_pos = keyinfo.find("URI")
     quotation_mark_pos = keyinfo.rfind('"')
     key_url = keyinfo[uri_pos:quotation_mark_pos].split('"')[1]
-    if reurl(key_url) == False:
+    if not reurl(key_url):
         key_url = url.rsplit("/", 1)[0] + "/" + key_url
     res = requests.get(key_url, headers=headers)
     key = res.content
@@ -53,8 +63,8 @@ def getKey(keystr, url):
 # decrypt:是否加密
 # down_path:下载地址
 # key:密钥
-def download(down_url, url, decrypt, down_path, key, nameid):
-    if reurl(down_url) == False:
+def download(down_url, url, decrypt, down_path, key):
+    if not reurl(down_url):
         if len(down_url.rsplit("/", 1)) > 1:
             filename = down_url.rsplit("/", 1)[1]
         else:
@@ -64,13 +74,13 @@ def download(down_url, url, decrypt, down_path, key, nameid):
         filename = down_url.rsplit("/", 1)[1]
     down_ts_path = down_path + "/{0}".format(filename)
     if os.path.exists(down_ts_path):
-        print('文件 ' + filename + ' 已经存在，跳过下载.')
+        print('\033[31m' + '文件 ' + filename + ' 已经存在，跳过下载.' + '\033[0m')
     else:
         try:
             res = requests.get(down_url, stream=True, verify=False, headers=headers)
-            print('正在下载资源：' + filename + '')
+            print('\033[32m' + '正在下载资源：' + filename + '' + '\033[0m')
         except Exception as e:
-            print('requests error:', e)
+            print('\033[31m' + 'requests error:' + '\033[0m', e)
             return
         if decrypt:
             cryptor = AES.new(key, AES.MODE_CBC, key)
@@ -82,7 +92,11 @@ def download(down_url, url, decrypt, down_path, key, nameid):
                         file.write(cryptor.decrypt(chunk))
                     else:
                         file.write(chunk)
-            print('文件:[' + filename + ']已保存到[' + down_path + ']目录.')
+            print('\033[32m' + '文件:[' + filename + ']已保存到[' + down_path + ']目录.' + '\033[0m')
+    # 获取当前线程的信息
+    current_thread = threading.current_thread()
+    thread_info = f"线程名称: {current_thread.name}, 线程ID: {current_thread.ident}"
+    return thread_info, "success"
 
 
 # 合并ts文件
@@ -90,13 +104,14 @@ def download(down_url, url, decrypt, down_path, key, nameid):
 # source_path:ts文件目录
 # ts_list:文件列表
 # delete:合成结束是否删除ts文件
-def merge_to_mp4(dest_file, source_path, ts_list, delete=True):
+def merge_to_mp4(dest_file, source_path, ts_list):
     files = glob.glob(source_path + '/*.ts')
     if len(files) != len(ts_list):
-        print(
-            "文件不完整，已取消合并！请重新执行一次脚本，完成未下载的文件。\n如果确认已下载完所有文件，请检查下载目录移除其它无关的ts文件。")
+        print('\033[31m' +
+              "文件不完整，已取消合并！请重新执行一次脚本，完成未下载的文件。\n"
+              "如果确认已下载完所有文件，请检查下载目录移除其它无关的ts文件。" + '\033[0m')
         return
-    print('开始合并[' + source_path + ']目录的ts视频...')
+    print('\033[34m' + '>>>>>>开始合并[' + source_path + ']目录的ts视频<<<<<<' + '\033[0m')
 
     with open(dest_file, 'wb') as fw:
         for file in ts_list:
@@ -104,27 +119,26 @@ def merge_to_mp4(dest_file, source_path, ts_list, delete=True):
                 fw.write(fr.read())
 
     # 合并完成后删除临时文件
-    if delete:
-        for file in ts_list:
-            file_path = os.path.join(source_path, file)
-            os.remove(file_path)
-        print('合并完成！ 文件名：' + dest_file + '')
+    print('\033[34m' + '>>>>>>开始删除[' + source_path + ']目录的临时ts文件<<<<<<' + '\033[0m')
+    shutil.rmtree(source_path)
+    print('\033[34m' + '合并完成！ 文件名：' + dest_file + '' + '\033[0m')
+    return dest_file
 
 
 def ready_download(url, title):
     # 禁止安全谁提示信息
     requests.packages.urllib3.disable_warnings()
-
-    print('开始分析m3u8文件资源...')
+    print()
+    print('\033[34m' + '>>>>>>开始分析m3u8文件资源<<<<<<' + '\033[0m')
     # 使用m3u8库获取文件信息
     try:
         video = m3u8.load(url, timeout=20, headers=headers)
     except Exception as e:
-        print('m3u8文件资源连接失败！请检查m3u8文件地址并重试.错误代码:', e)
+        print('\033[31m' + 'm3u8文件资源连接失败！请检查m3u8文件地址并重试.错误代码:' + '\033[0m', e)
         return
 
     # 设置下载路径
-    down_path = title + "tmp"
+    down_path = path + title
     # 设置是否加密标志
     decrypt = False
     # ts列表
@@ -132,11 +146,12 @@ def ready_download(url, title):
     # 判断是否加密
     key = ''
     if video.keys[0] is not None:
-        method, key = getKey(video.keys[0], url)
+        method, key = get_key(video.keys[0], url)
         decrypt = True
     # 判断是否需要创建文件夹
     if not os.path.exists(down_path):
-        os.mkdir(down_path)
+        # 创建所需的多级目录
+        os.makedirs(down_path, exist_ok=True)
     # 把ts文件名添加到列表中
     for filename in video.segments:
         if len(filename.uri.rsplit("/", 1)) > 1:
@@ -144,40 +159,47 @@ def ready_download(url, title):
         else:
             ts_list.append(filename.uri)
             # 开启线程池
+    print('\033[34m' + '>>>>>>TS分片数' + str(len(ts_list)) + '<<<<<<' + '\033[0m')
     with concurrent.futures.ThreadPoolExecutor() as executor:
         obj_list = []
         begin = time.time()  # 记录线程开始时间
         for i in range(len(video.segments)):
-            obj = executor.submit(download, video.segments[i].uri, url, decrypt, down_path, key, i)
+            obj = executor.submit(download, video.segments[i].uri, url, decrypt, down_path, key)
             obj_list.append(obj)
         # 查看线程池是否结束
         for future in as_completed(obj_list):
             data = future.result()
-            # print('completed result:',data)
-        merge_to_mp4(title + '.mp4', down_path, ts_list)  # 合并ts文件
+            print('\033[32m' 'completed result:' + '\033[0m', data)
+        video = merge_to_mp4(path + title + '.mp4', down_path, ts_list)  # 合并ts文件
+        # 创建视频缩略图
+        create_new_video_with_thumbnails(video)
         times = time.time() - begin  # 记录线程完成时间
-        print('总消耗时间:' + str(times) + '')
+        formatted_time = str(datetime.timedelta(seconds=times))
+        print('\033[34m' + '总消耗时间: {}'.format(formatted_time) + '\033[0m')
 
 
 def download_list(m3u8_list):
-    for str in m3u8_list:
-        list = str.split(',')
-        url = list[0]
-        title = list[1]
-
+    i = 1
+    for _ in m3u8_list:
+        info = _.split(',')
+        url = info[0]
+        title = info[1]
+        print('\033[32m' + '开始下载第' + str(i) + '个视频:' + '\033[0m')
+        print('\033[33m' + '<' + title + '> :' + url + '\033[0m')
         ready_download(url, title)
+        i += 1
 
-
-def main():
-    url = ''
-
-    if len(sys.argv) > 1:
-        url = (sys.argv[1])
-    else:
-        print('亲，没有添加m3u8地址,请在下方输入:')
-        url = input()
-    # ready_download(url)
-
-
-if __name__ == "__main__":
-    main()
+# 使用示例
+# def main():
+#     url = ''
+#
+#     if len(sys.argv) > 1:
+#         url = (sys.argv[1])
+#     else:
+#         print('亲，没有添加m3u8地址,请在下方输入:')
+#         url = input()
+#     # ready_download(url)
+#
+#
+# if __name__ == "__main__":
+#     main()

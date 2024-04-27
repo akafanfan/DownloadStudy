@@ -1,19 +1,18 @@
-import os
 import requests
 from bs4 import BeautifulSoup, Tag
 import re
 import json
 
-from model_download.demo3 import download_list
+from model_download.m3u8Download import download_list
 
 url_head = 'https://91md.me'
 
 
-def main():
-    m3u8_list = ['https://t21.cdn2020.com/video/m3u8/2023/01/10/2ab0b007/index.m3u8,糖心Vlog.淫荡女仆随时供给主人中出-米胡桃']
-    download_list(m3u8_list)
+# def main():
+#     m3u8_list = ['https://t21.cdn2020.com/video/m3u8/2023/01/10/2ab0b007/index.m3u8,糖心Vlog.淫荡女仆随时供给主人中出-米胡桃']
+#     download_list(m3u8_list)
 
-def main2():
+def main():
     # play_list_url = 'https://91md.me/index.php/vod/search/page/2/wd/辛尤里.html'
     # url1 = 'https://91md.me/index.php/vod/play/id/8630/sid/1/nid/1'
     url2 = 'https://91md.me/index.php/vod/search/page/1/wd/%E8%BE%9B%E5%B0%A4%E9%87%8C.html'
@@ -22,7 +21,7 @@ def main2():
     print("m3u8_list:")
     for index, item in enumerate(m3u8_list, start=1):
         print(f"{index}. {item}")
-
+    download_list(m3u8_list)
 
 def get_playlist(url):
     # 发起请求并获取网页内容
@@ -61,10 +60,10 @@ def get_playlist(url):
     return video_list
 
 
-def create_m3u8_list(list):
+def create_m3u8_list(playlist):
     res_list = []
     # 遍历列表中的每个URL
-    for i, url in enumerate(list):
+    for i, url in enumerate(playlist):
         # 打印当前获取的M3U8链接
         print(i + 1, " 当前前获取m3u8链接:", url)
         tmp = url.split(',')
