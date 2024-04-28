@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-
 import argparse
 import os
 import sys
@@ -9,10 +7,11 @@ import json
 import yaml
 import time
 
-from douyin_download.apiproxy import Douyin
+from douyin_download.apiproxy.common import utils
+from douyin_download.apiproxy.douyin import douyin_headers
+from douyin_download.apiproxy.douyin.douyin import Douyin
 from douyin_download.apiproxy.douyin.download import Download
-from douyin_download.apiproxy import douyin_headers
-from douyin_download.apiproxy import utils
+
 
 configModel = {
     "link": [],
@@ -271,90 +270,95 @@ def main():
                   avatar=configModel["avatar"], resjson=configModel["json"],
                   folderstyle=configModel["folderstyle"])
 
-    for link in configModel["link"]:
+    for _ in configModel["link"]:
+        # 主页链接地址
+        link = _.split(',')[0]
+        # 固定昵称
+        name = _.split(',')[1]
         print("--------------------------------------------------------------------------------")
         print("[  提示  ]:正在请求的链接: " + link + "\r\n")
         url = dy.getShareLink(link)
         key_type, key = dy.getKey(url)
         if key_type == "user":
-            print("[  提示  ]:正在请求用户主页下作品\r\n")
-            data = dy.getUserDetailInfo(sec_uid=key)
-            nickname = ""
-            if data is not None and data != {}:
-                nickname = utils.replaceStr(data['user']['nickname'])
+            print("[  提示  ]:正在请求用户" + name + "主页下作品\r\n")
+            # data = dy.getUserDetailInfo(sec_uid=key)
+            # nickname = ""
+            # if data is not None and data != {}:
+            #     nickname = utils.replaceStr(data['user']['nickname'])
 
-            userPath = os.path.join(configModel["path"], nickname)
+            userPath = os.path.join(configModel["path"], name)
             if not os.path.exists(userPath):
                 os.mkdir(userPath)
 
             for mode in configModel["mode"]:
                 print("--------------------------------------------------------------------------------")
-                print("[  提示  ]:正在请求用户主页模式: " + mode + " 昵称：" + nickname +"\r\n")
+                print("[  提示  ]:正在请求用户主页模式: " + mode + " 昵称：" + name + "\r\n")
                 if mode == 'post' or mode == 'like':
-                    datalist = dy.getUserInfo(key, mode, 35, configModel["number"][mode], configModel["increase"][mode])
+                    # increase 是否开启主页作品增量下载
+                    datalist = dy.getUserInfo(key, mode, 18, configModel["number"][mode], configModel["increase"][mode])
                     if datalist is not None and datalist != []:
                         modePath = os.path.join(userPath, mode)
                         if not os.path.exists(modePath):
                             os.mkdir(modePath)
                         dl.userDownload(awemeList=datalist, savePath=modePath)
-                elif mode == 'mix':
-                    mixIdNameDict = dy.getUserAllMixInfo(key, 35, configModel["number"]["allmix"])
-                    if mixIdNameDict is not None and mixIdNameDict != {}:
-                        for mix_id in mixIdNameDict:
-                            print(f'[  提示  ]:正在下载合集 [{mixIdNameDict[mix_id]}] 中的作品\r\n')
-                            mix_file_name = utils.replaceStr(mixIdNameDict[mix_id])
-                            datalist = dy.getMixInfo(mix_id, 35, 0, configModel["increase"]["allmix"], key)
-                            if datalist is not None and datalist != []:
-                                modePath = os.path.join(userPath, mode)
-                                if not os.path.exists(modePath):
-                                    os.mkdir(modePath)
-                                dl.userDownload(awemeList=datalist, savePath=os.path.join(modePath, mix_file_name))
-                                print(f'[  提示  ]:合集 [{mixIdNameDict[mix_id]}] 中的作品下载完成\r\n')
-        elif key_type == "mix":
-            print("[  提示  ]:正在请求单个合集下作品\r\n")
-            datalist = dy.getMixInfo(key, 35, configModel["number"]["mix"], configModel["increase"]["mix"], "")
-            if datalist is not None and datalist != []:
-                mixname = utils.replaceStr(datalist[0]["mix_info"]["mix_name"])
-                mixPath = os.path.join(configModel["path"], "mix_" + mixname + "_" + key)
-                if not os.path.exists(mixPath):
-                    os.mkdir(mixPath)
-                dl.userDownload(awemeList=datalist, savePath=mixPath)
-        elif key_type == "music":
-            print("[  提示  ]:正在请求音乐(原声)下作品\r\n")
-            datalist = dy.getMusicInfo(key, 35, configModel["number"]["music"], configModel["increase"]["music"])
-
-            if datalist is not None and datalist != []:
-                musicname = utils.replaceStr(datalist[0]["music"]["title"])
-                musicPath = os.path.join(configModel["path"], "music_" + musicname + "_" + key)
-                if not os.path.exists(musicPath):
-                    os.mkdir(musicPath)
-                dl.userDownload(awemeList=datalist, savePath=musicPath)
-        elif key_type == "aweme":
-            print("[  提示  ]:正在请求单个作品\r\n")
-            datanew, dataraw = dy.getAwemeInfo(key)
-            if datanew is not None and datanew != {}:
-                datalist = []
-                datalist.append(datanew)
-                awemePath = os.path.join(configModel["path"], "aweme")
-                if not os.path.exists(awemePath):
-                    os.mkdir(awemePath)
-                dl.userDownload(awemeList=datalist, savePath=awemePath)
-        elif key_type == "live":
-            print("[  提示  ]:正在进行直播解析\r\n")
-            live_json = dy.getLiveInfo(key)
-            if configModel["json"]:
-                livePath = os.path.join(configModel["path"], "live")
-                if not os.path.exists(livePath):
-                    os.mkdir(livePath)
-                live_file_name = utils.replaceStr(key + live_json["nickname"])
-                # 保存获取到json
-                print("[  提示  ]:正在保存获取到的信息到result.json\r\n")
-                with open(os.path.join(livePath, live_file_name + ".json"), "w", encoding='utf-8') as f:
-                    f.write(json.dumps(live_json, ensure_ascii=False, indent=2))
-                    f.close()
+                # elif mode == 'mix':
+                #     mixIdNameDict = dy.getUserAllMixInfo(key, 35, configModel["number"]["allmix"])
+                #     if mixIdNameDict is not None and mixIdNameDict != {}:
+                #         for mix_id in mixIdNameDict:
+                #             print(f'[  提示  ]:正在下载合集 [{mixIdNameDict[mix_id]}] 中的作品\r\n')
+                #             mix_file_name = utils.replaceStr(mixIdNameDict[mix_id])
+                #             datalist = dy.getMixInfo(mix_id, 35, 0, configModel["increase"]["allmix"], key)
+                #             if datalist is not None and datalist != []:
+                #                 modePath = os.path.join(userPath, mode)
+                #                 if not os.path.exists(modePath):
+                #                     os.mkdir(modePath)
+                #                 dl.userDownload(awemeList=datalist, savePath=os.path.join(modePath, mix_file_name))
+                #                 print(f'[  提示  ]:合集 [{mixIdNameDict[mix_id]}] 中的作品下载完成\r\n')
+        # elif key_type == "mix":
+        #     print("[  提示  ]:正在请求单个合集下作品\r\n")
+        #     datalist = dy.getMixInfo(key, 35, configModel["number"]["mix"], configModel["increase"]["mix"], "")
+        #     if datalist is not None and datalist != []:
+        #         mixname = utils.replaceStr(datalist[0]["mix_info"]["mix_name"])
+        #         mixPath = os.path.join(configModel["path"], "mix_" + mixname + "_" + key)
+        #         if not os.path.exists(mixPath):
+        #             os.mkdir(mixPath)
+        #         dl.userDownload(awemeList=datalist, savePath=mixPath)
+        # elif key_type == "music":
+        #     print("[  提示  ]:正在请求音乐(原声)下作品\r\n")
+        #     datalist = dy.getMusicInfo(key, 35, configModel["number"]["music"], configModel["increase"]["music"])
+        #
+        #     if datalist is not None and datalist != []:
+        #         musicname = utils.replaceStr(datalist[0]["music"]["title"])
+        #         musicPath = os.path.join(configModel["path"], "music_" + musicname + "_" + key)
+        #         if not os.path.exists(musicPath):
+        #             os.mkdir(musicPath)
+        #         dl.userDownload(awemeList=datalist, savePath=musicPath)
+        # elif key_type == "aweme":
+        #     print("[  提示  ]:正在请求单个作品\r\n")
+        #     datanew, dataraw = dy.getAwemeInfo(key)
+        #     if datanew is not None and datanew != {}:
+        #         datalist = []
+        #         datalist.append(datanew)
+        #         awemePath = os.path.join(configModel["path"], "aweme")
+        #         if not os.path.exists(awemePath):
+        #             os.mkdir(awemePath)
+        #         dl.userDownload(awemeList=datalist, savePath=awemePath)
+        # elif key_type == "live":
+        #     print("[  提示  ]:正在进行直播解析\r\n")
+        #     live_json = dy.getLiveInfo(key)
+        #     if configModel["json"]:
+        #         livePath = os.path.join(configModel["path"], "live")
+        #         if not os.path.exists(livePath):
+        #             os.mkdir(livePath)
+        #         live_file_name = utils.replaceStr(key + live_json["nickname"])
+        #         # 保存获取到json
+        #         print("[  提示  ]:正在保存获取到的信息到result.json\r\n")
+        #         with open(os.path.join(livePath, live_file_name + ".json"), "w", encoding='utf-8') as f:
+        #             f.write(json.dumps(live_json, ensure_ascii=False, indent=2))
+        #             f.close()
 
     end = time.time()  # 结束时间
-    print('\n' + nickname +' [下载完成]:总耗时: %d分钟%d秒\n' % (int((end - start) / 60), ((end - start) % 60)))  # 输出下载用时时间
+    print('\n' + name + ' [下载完成]:总耗时: %d分钟%d秒\n' % (int((end - start) / 60), ((end - start) % 60)))  # 输出下载用时时间
 
 
 if __name__ == "__main__":
