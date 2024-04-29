@@ -4,7 +4,7 @@
 # 可以设置多个链接, 确保至少一个链接
 # 必选
 link:
-  - https://v.douyin.com/iYKyoJtm/,味猪大肠（爱吃鸭头版）
+  - https://v.douyin.com/i2eaJ228/,Ninety
 
 # 野奶
 # https://v.douyin.com/iRCcq6nF/ 大
@@ -54,7 +54,7 @@ mode:
 # 下载作品个数设置
 # 可选
 number:
-  post: 0     # 主页下作品下载个数设置, 默认为0 全部下载
+  post: 999     # 主页下作品下载个数设置, 默认为0 全部下载
 #  like: 0     # 主页下喜欢下载个数设置, 默认为0 全部下载
 #  allmix: 0   # 主页下合集下载个数设置, 默认为0 全部下载
 #  mix: 0      # 单个合集下作品下载个数设置, 默认为0 全部下载
