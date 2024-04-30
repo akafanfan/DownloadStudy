@@ -4,16 +4,113 @@
 
 import sqlite3
 import json
+import datetime
 
 
 class DataBase(object):
     def __init__(self):
-        self.conn = sqlite3.connect('data2.db')
+        self.conn = sqlite3.connect('douyin.db')
         self.cursor = self.conn.cursor()
         self.create_user_post_table()
         self.create_user_like_table()
         self.create_mix_table()
         self.create_music_table()
+        self.create_user_all_record_table()
+
+    # get_d_user_all_record
+    # 根据uid 和 name 查询get_d_user_all_record表
+    def select_d_user_all_record(self, name: str):
+
+        sql = """select id, name, aweme_count, create_time,update_time,status,uid,last_point
+                    from d_user_all_record 
+                    where name=?;"""
+        try:
+            self.cursor.execute(sql, name)
+            self.conn.commit()
+            res = self.cursor.fetchone()
+            return res
+        except Exception as e:
+            pass
+
+    def insert_d_user_all_record(self, uid: str, name: str):
+        insert_sql = """
+            INSERT INTO d_user_all_record (name, aweme_count,create_time, update_time, status, uid, last_point)
+            VALUES (?, ?, ?, ?, ?,?)
+        """
+
+        # 获取当前时间
+        now_datetime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        try:
+            self.cursor.execute(insert_sql, (name, 0, now_datetime, now_datetime, 0, uid, 0))
+            self.conn.commit()
+        except Exception as e:
+            pass
+
+    def update_d_user_all_record_uid(self, uid: str, name: str):
+        update_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        sql = """
+            UPDATE d_user_all_record
+            SET uid=?, update_time=?
+            WHERE name=?
+        """
+        try:
+            self.cursor.execute(sql, (uid, update_time, name))
+            self.conn.commit()
+        except Exception as e:
+            pass
+
+    def update_d_user_all_record_aweme_count(self, name: str, last_point: int, aweme_count: int):
+        update_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        sql = """
+            UPDATE d_user_all_record
+            SET aweme_count=?, update_time=?,last_point=?
+            WHERE name=?
+        """
+        try:
+            self.cursor.execute(sql, (aweme_count, update_time, name, last_point))
+            self.conn.commit()
+        except Exception as e:
+            pass
+
+    def create_user_all_record_table(self):
+        create_table_sql = """
+            CREATE TABLE IF NOT EXISTS d_user_all_record (
+                id INT PRIMARY KEY,
+                name VARCHAR(100) NOT NULL,
+                aweme_count INT,
+                create_time DATETIME,
+                update_time DATETIME,
+                status INT,
+                uid VARCHAR(200),
+                last_point INT
+            );
+        """
+
+        create_name_index_sql = """
+            CREATE INDEX IF NOT EXISTS name_index ON d_user_all_record (name);
+        """
+
+        create_uid_index_sql = """
+            CREATE INDEX IF NOT EXISTS uid_index ON d_user_all_record (uid);
+        """
+
+        try:
+            self.cursor.execute(create_table_sql)
+            self.conn.commit()
+        except Exception as e:
+            pass
+
+        try:
+            self.cursor.execute(create_name_index_sql)
+            self.conn.commit()
+        except Exception as e:
+            pass
+
+        try:
+            self.cursor.execute(create_uid_index_sql)
+            self.conn.commit()
+        except Exception as e:
+            pass
 
     def create_user_post_table(self):
         sql = """CREATE TABLE if not exists t_user_post (
