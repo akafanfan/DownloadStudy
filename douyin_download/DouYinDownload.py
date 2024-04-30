@@ -42,18 +42,7 @@ configModel = {
     "cookie": None
 
 }
-# 定义全局变量来存储颜色代码
-global COLOR_GREEN
-global COLOR_BLUE
-global COLOR_YELLOW
-global COLOR_RED
-global COLOR_RESET
 
-COLOR_GREEN = "\033[32m"
-COLOR_BLUE = "\033[34m"
-COLOR_YELLOW = "\033[33m"
-COLOR_RED = "\033[31m"
-COLOR_RESET = "\033[m"
 
 def argument():
     parser = argparse.ArgumentParser(description='抖音批量下载工具 使用帮助')
@@ -74,7 +63,8 @@ def argument():
                         type=utils.str2bool, required=False, default=True)
     parser.add_argument("--folderstyle", "-fs", help="文件保存风格, 默认为True",
                         type=utils.str2bool, required=False, default=True)
-    parser.add_argument("--mode", "-M", help="link是个人主页时, 设置下载发布的作品(post)或喜欢的作品(like)或者用户所有合集(mix), 默认为post, 可以设置多种模式",
+    parser.add_argument("--mode", "-M",
+                        help="link是个人主页时, 设置下载发布的作品(post)或喜欢的作品(like)或者用户所有合集(mix), 默认为post, 可以设置多种模式",
                         type=str, required=False, default=[], action="append")
     parser.add_argument("--postnumber", help="主页下作品下载个数设置, 默认为0 全部下载",
                         type=int, required=False, default=0)
@@ -86,7 +76,8 @@ def argument():
                         type=int, required=False, default=0)
     parser.add_argument("--musicnumber", help="音乐(原声)下作品下载个数设置, 默认为0 全部下载",
                         type=int, required=False, default=0)
-    parser.add_argument("--database", "-d", help="是否使用数据库, 默认为True 使用数据库; 如果不使用数据库, 增量更新不可用",
+    parser.add_argument("--database", "-d",
+                        help="是否使用数据库, 默认为True 使用数据库; 如果不使用数据库, 增量更新不可用",
                         type=utils.str2bool, required=False, default=True)
     parser.add_argument("--postincrease", help="是否开启主页作品增量下载(True/False), 默认为False",
                         type=utils.str2bool, required=False, default=False)
@@ -233,38 +224,55 @@ def yamlConfig():
         pass
 
 
+# 定义全局变量来存储线程运行结果
+global thread_result_list
+
+# 定义全局变量来存储颜色代码
+global COLOR_GREEN
+global COLOR_BLUE
+global COLOR_YELLOW
+global COLOR_RED
+global COLOR_RESET
+
+COLOR_GREEN = "\033[32m"
+COLOR_BLUE = "\033[34m"
+COLOR_YELLOW = "\033[33m"
+COLOR_RED = "\033[31m"
+COLOR_RESET = "\033[m"
+
+
 def main():
-    args = argument()
+    # args = argument()
 
-    if args.cmd:
-        configModel["link"] = args.link
-        configModel["path"] = args.path
-        configModel["music"] = args.music
-        configModel["cover"] = args.cover
-        configModel["avatar"] = args.avatar
-        configModel["json"] = args.json
-        configModel["folderstyle"] = args.folderstyle
-        if args.mode == None or args.mode == []:
-            args.mode = []
-            args.mode.append("post")
-        configModel["mode"] = list(set(args.mode))
-        configModel["number"]["post"] = args.postnumber
-        configModel["number"]["like"] = args.likenumber
-        configModel["number"]["allmix"] = args.allmixnumber
-        configModel["number"]["mix"] = args.mixnumber
-        configModel["number"]["music"] = args.musicnumber
-        configModel["database"] = args.database
-        configModel["increase"]["post"] = args.postincrease
-        configModel["increase"]["like"] = args.likeincrease
-        configModel["increase"]["allmix"] = args.allmixincrease
-        configModel["increase"]["mix"] = args.mixincrease
-        configModel["increase"]["music"] = args.musicincrease
-        configModel["thread"] = args.thread
-        configModel["cookie"] = args.cookie
-    else:
-        yamlConfig()
+    # if args.cmd:
+    #     configModel["link"] = args.link
+    #     configModel["path"] = args.path
+    #     configModel["music"] = args.music
+    #     configModel["cover"] = args.cover
+    #     configModel["avatar"] = args.avatar
+    #     configModel["json"] = args.json
+    #     configModel["folderstyle"] = args.folderstyle
+    #     if args.mode == None or args.mode == []:
+    #         args.mode = []
+    #         args.mode.append("post")
+    #     configModel["mode"] = list(set(args.mode))
+    #     configModel["number"]["post"] = args.postnumber
+    #     configModel["number"]["like"] = args.likenumber
+    #     configModel["number"]["allmix"] = args.allmixnumber
+    #     configModel["number"]["mix"] = args.mixnumber
+    #     configModel["number"]["music"] = args.musicnumber
+    #     configModel["database"] = args.database
+    #     configModel["increase"]["post"] = args.postincrease
+    #     configModel["increase"]["like"] = args.likeincrease
+    #     configModel["increase"]["allmix"] = args.allmixincrease
+    #     configModel["increase"]["mix"] = args.mixincrease
+    #     configModel["increase"]["music"] = args.musicincrease
+    #     configModel["thread"] = args.thread
+    #     configModel["cookie"] = args.cookie
+    # else:
+    yamlConfig()
 
-    if configModel["link"] == []:
+    if not configModel["link"]:
         return
 
     if configModel["cookie"] is not None and configModel["cookie"] != "":
@@ -275,34 +283,37 @@ def main():
     if not os.path.exists(configModel["path"]):
         os.mkdir(configModel["path"])
 
-    dy = Douyin(database=configModel["database"])
     dl = Download(thread=configModel["thread"], music=configModel["music"], cover=configModel["cover"],
                   avatar=configModel["avatar"], resjson=configModel["json"],
                   folderstyle=configModel["folderstyle"])
     print("[  提示  ]:准备开始多线程下载 ")
-    global result_list
-    result = []
-    result_list = queue.Queue()
+    # 开启多线程下载
+    global thread_result_list
+    thread_result_list = queue.Queue()
     tasks = []
     for _ in configModel["link"]:
         task_name = _.split(',')[1]
         # 加入线程池
-        tasks.append(threading.Thread(target=ready_download, args=(_, dy, dl), name=task_name))
+        tasks.append(threading.Thread(target=ready_download, args=(_, dl), name=task_name))
     for task in tasks:
         task.start()
     for task in tasks:
         task.join()
     # 收集节点检查子线程运行结果
     # 输出子线程运行结果
-    while not result_list.empty():
-        result.append(result_list.get())
+    # 结果集
+    result = []
+    while not thread_result_list.empty():
+        result.append(thread_result_list.get())
 
     print("[  提示  ]:多线程下载结束 ")
     # 输出 result 中的数据
     for value in result:
         print(f'{COLOR_BLUE}{value}{COLOR_RESET}')
 
-def ready_download(_, dy, dl):
+
+def ready_download(_, dl):
+    db = Douyin(database=configModel["database"])
     current_thread = threading.current_thread()
     print(f"Thread {current_thread.name} is downloading")
 
@@ -314,31 +325,29 @@ def ready_download(_, dy, dl):
     name = _.split(',')[1]
     print("--------------------------------------------------------------------------------")
     print(f"[  提示 {current_thread.name}]:正在请求的链接: " + link + "\r\n")
-    url = dy.getShareLink(link)
-    key_type, key = dy.getKey(url)
+    url = db.getShareLink(link)
+    key_type, key = db.getKey(url)
     if key_type == "user":
-        userPath = os.path.join(configModel["path"], name)
-        if not os.path.exists(userPath):
-            os.mkdir(userPath)
+        user_path = os.path.join(configModel["path"], name)
+        if not os.path.exists(user_path):
+            os.mkdir(user_path)
 
-        for mode in configModel["mode"]:
-            print("--------------------------------------------------------------------------------")
-            print(f"[  提示 {current_thread.name}]:正在请求用户主页模式: " + mode + " 昵称：" + name + "\r\n")
-            if mode == 'post' or mode == 'like':
-                # increase 是否开启主页作品增量下载
-                # datalist = dy.getUserInfo(key, mode, 18, configModel["number"][mode], configModel["increase"][mode])
-                datalist = dy.get_user_info(key, name)
-                if datalist is not None and datalist != []:
-                    modePath = os.path.join(userPath, mode)
-                    if not os.path.exists(modePath):
-                        os.mkdir(modePath)
-                    dl.userDownload(awemeList=datalist, savePath=modePath)
+        print("--------------------------------------------------------------------------------")
+        print(f"[  提示 {current_thread.name}]:正在请求用户主页模式: " + " 昵称：" + name + "\r\n")
+        # increase 是否开启主页作品增量下载
+        # datalist = db.getUserInfo(key, mode, 18, configModel["number"][mode], configModel["increase"][mode])
+        datalist = db.get_user_info(key, name)
+        if datalist is not None and datalist != []:
+            mode_path = os.path.join(user_path, 'post')
+            if not os.path.exists(mode_path):
+                os.mkdir(mode_path)
+            dl.userDownload(awemeList=datalist, savePath=mode_path)
     end = time.time()  # 结束时间
 
     print('\n[' + current_thread.name + '下载完成]:总耗时: %d分钟%d秒\n' % (
         int((end - start) / 60), ((end - start) % 60)))  # 输出下载用时时间
-    global result_list
-    result_list.put(f'下载{name}作品成功')
+    global thread_result_list
+    thread_result_list.put(f'下载{name}作品成功')
 
 
 if __name__ == "__main__":

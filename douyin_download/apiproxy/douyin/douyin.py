@@ -8,6 +8,7 @@ import json
 import time
 import copy
 import datetime
+import sqlite3
 
 from douyin_download.apiproxy.douyin import douyin_headers
 from douyin_download.apiproxy.douyin.urls import Urls
@@ -317,6 +318,7 @@ class Douyin(object):
     def get_user_info(self, sec_uid, name, count=18, is_first=False):
         # 最大游标
         max_cursor = 0
+        min_cursor = 0
         # 当前作品数量
         this_aweme_count = 0
         # 上次下载点（更新用）
