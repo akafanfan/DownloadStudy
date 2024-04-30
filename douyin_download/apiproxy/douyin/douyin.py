@@ -143,6 +143,8 @@ class Douyin(object):
 
         return self.result.awemeDict, datadict
 
+
+
     # 传入 url 支持 https://www.iesdouyin.com 与 https://v.douyin.com
     #
     # 获取用户信息
@@ -157,8 +159,8 @@ class Douyin(object):
         # 打印用户id
         print('[  提示  ]:正在请求的用户 id = %s\r\n' % sec_uid)
         # 如果用户id为空，则返回None
-        if sec_uid is None:
-            return None
+        # if sec_uid is None:
+        #     return None
         # 如果number小于等于0，则numflag为False
         if number <= 0:
             numflag = False
@@ -174,8 +176,8 @@ class Douyin(object):
         numberis0 = False
 
         # 打印提示
-        print("[  提示  ]:正在获取所有作品数据请稍后...\r")
-        print("[  提示  ]:会进行多次请求，等待时间较长...\r\n")
+        # print("[  提示  ]:正在获取所有作品数据请稍后...\r")
+        # print("[  提示  ]:会进行多次请求，等待时间较长...\r\n")
         times = 0
         # 循环
         while True:
@@ -191,12 +193,12 @@ class Douyin(object):
                     # 根据模式选择接口
                     if mode == "post":
                         # url = self.urls.USER_POST + utils.getXbogus(
-                        #     f'sec_user_id={sec_uid}&max_cursor={max_cursor}&device_platform=webapp&aid=6383')
+                        #     f'sec_user_id={sec_uid}&max_cursor={max_cursor}&count={count}&device_platform=webapp&aid=6383')
                         url = self.urls.USER_POST + utils.getXbogus(
+                            f'sec_user_id={sec_uid}&count={count}&max_cursor={max_cursor}&device_platform=channel_pc_web&aid=6383')
+                    elif mode == "like":
+                        url = self.urls.USER_FAVORITE_A + utils.getXbogus(
                             f'sec_user_id={sec_uid}&count={count}&max_cursor={max_cursor}&device_platform=webapp&aid=6383')
-                    # elif mode == "like":
-                    #     url = self.urls.USER_FAVORITE_A + utils.getXbogus(
-                    #         f'sec_user_id={sec_uid}&count={count}&max_cursor={max_cursor}&device_platform=webapp&aid=6383')
                     else:
                         print("[  错误  ]:模式选择错误, 仅支持post、like、mix, 请检查后重新运行!\r")
                         return None
@@ -210,6 +212,10 @@ class Douyin(object):
                     # 如果没有数据，则结束
                     if datadict is not None and datadict["status_code"] == 0:
                         break
+                    # tmpList = datadict["aweme_list"]
+                    # for _ in tmpList:
+                    #     awemeList.append(tmpList[_])
+
                 except Exception as e:
                     # 结束时间
                     end = time.time()
@@ -232,12 +238,12 @@ class Douyin(object):
                                 increaseflag = True
                         else:
                             self.db.insert_user_post(sec_uid=sec_uid, aweme_id=aweme['aweme_id'], data=aweme)
-                    # elif mode == "like":
-                    #     if self.db.get_user_like(sec_uid=sec_uid, aweme_id=aweme['aweme_id']) is not None:
-                    #         if increase and aweme['is_top'] == 0:
-                    #             increaseflag = True
-                    #     else:
-                    #         self.db.insert_user_like(sec_uid=sec_uid, aweme_id=aweme['aweme_id'], data=aweme)
+                    elif mode == "like":
+                        if self.db.get_user_like(sec_uid=sec_uid, aweme_id=aweme['aweme_id']) is not None:
+                            if increase and aweme['is_top'] == 0:
+                                increaseflag = True
+                        else:
+                            self.db.insert_user_like(sec_uid=sec_uid, aweme_id=aweme['aweme_id'], data=aweme)
 
                     # 退出条件
                     if increase and numflag is False and increaseflag:
