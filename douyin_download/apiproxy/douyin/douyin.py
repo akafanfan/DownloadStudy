@@ -143,14 +143,24 @@ class Douyin(object):
 
         return self.result.awemeDict, datadict
 
+
+
     # 传入 url 支持 https://www.iesdouyin.com 与 https://v.douyin.com
-    # mode : post | like 模式选择 like为用户点赞 post为用户发布
-    def getUserInfo(self, sec_uid, mode="post", count=35, number=0, increase=False):
+    #
+    # 获取用户信息
+    # 参数：
+    # sec_uid：用户标识
+    # mode：请求类型，默认为post mode : post | like 模式选择 like为用户点赞 post为用户发布
+    # count：每次获取的数量，默认为35
+    # number：循环次数，默认为0表示无限循环
+    # increase：是否增加计数器，默认为False
+        #
+    def getUserInfo(self, sec_uid, mode="post", count=18, number=0, increase=False):
         # 打印用户id
         print('[  提示  ]:正在请求的用户 id = %s\r\n' % sec_uid)
         # 如果用户id为空，则返回None
-        if sec_uid is None:
-            return None
+        # if sec_uid is None:
+        #     return None
         # 如果number小于等于0，则numflag为False
         if number <= 0:
             numflag = False
@@ -166,8 +176,8 @@ class Douyin(object):
         numberis0 = False
 
         # 打印提示
-        print("[  提示  ]:正在获取所有作品数据请稍后...\r")
-        print("[  提示  ]:会进行多次请求，等待时间较长...\r\n")
+        # print("[  提示  ]:正在获取所有作品数据请稍后...\r")
+        # print("[  提示  ]:会进行多次请求，等待时间较长...\r\n")
         times = 0
         # 循环
         while True:
@@ -182,10 +192,10 @@ class Douyin(object):
                 try:
                     # 根据模式选择接口
                     if mode == "post":
-                        url = self.urls.USER_POST + utils.getXbogus(
-                            f'sec_user_id={sec_uid}&max_cursor={max_cursor}&device_platform=webapp&aid=6383')
                         # url = self.urls.USER_POST + utils.getXbogus(
-                        #     f'sec_user_id={sec_uid}&count={count}&max_cursor={max_cursor}&device_platform=webapp&aid=6383')
+                        #     f'sec_user_id={sec_uid}&max_cursor={max_cursor}&count={count}&device_platform=webapp&aid=6383')
+                        url = self.urls.USER_POST + utils.getXbogus(
+                            f'sec_user_id={sec_uid}&count={count}&max_cursor={max_cursor}&device_platform=channel_pc_web&aid=6383')
                     elif mode == "like":
                         url = self.urls.USER_FAVORITE_A + utils.getXbogus(
                             f'sec_user_id={sec_uid}&count={count}&max_cursor={max_cursor}&device_platform=webapp&aid=6383')
@@ -202,6 +212,10 @@ class Douyin(object):
                     # 如果没有数据，则结束
                     if datadict is not None and datadict["status_code"] == 0:
                         break
+                    # tmpList = datadict["aweme_list"]
+                    # for _ in tmpList:
+                    #     awemeList.append(tmpList[_])
+
                 except Exception as e:
                     # 结束时间
                     end = time.time()
