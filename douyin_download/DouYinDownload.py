@@ -317,12 +317,6 @@ def ready_download(_, dy, dl):
     url = dy.getShareLink(link)
     key_type, key = dy.getKey(url)
     if key_type == "user":
-        # print(f"[  提示 {current_thread.name}]:正在请求用户" + name + "主页下作品\r\n")
-        # data = dy.getUserDetailInfo(sec_uid=key)
-        # nickname = ""
-        # if data is not None and data != {}:
-        #     nickname = utils.replaceStr(data['user']['nickname'])
-
         userPath = os.path.join(configModel["path"], name)
         if not os.path.exists(userPath):
             os.mkdir(userPath)
@@ -332,7 +326,8 @@ def ready_download(_, dy, dl):
             print(f"[  提示 {current_thread.name}]:正在请求用户主页模式: " + mode + " 昵称：" + name + "\r\n")
             if mode == 'post' or mode == 'like':
                 # increase 是否开启主页作品增量下载
-                datalist = dy.getUserInfo(key, mode, 18, configModel["number"][mode], configModel["increase"][mode])
+                # datalist = dy.getUserInfo(key, mode, 18, configModel["number"][mode], configModel["increase"][mode])
+                datalist = dy.get_user_info(key, name)
                 if datalist is not None and datalist != []:
                     modePath = os.path.join(userPath, mode)
                     if not os.path.exists(modePath):
@@ -340,10 +335,10 @@ def ready_download(_, dy, dl):
                     dl.userDownload(awemeList=datalist, savePath=modePath)
     end = time.time()  # 结束时间
 
-    print('\n' + name + ' [' + current_thread.name + '下载完成]:总耗时: %d分钟%d秒\n' % (
+    print('\n[' + current_thread.name + '下载完成]:总耗时: %d分钟%d秒\n' % (
         int((end - start) / 60), ((end - start) % 60)))  # 输出下载用时时间
     global result_list
-    result_list.put(f'下载 {name} 作品成功')
+    result_list.put(f'下载{name}作品成功')
 
 
 if __name__ == "__main__":

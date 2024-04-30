@@ -1,11 +1,12 @@
-
 # 作品(视频或图集)、直播、合集、音乐集合、个人主页的分享链接或者电脑浏览器网址
 # (删除文案, 保证只有URL, https://v.douyin.com/kcvMpuN/ 或者 https://www.douyin.com/开头的)
 # 可以设置多个链接, 确保至少一个链接
 # 必选
 link:
-  - https://v.douyin.com/i2REDSUU/,FS思思
-  - https://v.douyin.com/i2REmpFd/,xxx
+  - https://v.douyin.com/i28WworN/,木里人鱼
+#  - https://v.douyin.com/i2REDSUU/,FS思思
+#  - https://v.douyin.com/i2REmpFd/,xxx
+
 # 野奶
 # https://v.douyin.com/iRCcq6nF/ 大
 # https://v.douyin.com/iRCcCbcf/ 小
@@ -91,8 +92,8 @@ cookies:
   # odin_tt: xxx
   # passport_csrf_token: xxx
   # sid_guard: xxx
-  msToken: tZgxFDBm60QNkhDc_YjotjoBRdXHA11N0d8gjr1PI6k5JnD6NmzHfeRhL5t533Gnk5xVwkZbBhDwPzqjmVg2Z-3KMXx8aM6P2k9Gdthox2zdLAd6r60NleWcjh0n
-  ttwid: 1%7CJOajlKvgwRT2S33ee2iR4j9WOJ6sRB__oTCtmC9B9qY%7C1692672655%7C5e0247f7b246357bff419da45b696981fbe6703d83914eff8ef0b8716fd50fca
-  odin_tt: 08e903a1addfc252000427facd707eb1dc089eef0dfd897e7e6e0768fb99f98fe929b5941991735a3b7b875788239295
-  passport_csrf_token: de774512818f9bafe224dd305d0d14fb
-  sid_guard: e8f9c9cee7388182b5bdecad4aef32d7%7C1698912759%7C5184000%7CMon%2C+01-Jan-2024+08%3A12%3A39+GMT
+  msToken: U4xnrjDfinzLRFyt53q4u8x2iX8TszRcJTHgkrNc1ihNCWBm672Nn_COBY-OyfAg3UQDSv2YLMhatJms2od5uw99Zqo6HSiY7A60j7gnP4nvd8zkeoAm8gB5lA==
+  ttwid: 1%7C9ut5a_alQBg6HZhok2TiQyZfpA4_2OjgXdvxB-JF5M4%7C1707153168%7C58a8e7a915ddd0591889dfc7670097bd7307a38cbcda1275f60a40b865a9b8e9
+  odin_tt: b5a395770381dcf9e1492b8006125e17b8afaf9df62d98b9a2b40131f0a15fc13cc670ce06b73ec382a60c4e7e729901
+  passport_csrf_token: a1afaece213091e5320d5445bf553e66
+  sid_guard: 529c5098bca2666b0fb39455601bfb23%7C1714486829%7C5184001%7CSat%2C+29-Jun-2024+14%3A20%3A30+GMT

@@ -7,6 +7,7 @@ import requests
 import json
 import time
 import copy
+import datetime
 
 from douyin_download.apiproxy.douyin import douyin_headers
 from douyin_download.apiproxy.douyin.urls import Urls
@@ -125,7 +126,6 @@ class Douyin(object):
                     print("[  提示  ]:重复请求该接口" + str(self.timeout) + "s, 仍然未获取到数据")
                     return {}, {}
 
-
         # 清空self.awemeDict
         self.result.clearDict(self.result.awemeDict)
 
@@ -143,8 +143,6 @@ class Douyin(object):
 
         return self.result.awemeDict, datadict
 
-
-
     # 传入 url 支持 https://www.iesdouyin.com 与 https://v.douyin.com
     #
     # 获取用户信息
@@ -154,7 +152,7 @@ class Douyin(object):
     # count：每次获取的数量，默认为35
     # number：循环次数，默认为0表示无限循环
     # increase：是否增加计数器，默认为False
-        #
+    #
     def getUserInfo(self, sec_uid, mode="post", count=18, number=0, increase=False):
         # 打印用户id
         print('[  提示  ]:正在请求的用户 id = %s\r\n' % sec_uid)
@@ -303,6 +301,128 @@ class Douyin(object):
 
         return awemeList
 
+    # 定义全局变量来存储颜色代码
+    global COLOR_GREEN
+    global COLOR_BLUE
+    global COLOR_YELLOW
+    global COLOR_RED
+    global COLOR_RESET
+
+    COLOR_GREEN = "\033[32m"
+    COLOR_BLUE = "\033[34m"
+    COLOR_YELLOW = "\033[33m"
+    COLOR_RED = "\033[31m"
+    COLOR_RESET = "\033[m"
+
+    def get_user_info(self, sec_uid, name, count=18, is_first=False):
+        # 最大游标
+        max_cursor = 0
+        # 当前作品数量
+        this_aweme_count = 0
+        # 上次下载点（更新用）
+        this_last_point = 0
+        # db_name = None
+        # db_update_time = None
+        # db_count = None
+        # db_status = None
+        # db_uid = None
+        # 先查询数据库用户是否存在
+        db_res = self.db.select_d_user_all_record(name=name)
+        if db_res is not None:
+            name, aweme_count, update_time, status, uid, last_point = db_res
+            # 判断 sec_uid 是否一致，不一致则更新
+            if uid != sec_uid:
+                self.db.update_d_user_all_record_uid(uid=sec_uid, name=name)
+                print(f'[INFO]:[{name}]用户的sec_uidID不一致，已更新记录\r\n')
+
+            print(f'[INFO]:[{name}]上次更新时间是 {update_time},设置当前查询游标 max_cursor={last_point}\r\n')
+            max_cursor = last_point
+        else:
+            # 第一次
+            self.db.insert_d_user_all_record(uid=sec_uid, name=name)
+            is_first = True
+
+        print(f'[INFO]:[{name}]正在请求>>>>>>id:{sec_uid}\r\n')
+        # 作品列表
+        aweme_list = []
+        times = 0
+        # 循环
+        while True:
+            times = times + 1
+            print(f"{COLOR_GREEN}[INFO]:[{name}]正在对主页进行第{str(times)}次请求>>>>>>{COLOR_RESET}\r")
+            # 开始时间
+            start = time.time()
+            # 无限循环
+            while True:
+                # 接口不稳定, 有时服务器不返回数据, 需要重新获取
+                try:
+                    # 封装请求url
+                    url = self.urls.USER_POST + utils.getXbogus(
+                        f'sec_user_id={sec_uid}&count={count}&max_cursor={max_cursor}&device_platform=channel_pc_web&aid=6383')
+                    # 获取数据
+                    res = requests.get(url=url, headers=douyin_headers)
+                    # 解析数据
+                    data_dict_obj = json.loads(res.text)
+                    print(
+                        f'{COLOR_YELLOW}[INFO]:[{name}]本次请求返回{str(len(data_dict_obj["aweme_list"]))}条数据{COLOR_RESET}\r')
+                    # 如果没有数据，则结束
+                    if data_dict_obj is not None and data_dict_obj["status_code"] == 0:
+                        break
+                except Exception as e:
+                    # 结束时间
+                    end = time.time()
+                    # 如果结束时间-开始时间大于超时时间，则提示
+                    if end - start > self.timeout:
+                        print("[ERROR]:重复请求该接口" + str(self.timeout) + "s, 仍然未获取到数据")
+                        return aweme_list
+
+            for aweme in data_dict_obj["aweme_list"]:
+                # 增量更新, 找到非置顶的最新的作品发布时间
+                if is_first is False and aweme['is_top'] == 1:
+                    # 不是第一次下载就移除置顶的
+                    aweme_list.remove(aweme)
+
+                if 1 == times and aweme['is_top'] != 1:
+                    # 下次从min_cursor 开始
+                    this_last_point = data_dict_obj["min_cursor"]
+
+                # 清空self.awemeDict
+                self.result.clearDict(self.result.awemeDict)
+                # 默认为视频
+                aweme_type = 0
+                try:
+                    if aweme["images"] is not None:
+                        aweme_type = 1
+                except Exception as e:
+                    print("[ERROR]:接口中未找到 images\r")
+
+                # 转换成我们自己的格式
+                self.result.dataConvert(aweme_type, self.result.awemeDict, aweme)
+
+                if self.result.awemeDict is not None and self.result.awemeDict != {}:
+                    aweme_list.append(copy.deepcopy(self.result.awemeDict))
+
+            # 更新 max_cursor
+            max_cursor = data_dict_obj["max_cursor"]
+            this_aweme_count += len(data_dict_obj["aweme_list"])
+            # 退出条件
+            if data_dict_obj["has_more"] == 0 or \
+                    data_dict_obj["has_more"] == False or \
+                    0 == len(data_dict_obj["aweme_list"]):
+
+                # 使用 strftime()方法将this_last_point对象格式化为日期字符串
+                last_time = datetime.datetime.fromtimestamp(this_last_point / 1000).strftime('%Y-%m-%d %H:%M:%S')
+
+                print(f'{COLOR_BLUE}[INFO]:[{name}]本次获取共计{this_aweme_count}个，最新作品时间:{last_time}\r\n')
+                # 更新数据库当前时间和总数
+                self.db.update_d_user_all_record_aweme_count(name=name, last_point=this_last_point,
+                                                             aweme_count=this_aweme_count)
+                break
+            else:
+                print(f'{COLOR_GREEN}[INFO]:[{name}]第{str(times)}次请求成功>>>>>>{COLOR_RESET}\r\n')
+
+        return aweme_list
+
     def getLiveInfo(self, web_rid: str):
         print('[  提示  ]:正在请求的直播间 id = %s\r\n' % web_rid)
 
@@ -429,7 +549,6 @@ class Douyin(object):
                         print("[  提示  ]:重复请求该接口" + str(self.timeout) + "s, 仍然未获取到数据")
                         return awemeList
 
-
             for aweme in datadict["aweme_list"]:
                 if self.database:
                     # 退出条件
@@ -540,7 +659,6 @@ class Douyin(object):
                         print("[  提示  ]:重复请求该接口" + str(self.timeout) + "s, 仍然未获取到数据")
                         return mixIdNameDict
 
-
             for mix in datadict["mix_infos"]:
                 mixIdNameDict[mix["mix_id"]] = mix["mix_name"]
                 if numflag:
@@ -602,7 +720,6 @@ class Douyin(object):
                     if end - start > self.timeout:
                         print("[  提示  ]:重复请求该接口" + str(self.timeout) + "s, 仍然未获取到数据")
                         return awemeList
-
 
             for aweme in datadict["aweme_list"]:
                 if self.database:
@@ -686,7 +803,7 @@ class Douyin(object):
             # 接口不稳定, 有时服务器不返回数据, 需要重新获取
             try:
                 url = self.urls.USER_DETAIL + utils.getXbogus(
-                        f'sec_user_id={sec_uid}&device_platform=webapp&aid=6383')
+                    f'sec_user_id={sec_uid}&device_platform=webapp&aid=6383')
 
                 res = requests.get(url=url, headers=douyin_headers)
                 datadict = json.loads(res.text)
