@@ -326,8 +326,8 @@ def ready_download(_, dy, dl):
             print(f"[  提示 {current_thread.name}]:正在请求用户主页模式: " + mode + " 昵称：" + name + "\r\n")
             if mode == 'post' or mode == 'like':
                 # increase 是否开启主页作品增量下载
-                datalist = dy.getUserInfo(key, mode, 18, configModel["number"][mode], configModel["increase"][mode])
-                # datalist = dy.get_user_info(key, name)
+                # datalist = dy.getUserInfo(key, mode, 18, configModel["number"][mode], configModel["increase"][mode])
+                datalist = dy.get_user_info(key, name)
                 if datalist is not None and datalist != []:
                     modePath = os.path.join(userPath, mode)
                     if not os.path.exists(modePath):
