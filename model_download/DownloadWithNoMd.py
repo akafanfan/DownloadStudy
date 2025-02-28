@@ -15,13 +15,15 @@ url_head = 'https://91md.me'
 def main():
     # play_list_url = 'https://91md.me/index.php/vod/search/page/2/wd/辛尤里.html'
     # url1 = 'https://91md.me/index.php/vod/play/id/8630/sid/1/nid/1'
-    url2 = 'https://91md.me/index.php/vod/search/page/1/wd/%E8%BE%9B%E5%B0%A4%E9%87%8C.html'
+    url2 = 'https://91md.me/index.php/vod/search/page/1/wd/%E8%8B%8F%E5%B0%8F%E6%B6%B5.html'
     playlist = get_playlist(url2)
+    print("当前采集网址明细 playlist:",playlist)
     m3u8_list = create_m3u8_list(playlist)
-    print("m3u8_list:")
-    for index, item in enumerate(m3u8_list, start=1):
-        print(f"{index}. {item}")
+    print("m3u8_list:",m3u8_list)
+    # for index, item in enumerate(m3u8_list, start=1):
+    #     print(f"{index}. {item}")
     download_list(m3u8_list)
+
 
 def get_playlist(url):
     # 发起请求并获取网页内容
@@ -55,7 +57,7 @@ def get_playlist(url):
                         href_links = p.find_all(href=re.compile('.*'))
                         if len(href_links) > 0:
                             href_values = [link.get('href') for link in href_links if link.get('href')]
-                            video_list.append(title + ',' + url_head + href_values[0])
+                            video_list.append(title + '+' + url_head + href_values[0])
 
     return video_list
 
@@ -66,7 +68,7 @@ def create_m3u8_list(playlist):
     for i, url in enumerate(playlist):
         # 打印当前获取的M3U8链接
         print(i + 1, " 当前前获取m3u8链接:", url)
-        tmp = url.split(',')
+        tmp = url.split('+')
         title = tmp[0]
         m3u8 = get_1_video_m3u8(tmp[1])
         res_list.append(m3u8 + ',' + title)

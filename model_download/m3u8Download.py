@@ -21,7 +21,7 @@ headers = {
     'Accept-Language': 'Zh-CN, zh;q=0.9, en-gb;q=0.8, en;q=0.7'
 }
 
-path = 'D:\\Desktop\\Temp\\'
+path = './download/'
 
 
 # 红色：\033[31m
@@ -176,7 +176,7 @@ def ready_download(url, title):
             print('\033[32m' 'completed result:' + '\033[0m', data)
         video = merge_to_mp4(path + title + '.mp4', down_path, ts_list)  # 合并ts文件
         # 创建视频缩略图
-        create_new_video_with_thumbnails(video)
+        # create_new_video_with_thumbnails(video)
         times = time.time() - begin  # 记录线程完成时间
         formatted_time = str(datetime.timedelta(seconds=times))
         print('\033[34m' + '总消耗时间: {}'.format(formatted_time) + '\033[0m')
@@ -194,16 +194,9 @@ def download_list(m3u8_list):
         i += 1
 
 # 使用示例
-# def main():
-#     url = ''
-#
-#     if len(sys.argv) > 1:
-#         url = (sys.argv[1])
-#     else:
-#         print('亲，没有添加m3u8地址,请在下方输入:')
-#         url = input()
-#     # ready_download(url)
-#
-#
-# if __name__ == "__main__":
-#     main()
+def main():
+    url = ['https://t30.cdn2020.com/video/m3u8/2025/02/19/05282ec1/index.m3u8,糖心Vlog.内射性感OL-苏小涵', 'https://t30.cdn2020.com/video/m3u8/2025/02/16/e836ee75/index.m3u8,糖心Vlog.嫂子的肉体风险-苏小涵', 'https://t30.cdn2020.com/video/m3u8/2025/01/27/7eb80a41/index.m3u8,糖心Vlog.租赁女友性体验-苏小涵', 'https://t30.cdn2020.com/video/m3u8/2025/01/23/9f5f917e/index.m3u8,糖心Vlog.淫荡小妈蜜穴保密-苏小涵', 'https://t25.cdn2020.com/video/m3u8/2024/12/25/54304107/index.m3u8,糖心Vlog.淫荡麋鹿圣诞献身-苏小涵', 'https://t25.cdn2020.com/video/m3u8/2024/12/11/6fbd61ec/index.m3u8,糖心Vlog.渴望被调教的骚母狗-苏小涵', 'https://t25.cdn2020.com/video/m3u8/2024/11/07/c5af0e18/index.m3u8,糖心Vlog.业绩爆棚的秘密-苏小涵', 'https://t25.cdn2020.com/video/m3u8/2024/10/10/5650985b/index.m3u8,糖心Vlog.淫欲审判官的特殊审问题-苏小涵', 'https://t0.97img.com/a1000480/a.m3u8,巨乳护士肉棒治疗.把人家骚穴操坏.可是需要赔偿的哦-苏小涵', 'https://t0.97img.com/a1000434/a.m3u8,巨乳人妻裸足足交侍奉.边打电话边挨操.精液射满身 苏小涵', 'https://t0.97img.com/a1000415/a.m3u8,苏小涵.蜘蛛女的榨精惩罚.小M快进来被调教', 'https://t25.cdn2020.com/video/m3u8/2024/09/17/67a604fa/index.m3u8,糖心Vlog.嫦娥仙子的性幻想-苏小涵', 'https://t25.cdn2020.com/video/m3u8/2024/09/13/86ea3ab8/index.m3u8,糖心Vlog.女高中生的色诱淫技-苏小涵', 'https://t25.cdn2020.com/video/m3u8/2024/09/02/851cf4da/index.m3u8,糖心Vlog.主人的肉棒惩罚-苏小涵', 'https://t25.cdn2020.com/video/m3u8/2024/08/30/2792e9e7/index.m3u8,糖心Vlog.奉献女友还债-苏小涵', 'https://t25.cdn2020.com/video/m3u8/2024/08/25/2d36b1c4/index.m3u8,糖心Vlog.可爱邻家骚妹丝足榨精-苏小涵', 'https://t25.cdn2020.com/video/m3u8/2024/08/25/95b097d3/index.m3u8,糖心Vlog.S属性女房东公狗调教-苏小涵', 'https://t25.cdn2020.com/video/m3u8/2024/08/19/60ff6f6a/index.m3u8,糖心Vlog.富婆的肉体游戏-苏小涵', 'https://t25.cdn2020.com/video/m3u8/2024/08/16/080d277d/index.m3u8,糖心Vlog.淫荡女大按摩淫技-苏小涵', 'https://t25.cdn2020.com/video/m3u8/2024/08/16/82280f2d/index.m3u8,糖心Vlog.榨干人类的精液-苏小涵', 'https://t25.cdn2020.com/video/m3u8/2024/08/14/22415b28/index.m3u8,糖心Vlog,秘书的报答-苏小涵']
+    download_list(url)
+
+if __name__ == "__main__":
+    main()
