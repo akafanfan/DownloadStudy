@@ -22,7 +22,7 @@ headers = {
     'Accept-Language': 'Zh-CN, zh;q=0.9, en-gb;q=0.8, en;q=0.7'
 }
 
-path = '/Users/yangfan/Downloads/download/aixi/4/'
+path = '/Users/yangfan/Downloads/download/aixi/1/'
 
 
 # 红色：\033[31m
@@ -199,7 +199,7 @@ def download_list(m3u8_list):
 
 # 使用示例
 def main():
-    url1 = ['https://t27.cdn2020.com/video/m3u8/2022/12/06/3c2491aa/index.m3u8,麻豆传媒映画.RS-012.EP3.节目篇.艾熙.夏禹熙.宋南伊.赵晓涵.世足狂热丝足狂潮.电流极乐足控天堂', 'https://t27.cdn2020.com/video/m3u8/2022/11/28/950d4daf/index.m3u8,麻豆传媒映画.RS-012.EP2.节目篇.艾熙.夏禹熙.宋南伊.赵晓涵.世足狂热丝足狂潮.软硬兼湿激情纠缠', 'https://t27.cdn2020.com/video/m3u8/2022/11/25/5695a48c/index.m3u8,麻豆传媒映画.RS-012.EP1.AV篇.艾熙.世足狂热丝足狂潮.黑丝美足君子好逑', 'https://t27.cdn2020.com/video/m3u8/2022/11/23/1dc7fb92/index.m3u8,麻豆传媒映画.RS-012.EP1.节目篇.艾熙.夏禹熙.宋南伊.赵晓涵.世足狂热丝足狂潮.有球必硬解放性欲', 'https://t27.cdn2020.com/video/m3u8/2022/11/19/2bb8c16e/index.m3u8,麻豆传媒映画.MD-0254.艾熙.性爱临摹美术班.人体模特初体验', 'https://t27.cdn2020.com/video/m3u8/2022/10/16/133ef338/index.m3u8,麻豆传媒映画.MDL-0008-2.夏晴子 李蓉蓉 艾熙.我不是撸神下集.初心不改性欲无罪', 'https://t27.cdn2020.com/video/m3u8/2022/10/08/19e971f7/index.m3u8,麻豆传媒映画.MDL-0008-1.夏晴子 李蓉蓉 艾熙.我不是撸神上集追随本性情欲释放']
+    url1 = ['https://t33.cdn2020.com/video/m3u8/2025/11/07/ff16a832/index.m3u8,麻豆传媒映画.MD-0356.艾熙.夏日美乳少妇的色按初体验.挑逗G点手法全身颤抖痉挛', 'https://t33.cdn2020.com/video/m3u8/2025/10/31/5d03a496/index.m3u8,穿着情趣睡衣等你来让上我-艾熙', 'https://t33.cdn2020.com/video/m3u8/2025/10/23/2cb13c78/index.m3u8,下班不回家被上司压在桌子上操-艾熙', 'https://t33.cdn2020.com/video/m3u8/2025/10/18/64827eee/index.m3u8,麻豆传媒映画.MDSR-0005-6.艾熙.苏畅.艾悠.少妇白洁.第六章.绿帽风云.谁是谁的妻', 'https://t0.97img.com/a1002022/a.m3u8,内涵甜蜜女友.NHAV-090.学霸恋情恶男老师.用身体堵住他的嘴.艾熙', 'https://t33.cdn2020.com/video/m3u8/2025/10/02/8e83b8e4/index.m3u8,麻豆传媒映画.MDSR-0005-5.艾熙.欣晴.少妇白洁.第五章.多情不敢难自抑', 'https://t33.cdn2020.com/video/m3u8/2025/09/13/26a4224d/index.m3u8,麻豆传媒映画.MGL-0007.艾熙.黎芷媗.麻豆万能服务公司.满足兽父心中的妄想', 'https://t33.cdn2020.com/video/m3u8/2025/09/11/6d13d653/index.m3u8,湿透巨乳女友的冷气坏掉之夜-艾熙', 'https://t33.cdn2020.com/video/m3u8/2025/09/12/4483b814/index.m3u8,很久没有被内射了好害羞被顶到点了-艾熙', 'https://t33.cdn2020.com/video/m3u8/2025/09/04/b099081f/index.m3u8,想要被我服务吗你只需要干爆我就好-艾熙', 'https://t33.cdn2020.com/video/m3u8/2025/08/27/8c8a5a5e/index.m3u8,每次去旅行都要被塞满了啦-艾熙', 'https://t0.97img.com/a1001864/a.m3u8,内涵甜蜜女友.NHAV-074.艾熙.搭讪失败的火辣美女是个淫荡骚货', 'https://t33.cdn2020.com/video/m3u8/2025/08/21/8c3d6538/index.m3u8,一个不够用加一个刚刚好-艾熙', 'https://t30.cdn2020.com/video/m3u8/2025/07/30/7a77bafd/index.m3u8,制服的诱惑体育服-艾熙', 'https://t30.cdn2020.com/video/m3u8/2025/07/11/d50bbace/index.m3u8,麻豆传媒映画.MD-0348.艾熙.周宁.黑人干爆亚洲骚穴实录.黑色巨屌激战双女', 'https://t30.cdn2020.com/video/m3u8/2025/06/21/f8af56ef/index.m3u8,麻豆传媒映画.MDSR-0009-1.苏语棠.艾熙.极品嫂子.夏日欲火无套乱伦.情色文学.4P', 'https://t30.cdn2020.com/video/m3u8/2025/05/17/4436d0ba/index.m3u8,麻豆传媒映画.MD-0358.温芮欣.艾熙.京东做爱的外卖总裁.霸道总裁亲自下海操骚屄', 'https://t30.cdn2020.com/video/m3u8/2025/05/02/9a8f785b/index.m3u8,麻豆传媒映画.MDSR-0008-1.艾熙.艾悠.蓝天航空公司的空姐EP1.升迁下的性爱调教', 'https://t30.cdn2020.com/video/m3u8/2025/04/02/fe203cb9/index.m3u8,蜜桃影像传媒.EMX-079.艾熙.极欲女大生的桌底秘密.偷偷的在你身边自慰.要的就是你能操我', 'https://t30.cdn2020.com/video/m3u8/2025/02/07/4ce48e2d/index.m3u8,麻豆传媒映画.MDL-0010-2.艾熙.夏晴子.鲍鱼游戏2.轮奸真假间谍.潮吹爆喷', 'https://t30.cdn2020.com/video/m3u8/2025/02/02/232e8cca/index.m3u8,蜜桃影像传媒.PM-096.艾熙.淫荡女回家过年.性欲来了怎么办', 'https://t0.97img.com/a1000939/a.m3u8,麻豆传媒映画.MDL-0010-1.夏晴子.李蓉蓉.艾熙.苏樱花.吴梦梦.孟若羽.优娜.蕾·利尔·布莱克.鲍鱼游戏2.第一集.黑人26公分巨屌.疯狂抽插', 'https://t25.cdn2020.com/video/m3u8/2024/12/14/1de777c9/index.m3u8,和艾熙的两女性器关-吴梦梦', 'https://t25.cdn2020.com/video/m3u8/2024/12/11/fd2dd82e/index.m3u8,蜜桃影像传媒.EMX-069.艾熙.性感小姨对我性治疗小姨风骚又性感的身体才能治疗我的肿胀']
     download_list(url1)
 
 if __name__ == "__main__":

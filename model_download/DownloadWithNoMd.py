@@ -17,7 +17,7 @@ url_head = 'https://91md.cc'
 
 def main():
     # play_list_url = 'https://91md.me/index.php/vod/search/page/2/wd/辛尤里.html'
-    url2 = 'https://md91.cc/index.php/vod/search/page/2/wd/%E8%89%BE%E7%86%99.html'
+    url2 = 'https://md91.cc/index.php/vod/search/page/1/wd/%E8%89%BE%E7%86%99.html'
     playlist = get_playlist(url2)
     print("当前采集网址明细 playlist:",playlist)
     m3u8_list = create_m3u8_list(playlist)
