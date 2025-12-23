@@ -5,26 +5,53 @@ import requests
 from bs4 import BeautifulSoup, Tag
 import re
 import json
-
+import time  # 用于延时，避免请求过快
 from model_download.m3u8Download import download_list
+from urllib3.exceptions import InsecureRequestWarning
 
-url_head = 'https://91md.cc'
+url_head = 'https://91md.me'
 
 
 # def main():
 #     m3u8_list = ['https://t21.cdn2020.com/video/m3u8/2023/01/10/2ab0b007/index.m3u8,糖心Vlog.淫荡女仆随时供给主人中出-米胡桃']
 #     download_list(m3u8_list)
+# %E8%8B%8F%E5%B0%8F%E6%B6%B5.html  苏小涵
+# %E8%89%BE%E7%86%99 艾熙
+def main(page):
+    model_name = '苏小涵'
+    base_url = (url_head + '/index.php/vod/search/page/{}/wd/%E8%8B%8F%E5%B0%8F%E6%B6%B5.html')
 
-def main():
-    # play_list_url = 'https://91md.me/index.php/vod/search/page/2/wd/辛尤里.html'
-    url2 = 'https://md91.cc/index.php/vod/search/page/1/wd/%E8%89%BE%E7%86%99.html'
-    playlist = get_playlist(url2)
-    print("当前采集网址明细 playlist:",playlist)
+    url = base_url.format(page)
+    print(f"\n正在采集第 {page} 页: {url}")
+
+    playlist = get_playlist(url)
+    print(f"第 {page} 页 - 当前采集网址明细 playlist: {playlist}")
+
+    # 如果当前页没有内容，结束采集
+    if not playlist:
+        print(f"第 {page} 页无内容，所有页面采集完毕，程序结束。")
+
+    # 生成当前页的 m3u8 列表
     m3u8_list = create_m3u8_list(playlist)
-    print("m3u8_list:",m3u8_list)
-    # for index, item in enumerate(m3u8_list, start=1):
-    #     print(f"{index}. {item}")
-    # download_list(m3u8_list)
+    print(f"第 {page} 页 - m3u8_list: {m3u8_list}")
+
+    # 打印当前页的序号和链接（本页从1开始编号）
+    for index, item in enumerate(m3u8_list, start=1):
+        print(f"{index}. {item}")
+
+    # 每页采集完成后，立即下载本页的内容
+    if m3u8_list:
+        print(f"第 {page} 页采集完成，开始下载本页 {len(m3u8_list)} 个视频...")
+        # download_list(model_name, m3u8_list, page)
+        print(f"第 {page} 页下载任务已提交/完成。")
+    else:
+        print(f"第 {page} 页没有可下载的 m3u8 链接。")
+
+    # 翻到下一页
+    page += 1
+
+    # 建议保留延时，防止请求过快被网站屏蔽
+    # time.sleep(2)  # 可根据实际情况调整为 1~5 秒
 
 
 def get_playlist(url):
@@ -66,25 +93,37 @@ def get_playlist(url):
 
 def create_m3u8_list(playlist):
     res_list = []
-    # 遍历列表中的每个URL
     for i, url in enumerate(playlist):
-        # 打印当前获取的M3U8链接
-        print(i + 1, " 当前前获取m3u8链接:", url)
+        print(i + 1, " 开始获取m3u8链接 ", url)
         tmp = url.split('+')
         title = tmp[0]
-        sleep(2)
-        m3u8 = get_1_video_m3u8(tmp[1])
-        res_list.append(m3u8 + ',' + title)
+        # sleep(2)  # 如果需要可以保留
+        m3u8 = get_old_video_m3u8(tmp[1])
+
+        if m3u8:  # 如果 m3u8 不为 None 且不为空字符串
+            res_list.append(m3u8 + ',' + title)
+        else:
+            print(f"警告: 获取失败，跳过视频 - {title} ({tmp[1]})")
+
+    print(f"m3u8_list: {res_list}")
     return res_list
 
 
-def get_1_video_m3u8(url):
+def get_old_video_m3u8(url):
     # 发起请求并获取网页内容
-    m3u8_url = ''
-    response = requests.get(url)
-    html_content = response.text
+    m3u8_url = None  # 先初始化为 None
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
+        "Referer": "https://91md.me/",  # 可选，增加真实性
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+    }
+    requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
+
+    response = requests.get(url, headers=headers, verify=False, timeout=30)
+    response.encoding = 'utf-8'  # 或根据实际编码调整
     # 使用BeautifulSoup解析网页内容
-    soup = BeautifulSoup(html_content, 'html.parser')
+    soup = BeautifulSoup(response.text, 'html.parser')
+
     # 查找 <script type="text/javascript"> 部分
     script_tags = soup.find_all('script', type='text/javascript')
     for script_tag in script_tags:
@@ -119,4 +158,5 @@ def parse_m3u8(script_content):
 
 
 if __name__ == '__main__':
-    main()
+    # main(1)
+    get_old_video_m3u8('https://cn.pornhub.com/view_video.php?viewkey=680d282cc8610')

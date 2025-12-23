@@ -1,6 +1,6 @@
 ./tdl login
 
-./tdl --proxy http://127.0.0.1:7890  chat export -c 1813595356 -i 1727712000,1758186249
+./tdl --proxy http://127.0.0.1:7890  chat export -c 1813595356 -i 1727712000,1758186249 -o ./jadeuly1.json
 
 
 
@@ -31,4 +31,5 @@ https://t.me/laose_p
 2751077071
 11.1 - 12.15
 1761926400 - 1765728000
+
 ./tdl --proxy  socks5://127.0.0.1:7897 chat export -c 2751077071 -i 1761926400,1765728000 --with-content -o /Users/yangfan/PycharmProjects/DownloadStudy/telegram_download/mac/model/Laosep.json
