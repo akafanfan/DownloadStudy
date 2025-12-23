@@ -4,7 +4,9 @@ import json
 import sys
 import time
 
-def download_telegram_files(base_url, download_dir, json_file_path):
+telegram_group_id = 2751077071
+
+def download_telegram_files(model_name,base_url, download_dir, json_file_path,type):
     """
     下载Telegram文件
 
@@ -35,13 +37,21 @@ def download_telegram_files(base_url, download_dir, json_file_path):
         message_id = message.get('id')
         if not message_id:
             continue
-
         print("\n" + "="*50)
         print(f"[进度] {index}/{total_messages}")
         print(f"[信息] 开始处理消息ID: {message_id}")
+        file_name = f"{telegram_group_id}_{message_id}_{message.get('file')}"
+        print(f"[信息] 开始处理消息文件名: {message.get('file')}")
+        if model_name not in message.get("file", ""):
+            print(f"[跳过] 消息ID {message_id} 不包含 {model_name}，跳过下载")
+            continue
 
+        # 【新增】检查文件是否已存在
+        if os.path.exists(download_dir+ '/' + file_name):
+            print(f"[跳过] 文件已存在: {file_name}")
+            continue
         # 构建完整的URL
-        full_url = f"{base_url}?comment={message_id}"
+        full_url = f"{base_url}{type}{message_id}"
         print(f"[信息] 完整URL: {full_url}")
 
         # 构建命令
@@ -112,13 +122,16 @@ if __name__ == "__main__":
     print("="*50)
 
     # 配置参数
-    BASE_URL = "https://t.me/poyi8888888/39787"
-    DOWNLOAD_DIR = os.path.abspath("./model/jadeuly/")
-    JSON_FILE_PATH = os.path.abspath("./model/jadeuly/jadeuly1.json")
-
+    MODEL_NAME = "YoShiE"
+    BASE_URL = "https://t.me/laose_p"
+    DOWNLOAD_DIR = os.path.abspath("./model/YoShiE/")
+    JSON_FILE_PATH = os.path.abspath("./model/Laosep.json")
+    TYPE = '/' # '?comment='：评论 or '/'
+    print(f"[配置] 模特名称: {MODEL_NAME}")
     print(f"[配置] 下载目录: {DOWNLOAD_DIR}")
     print(f"[配置] JSON文件路径: {JSON_FILE_PATH}")
     print(f"[配置] 基础URL: {BASE_URL}")
+    print(f"[配置] 模式: {TYPE}")
 
     # 执行下载
-    download_telegram_files(BASE_URL, DOWNLOAD_DIR, JSON_FILE_PATH)
+    download_telegram_files(MODEL_NAME,BASE_URL, DOWNLOAD_DIR, JSON_FILE_PATH,TYPE)
