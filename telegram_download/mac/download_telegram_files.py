@@ -10,7 +10,7 @@ DEFAULT_PROXY = "socks5://127.0.0.1:7897"           # 代理
 DEFAULT_MODEL_NAME = "YoShiE"
 DEFAULT_BASE_URL = "https://t.me/laose_p"
 DEFAULT_DOWNLOAD_DIR = os.path.abspath("./model/YoShiE/")
-DEFAULT_JSON_PATH = os.path.abspath("./model/Laosep.json")
+DEFAULT_JSON_PATH = os.path.abspath("model/YoShiE.json")
 DEFAULT_TYPE = "/"                                  # / 或 ?comment=
 TELEGRAM_GROUP_ID = 2751077071                      # 用于构造文件名，可修改
 # ===============================================

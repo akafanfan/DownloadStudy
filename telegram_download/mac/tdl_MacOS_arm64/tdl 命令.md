@@ -1,5 +1,5 @@
 ./tdl login
-
+./tdl --proxy socks5://127.0.0.1:7897 login -T code
 ./tdl --proxy http://127.0.0.1:7890  chat export -c 1813595356 -i 1727712000,1758186249 -o ./jadeuly1.json
 
 

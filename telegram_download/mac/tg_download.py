@@ -125,7 +125,7 @@ if __name__ == "__main__":
     MODEL_NAME = "YoShiE"
     BASE_URL = "https://t.me/laose_p"
     DOWNLOAD_DIR = os.path.abspath("./model/YoShiE/")
-    JSON_FILE_PATH = os.path.abspath("./model/Laosep.json")
+    JSON_FILE_PATH = os.path.abspath("model/YoShiE.json")
     TYPE = '/' # '?comment='：评论 or '/'
     print(f"[配置] 模特名称: {MODEL_NAME}")
     print(f"[配置] 下载目录: {DOWNLOAD_DIR}")

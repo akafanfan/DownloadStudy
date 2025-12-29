@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import random
 from time import sleep
 
 import requests
@@ -10,16 +11,27 @@ from model_download.m3u8Download import download_list
 from urllib3.exceptions import InsecureRequestWarning
 
 url_head = 'https://91md.me'
-
+# 一组常见的真实 User-Agent（更新到 2025 年最新浏览器版本，可自行扩展）
+USER_AGENTS = [
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_6_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:132.0) Gecko/20100101 Firefox/132.0",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 14.6; rv:132.0) Gecko/20100101 Firefox/132.0",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Edg/131.0.0.0",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 18_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1",
+    "Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36",
+]
 
 # def main():
 #     m3u8_list = ['https://t21.cdn2020.com/video/m3u8/2023/01/10/2ab0b007/index.m3u8,糖心Vlog.淫荡女仆随时供给主人中出-米胡桃']
 #     download_list(m3u8_list)
 # %E8%8B%8F%E5%B0%8F%E6%B6%B5.html  苏小涵
 # %E8%89%BE%E7%86%99 艾熙
+# %E6%9D%8E%E8%93%89%E8%93%89.html 李蓉蓉
 def main(page):
-    model_name = '苏小涵'
-    base_url = (url_head + '/index.php/vod/search/page/{}/wd/%E8%8B%8F%E5%B0%8F%E6%B6%B5.html')
+    model_name = '李蓉蓉'
+    base_url = (url_head + '/index.php/vod/search/page/{}/wd/%E6%9D%8E%E8%93%89%E8%93%89.html')
 
     url = base_url.format(page)
     print(f"\n正在采集第 {page} 页: {url}")
@@ -30,7 +42,7 @@ def main(page):
     # 如果当前页没有内容，结束采集
     if not playlist:
         print(f"第 {page} 页无内容，所有页面采集完毕，程序结束。")
-
+    time.sleep(2)  # 可根据实际情况调整为 1~5 秒
     # 生成当前页的 m3u8 列表
     m3u8_list = create_m3u8_list(playlist)
     print(f"第 {page} 页 - m3u8_list: {m3u8_list}")
@@ -48,7 +60,7 @@ def main(page):
         print(f"第 {page} 页没有可下载的 m3u8 链接。")
 
     # 翻到下一页
-    page += 1
+    # page += 1
 
     # 建议保留延时，防止请求过快被网站屏蔽
     # time.sleep(2)  # 可根据实际情况调整为 1~5 秒
@@ -93,15 +105,17 @@ def get_playlist(url):
 
 def create_m3u8_list(playlist):
     res_list = []
+    print(f"开始获取m3u8链接，共 {len(playlist)} 个视频")
     for i, url in enumerate(playlist):
         print(i + 1, " 开始获取m3u8链接 ", url)
         tmp = url.split('+')
         title = tmp[0]
-        # sleep(2)  # 如果需要可以保留
+        sleep(5)  # 如果需要可以保留
         m3u8 = get_old_video_m3u8(tmp[1])
-
+        # m3u8 = new_get_video_m3u8(tmp[1])
         if m3u8:  # 如果 m3u8 不为 None 且不为空字符串
             res_list.append(m3u8 + ',' + title)
+            print(f"第 {i + 1} 个视频 - {title} 的m3u8 获取成功：{m3u8}")
         else:
             print(f"警告: 获取失败，跳过视频 - {title} ({tmp[1]})")
 
@@ -133,6 +147,7 @@ def get_old_video_m3u8(url):
             m3u8_url = parse_m3u8(script_content)
             break
             # m3u8_urls.append(m3u8_url)
+    sleep(5)  # 如果需要可以保留
     return m3u8_url
 
 
@@ -159,4 +174,6 @@ def parse_m3u8(script_content):
 
 if __name__ == '__main__':
     # main(1)
-    get_old_video_m3u8('https://cn.pornhub.com/view_video.php?viewkey=680d282cc8610')
+    list = ['制服诱惑想要好成绩只好跟老师-李蓉蓉+https://91md.me/index.php/vod/play/id/29802/sid/1/nid/1.html', '性感兔女郎服装真实的高潮呈现-李蓉蓉+https://91md.me/index.php/vod/play/id/29750/sid/1/nid/1.html', '红色性感睡衣御姐风-李蓉蓉+https://91md.me/index.php/vod/play/id/29730/sid/1/nid/1.html', '蓉蓉我準备好一起过圣诞节了-李蓉蓉+https://91md.me/index.php/vod/play/id/29692/sid/1/nid/1.html', '喜欢一早有人吃吃吗-李蓉蓉+https://91md.me/index.php/vod/play/id/29658/sid/1/nid/1.html', '居家蕩妇超薄纱透视旗袍-李蓉蓉+https://91md.me/index.php/vod/play/id/29576/sid/1/nid/1.html', '鱿鱼游戏COSPLAY稍息立正没有我的允许不准射-李蓉蓉+https://91md.me/index.php/vod/play/id/29538/sid/1/nid/1.html', '温泉泡汤爱爱-李蓉蓉+https://91md.me/index.php/vod/play/id/29496/sid/1/nid/1.html', '居家系列眼镜御姐跳蛋玩弄无套内射-李蓉蓉+https://91md.me/index.php/vod/play/id/29456/sid/1/nid/1.html', '激烈到坠落床底-李蓉蓉+https://91md.me/index.php/vod/play/id/29412/sid/1/nid/1.html', '刚洗完澡被站着后入坏坏了-李蓉蓉+https://91md.me/index.php/vod/play/id/29392/sid/1/nid/1.html', '特别企划圣诞快乐Fcup巨乳姊姊口爆吞精-李蓉蓉+https://91md.me/index.php/vod/play/id/29322/sid/1/nid/1.html', '参加完表妹的婚礼回家被男友内射-李蓉蓉+https://91md.me/index.php/vod/play/id/29281/sid/1/nid/1.html', '使用玩具阴蒂和阴道双重刺激受不了身体自己扭动连续高潮-李蓉蓉+https://91md.me/index.php/vod/play/id/29241/sid/1/nid/1.html', '天使的诱惑性感睡衣无套内射-李蓉蓉+https://91md.me/index.php/vod/play/id/29221/sid/1/nid/1.html', '发春警告有时候突然就很湿很湿好想要想要塞满灌满阿-李蓉蓉+https://91md.me/index.php/vod/play/id/29177/sid/1/nid/1.html', '喝醉了被硬上你会特别兴奋吗-李蓉蓉+https://91md.me/index.php/vod/play/id/29109/sid/1/nid/1.html', 'POV居家系列特写内射露出-李蓉蓉+https://91md.me/index.php/vod/play/id/29077/sid/1/nid/1.html', '豹纹主题性爱含第一人称视角-李蓉蓉+https://91md.me/index.php/vod/play/id/29034/sid/1/nid/1.html', '阴蒂一直被玩弄真的很舒服第一人称视角无套内射-李蓉蓉+https://91md.me/index.php/vod/play/id/28991/sid/1/nid/1.html', 'CK的诱惑眼镜御姐色吗-李蓉蓉+https://91md.me/index.php/vod/play/id/28977/sid/1/nid/1.html', 'OL下班自慰个不停想要棒棒-李蓉蓉+https://91md.me/index.php/vod/play/id/28913/sid/1/nid/1.html', '明明只是约跑减肥怎么还是跑到床上了啦但是他真的好大被塞得好满最后又被内射到最深处-李蓉蓉+https://91md.me/index.php/vod/play/id/28892/sid/1/nid/1.html', '好色叔叔对我伸出魔爪来一炮吧-李蓉蓉+https://91md.me/index.php/vod/play/id/28839/sid/1/nid/1.html']
+    create_m3u8_list(list)
+    # get_old_video_m3u8('https://cn.pornhub.com/view_video.php?viewkey=680d282cc8610')
