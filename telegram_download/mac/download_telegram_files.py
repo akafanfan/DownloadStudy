@@ -7,7 +7,7 @@ import time
 # ==================== 默认配置 ====================
 DEFAULT_TDL_PATH = "./tdl_MacOS_arm64/tdl"          # tdl 可执行文件路径
 DEFAULT_PROXY = "socks5://127.0.0.1:7897"           # 代理
-DEFAULT_MODEL_NAME = "YoShiE"
+DEFAULT_MODEL_NAME = None
 DEFAULT_BASE_URL = "https://t.me/laose_p"
 DEFAULT_DOWNLOAD_DIR = os.path.abspath("./model/YoShiE/")
 DEFAULT_JSON_PATH = os.path.abspath("model/YoShiE.json")
@@ -73,6 +73,8 @@ def download_telegram_files(model_name: str, base_url: str, download_dir: str, j
             continue
 
         original_file = message.get('file', '')
+        text = message.get('text', '')  # 获取text内容
+
         if not original_file:
             print(f"[跳过] 消息ID {message_id} 无文件名")
             skipped_count += 1
@@ -81,12 +83,18 @@ def download_telegram_files(model_name: str, base_url: str, download_dir: str, j
         print("\n" + "=" * 50)
         print(f"[进度] {index}/{total_messages} | 消息ID: {message_id}")
         print(f"[文件] 原始文件名: {original_file}")
+        if text:  # 如果有text内容，也打印出来
+            print(f"[文本] 内容: {text}")
 
-        # 过滤模型名称
-        if model_name.lower() not in original_file.lower():  # 不区分大小写匹配
-            print(f"[跳过] 文件名不包含 '{model_name}'，跳过")
-            skipped_count += 1
-            continue
+
+        if model_name:
+            # 过滤模型名称 - 检查文件名和文本内容
+            file_match = model_name.lower() in original_file.lower()
+            text_match = model_name.lower() in text.lower()
+            if not (file_match or text_match):  # 文件名和文本都不包含model_name时才跳过
+                print(f"[跳过] 文件名不包含 '{model_name}'，跳过")
+                skipped_count += 1
+                continue
 
         # 构造最终文件名
         file_name = f"{TELEGRAM_GROUP_ID}_{message_id}_{original_file}"

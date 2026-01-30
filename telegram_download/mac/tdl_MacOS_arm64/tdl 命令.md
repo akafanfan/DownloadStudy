@@ -33,3 +33,16 @@ https://t.me/laose_p
 1761926400 - 1765728000
 
 ./tdl --proxy  socks5://127.0.0.1:7897 chat export -c 2751077071 -i 1761926400,1765728000 --with-content -o /Users/yangfan/PycharmProjects/DownloadStudy/telegram_download/mac/model/Laosep.json
+
+luckydog77
+https://t.me/ceqing12
+2492784420
+2025-2-15 - 2025-12-16
+
+1712841500
+https://t.me/sheshewu
+2024-7-18   2024-8-22
+
+xixi
+https://t.me/c/2243736179
+2243736179
