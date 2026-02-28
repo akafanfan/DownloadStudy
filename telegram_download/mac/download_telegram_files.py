@@ -145,7 +145,7 @@ def download_telegram_files(model_name: str, base_url: str, download_dir: str, j
             return_code = process.returncode
             download_time = time.time() - start_time
 
-            if return_code == 0 and os.path.exists(full_path):
+            if os.path.exists(full_path):
                 print(f"[成功] 下载完成 → {file_name}")
                 print(f"[统计] 耗时: {download_time:.2f} 秒")
                 downloaded_count += 1
