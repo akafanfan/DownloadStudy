@@ -1,21 +1,13 @@
 # -*- coding: utf-8 -*-
-import os
-import random
 import subprocess
 from pathlib import Path
-from time import sleep
-
 import requests
 from bs4 import BeautifulSoup, Tag
-import re
-import json
 import time  # 用于延时，避免请求过快
-from model_download.m3u8Download import download_list
-from urllib3.exceptions import InsecureRequestWarning
 from urllib.parse import urljoin
 
 
-video_head = 'https://taiav.com/cn/movie/'
+video_head = 'https://taiav.com'
 url_head = 'https://taiav.com/cn/tag/'
 # 一组常见的真实 User-Agent（更新到 2025 年最新浏览器版本，可自行扩展）
 USER_AGENTS = [
@@ -32,7 +24,8 @@ USER_AGENTS = [
 
 #https://taiav.com/cn/tag/%E5%A7%9A%E5%AE%9B%E5%84%BF?page=1
 def main(page):
-    # https://taiav.com/cn/tag/%E5%87%AF%E8%92%82?page=1
+
+    # model_name = '%E5%A7%9A%E5%AE%9B%E5%84%BF'
     model_name = '%E5%87%AF%E8%92%82'
     base_url = (url_head + model_name+'?page={}')
 
@@ -45,7 +38,7 @@ def main(page):
     # 如果当前页没有内容，结束采集
     if not playlist:
         print(f"第 {page} 页无内容，所有页面采集完毕，程序结束。")
-    time.sleep(2)  # 可根据实际情况调整为 1~5 秒
+
     # 生成当前页的 m3u8 列表
     m3u8_list = create_m3u8_list(playlist)
     print(f"第 {page} 页 - m3u8_list: {m3u8_list}")
@@ -61,12 +54,8 @@ def main(page):
         print(f"第 {page} 页下载任务已提交/完成。")
     else:
         print(f"第 {page} 页没有可下载的 m3u8 链接。")
-
-    # 翻到下一页
-    # page += 1
-
     # 建议保留延时，防止请求过快被网站屏蔽
-    # time.sleep(2)  # 可根据实际情况调整为 1~5 秒
+    time.sleep(5)  # 可根据实际情况调整为 1~5 秒
 
 
 def get_playlist(url: str) :
@@ -118,11 +107,15 @@ def create_m3u8_list(playlist):
         print(i + 1, " 开始获取m3u8链接 ", url)
         tmp = url.split('+')
         title = tmp[1]
-        # sleep(5)  # 如果需要可以保留
-        # m3u8 = get_video_m3u8(tmp[0])
-        if m3u8:  # 如果 m3u8 不为 None 且不为空字符串
-            res_list.append(m3u8 + ',' + title)
-            print(f"第 {i + 1} 个视频 - {title} 的m3u8 获取成功：{m3u8}")
+        m3u8 = get_taiav_m3u8(tmp[0], quality="1280")
+        if m3u8:
+            print("当前 m3u8:", m3u8)
+            download_taiav_video(
+                m3u8_url=m3u8,
+                output_file=fr"D:\Documents\GitHub\DownloadStudy\tai_download\model\{title}.mp4",
+                threads=4,
+                http_proxy="http://127.0.0.1:7897"
+            )
         else:
             print(f"警告: 获取失败，跳过视频 - {title} ({tmp[1]})")
 
@@ -166,117 +159,112 @@ def get_taiav_m3u8(movie_url: str, quality: str = "1280") -> str | None:
     except Exception as e:
         print(f"请求失败: {e}")
         return None
-
-
 def download_taiav_video(
-        m3u8_url: str,
-        output_file: str,  # ← 必填：完整的输出文件名（含路径和扩展名）
-        quality: str = "1280",
-        ffmpeg_path: str = "ffmpeg",
-        extra_ffmpeg_args: list = None,
-        timeout_get_m3u8: int = 15,
-        show_progress: bool = True,
-        http_proxy="http://127.0.0.1:7897",   # 改成你的代理端口
-        https_proxy="http://127.0.0.1:7897"
+    m3u8_url: str,
+    output_file: str,
+    threads: int = 16,
+    nm3u8_path: str = r"F:\N_m3u8\N_m3u8DL-RE_v0.5.1-beta_win-NT6.0-x86_20251029\N_m3u8DL-RE.exe",  # 如果不传，默认用相对路径
+    http_proxy: str = "http://127.0.0.1:7897",
+    show_command: bool = True
 ) -> bool:
     """
-    参数:
-        m3u8_url         : 视频m3u8_url链接
-        output_file       : 输出文件名（例如 "D:/videos/姚宛儿_浴室.mp4"），必须包含 .mp4 扩展名
-        quality           : 分辨率 "1280"(默认720p) 或 "1920"等
-        ffmpeg_path       : ffmpeg 可执行文件路径（默认使用系统 PATH 中的 ffmpeg）
-        extra_ffmpeg_args : 额外 ffmpeg 参数，例如 ["-ss", "00:01:00", "-t", "00:10:00"]
-        timeout_get_m3u8  : 获取 m3u8 的超时秒数
-        show_progress     : 是否打印进度信息
-
-    返回:
-        bool: 下载是否成功
+    使用 N_m3u8DL-RE v0.5.1-beta 下载 m3u8
     """
+    if not Path(nm3u8_path).is_file():
+        print(f"错误：找不到 N_m3u8DL-RE.exe → {nm3u8_path}")
+        return False
+
     if not output_file.lower().endswith(('.mp4', '.mkv', '.ts')):
         print("警告：建议输出文件以 .mp4 结尾")
 
     output_path = Path(output_file)
-    output_path.parent.mkdir(parents=True, exist_ok=True)  # 自动创建目录
+    output_path.parent.mkdir(parents=True, exist_ok=True)
 
     print(f"目标保存路径: {output_path.absolute()}")
 
-    # 1. 获取 m3u8
-    # 2. 构建 ffmpeg 命令
+    # 构建命令（适配 v0.5.1-beta 参数）
     cmd = [
-        ffmpeg_path,
-        "-headers", f"Referer: {m3u8_url}\r\n",
-        "-i", m3u8_url,
-        "-c", "copy",
-        "-bsf:a", "aac_adtstoasc",
-        "-y"  # 覆盖已有文件
+        nm3u8_path,
+        m3u8_url,
+        "--save-name", output_path.stem,              # 文件名（不带扩展名）
+        "--save-dir", str(output_path.parent),        # 保存目录
+        "--tmp-dir", str(output_path.parent / "tmp"), # 临时目录
+        "--thread-count", str(threads),               # 多线程数
+        "--auto-subtitle-fix",                        # 自动修复字幕
+        "--check-segments-count"                      # 检查分段完整性
     ]
 
-    if extra_ffmpeg_args:
-        cmd.extend(extra_ffmpeg_args)
+    # headers（用 --headers "Referer:xxx|User-Agent:xxx" 格式）
+    headers_str = (
+        f"Referer: {m3u8_url}|"
+        f"User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+    )
+    cmd.extend(["--header", headers_str])
+    cmd.extend(["--download-retry-count", "10"])  # 每个分段重试 10 次
+    cmd.extend(["--http-request-timeout", "30"])  # 每个请求超时 30 秒
+    # 代理
+    if http_proxy:
+        cmd.extend(["--custom-proxy", http_proxy])
 
-    cmd.append(str(output_path))
-
-    if show_progress:
-        print("即将执行的 ffmpeg 命令：")
+    if show_command:
+        print("\n即将执行 N_m3u8DL-RE v0.5.1-beta 下载命令：")
         print(" ".join(cmd))
+        print("\n" + "="*80)
 
-    # 3. 执行下载（使用 Popen 实时读取输出，避免“没反应”）
     try:
         start_time = time.time()
 
-        env = os.environ.copy()
-        if http_proxy:
-            env["http_proxy"] = http_proxy
-            env["HTTP_PROXY"] = http_proxy
-        if https_proxy:
-            env["https_proxy"] = https_proxy
-            env["HTTPS_PROXY"] = https_proxy
-
-        # 关键修复：使用 utf-8 编码 + errors='replace' 处理非法字符
         process = subprocess.Popen(
             cmd,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,
             encoding='utf-8',
-            errors='replace',  # ← 核心：替换非法字符，避免 GBK 解码崩溃
+            errors='replace',
             bufsize=1,
-            universal_newlines=True,
-            env=env
+            universal_newlines=True
         )
 
-        # 实时打印输出
         for line in iter(process.stdout.readline, ''):
             print(line.strip())
 
         return_code = process.wait()
-
         elapsed = time.time() - start_time
 
         if return_code == 0:
-            print(f"\n下载完成！用时 {elapsed:.1f} 秒")
-            print(f"文件已保存至: {output_path.absolute()}")
+            print("\n" + "="*80)
+            print(f"下载完成！用时 {elapsed:.1f} 秒")
+            print(f"文件保存至: {output_path.with_suffix('.mp4').absolute()}")
             return True
         else:
-            print(f"\nffmpeg 异常结束，返回码: {return_code}")
+            print(f"\n异常结束，返回码: {return_code}")
             return False
 
     except FileNotFoundError:
-        print(f"\n错误：找不到 ffmpeg → {ffmpeg_path}")
+        print(f"\n找不到 exe 文件：{nm3u8_path}")
         return False
-
     except Exception as e:
         print(f"\n意外错误: {e}")
         return False
 
-if __name__ == "__main__":
-    url = "https://taiav.com/cn/movie/683d16c08bb62c0d8cc5b5aa"
-    m3u8 = get_taiav_m3u8(url, quality="1280")
-    if m3u8:
-        print("当前 m3u8:", m3u8)
-        # 示例输出可能像：
-        # https://taiav
-    success = download_taiav_video(
-        m3u8_url=m3u8,
-        output_file="D:/Documents/GitHub/DownloadStudy/tai_download/model/姚宛儿_浴室尿失禁.mp4"
-    )
+if __name__ == '__main__':
+    for i in range(1, 10):  # 假设循环5次，从1到5
+        main(i)
+    # list =q
+    # create_m3u8_list(list)
+    # get_old_video_m3u8('https://cn.pornhub.com/view_video.php?viewkey=680d282cc8610')
+    # n+=1
+
+# if __name__ == "__main__":
+#     url = "https://taiav.com/cn/movie/683d16c08bb62c0d8cc5b5aa"
+#     m3u8 = get_taiav_m3u8(url, quality="1280")
+#     if m3u8:
+#         print("当前 m3u8:", m3u8)
+#         # 示例输出可能像：
+#         # https://taiav
+#     download_taiav_video(
+#         m3u8_url=m3u8,
+#         output_file=r"D:\Documents\GitHub\DownloadStudy\tai_download\model\姚宛儿_浴室尿失禁.mp4",
+#         threads=4,
+#         http_proxy="http://127.0.0.1:7897"
+#     )

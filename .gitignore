@@ -1,2 +1,6 @@
 
 .idea/*
+/tai_download/model/*
+**/log/**
+**/logs/**
+**/*.log/**
