@@ -22,7 +22,7 @@ headers = {
     'Accept-Language': 'Zh-CN, zh;q=0.9, en-gb;q=0.8, en;q=0.7'
 }
 
-path = './'
+path = 'D:\\x下载\\download\\'
 
 
 # 红色：\033[31m
@@ -128,10 +128,11 @@ def merge_to_mp4(dest_file, source_path, ts_list):
 
 def ready_download(model_name, url, title, page):
     # 设置下载路径
-    down_path = path + model_name + '/' + str(page) + '/' + title
+    down_path = path + model_name + '\\' + str(page) + '\\' + title
+    video_file = down_path + '.mp4'
     # 判断文件是否存在
-    if os.path.exists(down_path + '.mp4'):
-        print('\033[31m' + '文件' + down_path + '已经存在不用重复下载:' + '\033[0m')
+    if os.path.exists(video_file):
+        print('\033[31m' + '文件' + video_file + ' 已经存在不用重复下载:' + '\033[0m')
         return
 
     # 禁止安全谁提示信息
@@ -168,7 +169,7 @@ def ready_download(model_name, url, title, page):
             ts_list.append(filename.uri)
             # 开启线程池
     print('\033[34m' + '>>>>>>TS分片数' + str(len(ts_list)) + '<<<<<<' + '\033[0m')
-    max_threads = 16  # 你可以改成 8、10、16、20、32 等，根据你的网速和机器性能调整
+    max_threads = 32  # 你可以改成 8、10、16、20、32 等，根据你的网速和机器性能调整
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_threads) as executor:
         obj_list = []
         begin = time.time()  # 记录线程开始时间
@@ -179,7 +180,8 @@ def ready_download(model_name, url, title, page):
         for future in as_completed(obj_list):
             data = future.result()
             print('\033[32m' 'completed result:' + '\033[0m', data)
-        video = merge_to_mp4(path + title + '.mp4', down_path, ts_list)  # 合并ts文件
+        final_video_path = os.path.dirname(down_path) + os.sep + title + '.mp4'
+        video = merge_to_mp4(final_video_path, down_path, ts_list)
         # 创建视频缩略图
         # create_new_video_with_thumbnails(video)
         times = time.time() - begin  # 记录线程完成时间
@@ -189,6 +191,8 @@ def ready_download(model_name, url, title, page):
 
 def download_list(model_name, m3u8_list, page):
     i = 1
+    m3u8_list
+    print(f'准备下视频数量{len(m3u8_list)}')
     for _ in m3u8_list:
         info = _.split(',')
         url = info[0]
@@ -201,9 +205,14 @@ def download_list(model_name, m3u8_list, page):
 
 # 使用示例
 def main():
-    m3u8_list = ['https://t33.cdn2020.com/video/m3u8/2025/12/25/538e7407/index.m3u8,制服诱惑想要好成绩只好跟老师-李蓉蓉', 'https://t33.cdn2020.com/video/m3u8/2025/12/24/3da2f84d/index.m3u8,性感兔女郎服装真实的高潮呈现-李蓉蓉', 'https://t33.cdn2020.com/video/m3u8/2025/12/23/55eaa401/index.m3u8,红色性感睡衣御姐风-李蓉蓉', 'https://t33.cdn2020.com/video/m3u8/2025/12/22/6fafb2c5/index.m3u8,蓉蓉我準备好一起过圣诞节了-李蓉蓉', 'https://t33.cdn2020.com/video/m3u8/2025/12/21/d0b67124/index.m3u8,喜欢一早有人吃吃吗-李蓉蓉', 'https://t33.cdn2020.com/video/m3u8/2025/12/20/ebb86c4e/index.m3u8,居家蕩妇超薄纱透视旗袍-李蓉蓉', 'https://t33.cdn2020.com/video/m3u8/2025/12/19/ae56a222/index.m3u8,鱿鱼游戏COSPLAY稍息立正没有我的允许不准射-李蓉蓉', 'https://t33.cdn2020.com/video/m3u8/2025/12/18/ab8ecdc4/index.m3u8,温泉泡汤爱爱-李蓉蓉', 'https://t33.cdn2020.com/video/m3u8/2025/12/17/77e4648a/index.m3u8,居家系列眼镜御姐跳蛋玩弄无套内射-李蓉蓉', 'https://t33.cdn2020.com/video/m3u8/2025/12/16/3f3f797e/index.m3u8,激烈到坠落床底-李蓉蓉', 'https://t33.cdn2020.com/video/m3u8/2025/12/15/18afd64f/index.m3u8,刚洗完澡被站着后入坏坏了-李蓉蓉', 'https://t33.cdn2020.com/video/m3u8/2025/12/14/b2b8a61b/index.m3u8,特别企划圣诞快乐Fcup巨乳姊姊口爆吞精-李蓉蓉', 'https://t33.cdn2020.com/video/m3u8/2025/12/13/c14a2b65/index.m3u8,参加完表妹的婚礼回家被男友内射-李蓉蓉', 'https://t33.cdn2020.com/video/m3u8/2025/12/12/c530b3d3/index.m3u8,使用玩具阴蒂和阴道双重刺激受不了身体自己扭动连续高潮-李蓉蓉', 'https://t33.cdn2020.com/video/m3u8/2025/12/11/a8fffa74/index.m3u8,天使的诱惑性感睡衣无套内射-李蓉蓉', 'https://t33.cdn2020.com/video/m3u8/2025/12/10/7071840e/index.m3u8,发春警告有时候突然就很湿很湿好想要想要塞满灌满阿-李蓉蓉', 'https://t33.cdn2020.com/video/m3u8/2025/12/09/a41c0c1c/index.m3u8,喝醉了被硬上你会特别兴奋吗-李蓉蓉', 'https://t33.cdn2020.com/video/m3u8/2025/12/08/c7afaf45/index.m3u8,POV居家系列特写内射露出-李蓉蓉', 'https://t33.cdn2020.com/video/m3u8/2025/12/07/94a2959c/index.m3u8,豹纹主题性爱含第一人称视角-李蓉蓉', 'https://t33.cdn2020.com/video/m3u8/2025/12/06/1c2e6693/index.m3u8,阴蒂一直被玩弄真的很舒服第一人称视角无套内射-李蓉蓉', 'https://t33.cdn2020.com/video/m3u8/2025/12/05/de0c3341/index.m3u8,CK的诱惑眼镜御姐色吗-李蓉蓉', 'https://t33.cdn2020.com/video/m3u8/2025/12/04/28b46f9d/index.m3u8,OL下班自慰个不停想要棒棒-李蓉蓉', 'https://t33.cdn2020.com/video/m3u8/2025/12/03/b5a6b844/index.m3u8,明明只是约跑减肥怎么还是跑到床上了啦但是他真的好大被塞得好满最后又被内射到最深处-李蓉蓉', 'https://t33.cdn2020.com/video/m3u8/2025/12/02/93b1d8d9/index.m3u8,好色叔叔对我伸出魔爪来一炮吧-李蓉蓉']
+    m3u8_list = ['我是你的东方小妖精-李蓉蓉+https://91md.me/index.php/vod/play/id/31871/sid/1/nid/1.html', '不良少女-李蓉蓉+https://91md.me/index.php/vod/play/id/31770/sid/1/nid/1.html', '洗香香后的性爱-李蓉蓉+https://91md.me/index.php/vod/play/id/31668/sid/1/nid/1.html', '女僕角色扮演今晚只为你服务的那一刻-李蓉蓉+https://91md.me/index.php/vod/play/id/31646/sid/1/nid/1.html', '吹风机变成吹鸡鸡情境剧-李蓉蓉+https://91md.me/index.php/vod/play/id/31533/sid/1/nid/1.html', '购买鲜花的少妇-李蓉蓉+https://91md.me/index.php/vod/play/id/31342/sid/1/nid/1.html', '居家系列真实疯狂高潮偷拍视角-李蓉蓉+https://91md.me/index.php/vod/play/id/31212/sid/1/nid/1.html', '万众瞩目的黑色丝袜高跟鞋最后射脸-李蓉蓉+https://91md.me/index.php/vod/play/id/31131/sid/1/nid/1.html', '表姊的处男性爱教学-李蓉蓉+https://91md.me/index.php/vod/play/id/30983/sid/1/nid/1.html', '阳台到厨房一段不该太靠近的靠近-李蓉蓉+https://91md.me/index.php/vod/play/id/30858/sid/1/nid/1.html', '温泉会馆-李蓉蓉+https://91md.me/index.php/vod/play/id/30727/sid/1/nid/1.html', '直播做爱完整侧录-李蓉蓉+https://91md.me/index.php/vod/play/id/30541/sid/1/nid/1.html', '不良少女的悲欢剧场-李蓉蓉+https://91md.me/index.php/vod/play/id/30511/sid/1/nid/1.html', '真实性爱连续高潮八次-李蓉蓉+https://91md.me/index.php/vod/play/id/30440/sid/1/nid/1.html', '性感正妹OL下班下厨被强上-李蓉蓉+https://91md.me/index.php/vod/play/id/30343/sid/1/nid/1.html', '认真手淫教学但人很不正经-李蓉蓉+https://91md.me/index.php/vod/play/id/30279/sid/1/nid/1.html', '高跟鞋站着后入在镜子前被干到高潮还内射-李蓉蓉+https://91md.me/index.php/vod/play/id/30253/sid/1/nid/1.html', '饥渴后妈与儿的激情-李蓉蓉+https://91md.me/index.php/vod/play/id/29988/sid/1/nid/1.html', '制服诱惑想要好成绩只好跟老师-李蓉蓉+https://91md.me/index.php/vod/play/id/29802/sid/1/nid/1.html', '性感兔女郎服装真实的高潮呈现-李蓉蓉+https://91md.me/index.php/vod/play/id/29750/sid/1/nid/1.html', '红色性感睡衣御姐风-李蓉蓉+https://91md.me/index.php/vod/play/id/29730/sid/1/nid/1.html', '蓉蓉我準备好一起过圣诞节了-李蓉蓉+https://91md.me/index.php/vod/play/id/29692/sid/1/nid/1.html', '喜欢一早有人吃吃吗-李蓉蓉+https://91md.me/index.php/vod/play/id/29658/sid/1/nid/1.html', '居家蕩妇超薄纱透视旗袍-李蓉蓉+https://91md.me/index.php/vod/play/id/29576/sid/1/nid/1.html']
     download_list('李蓉蓉',m3u8_list,1)
 
-
 if __name__ == "__main__":
-    main()
+    i = 1
+    while i <= 5:
+        print(f'>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+        print(f'第{i}次运行下载')
+        print(f'>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+        main()
+        i += 1
