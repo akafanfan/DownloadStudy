@@ -1,0 +1,40 @@
+# config.yml
+twitter:
+  path: "./download"
+  folderize: no
+  mode: post
+  naming: '{create}_{desc}_{tweet_id}'
+  cookie: 'auth_token=f291960b73f8dd6e71951cc5fea281f7256df2cb;ct0=991a6901149fd35558c1db60fd375cf9749e55f46776e134ba6e49ad4bf86a89098b558c96407d31664cffe3d65817ea7a9f42f7f52134bdc198b6a0f474c55e023892bc6732fdc8f3dfbb360df75992;twid=u%3D742343415791161344; lang=zh-cn'
+  x_csrf_token: "991a6901149fd35558c1db60fd375cf9749e55f46776e134ba6e49ad4bf86a89098b558c96407d31664cffe3d65817ea7a9f42f7f52134bdc198b6a0f474c55e023892bc6732fdc8f3dfbb360df75992"
+  interval: all
+  timeout: 10
+  max_retries: 5
+  max_connections: 5
+  max_counts: 0
+  max_tasks: 5
+  page_counts: 20
+  proxies:
+    "http://": "http://127.0.0.1:7897"
+    "https://": "http://127.0.0.1:7897"  # 如果代理不支持 HTTPS，可与 http 相同
+
+
+bark:
+  enable: false
+  key:
+  token:
+  mode: get
+  url: "https://f2.wiki/"
+  retry: 3
+  ringtones: 1
+  icon: https://f2.wiki/f2-logo-with-shadow.png
+  level: active
+  volume: 5
+  call: 0
+  isArchive: 1
+  sound: birdsong
+  autoCopy: 1
+  title: F2
+  body: ""
+  copy: ""
+  group: F2下载统计
+  badge: 1
