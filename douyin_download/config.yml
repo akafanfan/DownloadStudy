@@ -1,48 +1,28 @@
-# config.yml
+f2:
+  enable_bark: false
 douyin:
+  db_path: "./download_records.db"  # 自定义数据库路径
   # 全局下载设置（参考你之前提供的，全部统一在这里）
   cookie: "__ac_referer=__ac_blank; douyin.com; device_web_cpu_core=12; device_web_memory_size=8; enter_pc_once=1; UIFID_TEMP=4a6f79d53a9eb34097631580ea9ea3ff3a17eaf36e45654c72ea19224fc01912c29d9bff3e36612d7da282b5b52eb7395b00a69fe2c0167bc12a8f44eb196ade0e0a640e936b448faee6513fb5cc7db96a58d3fd60d0a7d4874da02f7d7c844ea55e7f16e40c94ae9196e9b3bb72c22f; hevc_supported=true; fpk1=U2FsdGVkX19G2wlnlbXCoiXWA8b//VJNMfMPuSarMC6R52eF3n8BbujKaPT4iEXOxdEqed6evP3Ea3pYtC1vOg==; fpk2=684fac3d8e595845640e507a9122bd55; s_v_web_id=verify_mk5b2p4w_8vCGAglz_yQ7v_4niE_8eAW_45c9YafD9YaX; passport_csrf_token=a28f6b284fc6374766643b016c7ccac8; passport_csrf_token_default=a28f6b284fc6374766643b016c7ccac8; bd_ticket_guard_client_web_domain=2; passport_mfa_token=CjXROm5YRxpEMho452jt1QFgz5zJzGapsaS6%2F5a1BrQVuE3UL1CJbH58cgTWpnxZ8xRxntBm4hpKCjwAAAAAAAAAAAAAT%2B0ZiTr%2BrhQ7U4hiauB2iZJ0aERdxVOtesGVHhVI4UXRRNJfmlJTnwoZ7hUthchl2v4Qnq2GDhj2sdFsIAIiAQP7ws3V; d_ticket=481ab21b589b1d1c638e5673bdd57dc85e794; passport_assist_user=Cjws6mnU1XJP6zpbI6Mxq1Tz32gzvpARnydcY53g1kqeac9VjLPdVsNhUMVceXtOR7NQFc03sV1-jx3xI8IaSgo8AAAAAAAAAAAAAE_txnidq6am-QllSj7fvwS7zDuIGYj-EliSJw4AAWgpLZEZhEZ0-hBbeseqYNl6ynqDENythg4Yia_WVCABIgEDAd5Ttg%3D%3D; n_mh=-tAF7qk-LcS_Fl7_pZXdQEaPg_l92hMfMy_vXWN8uT4; uid_tt=aef04741b1300854606d085570710c87; uid_tt_ss=aef04741b1300854606d085570710c87; sid_tt=019fed122d9a7465c87eab524a83d38f; sessionid=019fed122d9a7465c87eab524a83d38f; sessionid_ss=019fed122d9a7465c87eab524a83d38f; is_staff_user=false; _bd_ticket_crypt_cookie=01ef0ce30455ac2838cb0a77ec03ea7a; __security_mc_1_s_sdk_sign_data_key_web_protect=e7e424c7-4f93-ae36; __security_mc_1_s_sdk_cert_key=583268dd-43e7-8d39; __security_mc_1_s_sdk_crypt_sdk=f33c5fd1-4e93-bf0c; __security_server_data_status=1; login_time=1767868227826; UIFID=4a6f79d53a9eb34097631580ea9ea3ff3a17eaf36e45654c72ea19224fc01912c29d9bff3e36612d7da282b5b52eb7395b00a69fe2c0167bc12a8f44eb196ade14184159ed43f90ce29ffd83f59acd8f9dcff625f7eb4fa1de848a21c5b030193c0803997a76f6f3a5697c60f9a51a43af783aa6e2d527099804aca60b18a6b50a2c708f118efed9357c6a91a13eee4124f0fbc854e4354a99caa0f815476fd6153ec95df91412f352235bcf860bcf94; sid_guard=019fed122d9a7465c87eab524a83d38f%7C1770962946%7C5184000%7CTue%2C+14-Apr-2026+06%3A09%3A06+GMT; session_tlb_tag=sttt%7C19%7CAZ_tEi2adGXIfqtSSoPTj__________pQAnDVzr-eYf8eLUkFGs2NF5vUDHAKss6k5PHcOnFgDM%3D; sid_ucp_v1=1.0.0-KGVlZmQ3ZTNjZTcyNGQwZTgyZDQyOTBhOWE5MzJhOGYyYmJmM2ZjODUKHwjn8PbtlwIQgoC7zAYY7zEgDDD6j4zQBTgHQPQHSAQaAmxmIiAwMTlmZWQxMjJkOWE3NDY1Yzg3ZWFiNTI0YTgzZDM4Zg; ssid_ucp_v1=1.0.0-KGVlZmQ3ZTNjZTcyNGQwZTgyZDQyOTBhOWE5MzJhOGYyYmJmM2ZjODUKHwjn8PbtlwIQgoC7zAYY7zEgDDD6j4zQBTgHQPQHSAQaAmxmIiAwMTlmZWQxMjJkOWE3NDY1Yzg3ZWFiNTI0YTgzZDM4Zg; my_rd=2; dy_swidth=1800; dy_sheight=1169; is_dash_user=1; publish_badge_show_info=%220%2C0%2C0%2C1772174468675%22; __ac_signature=_02B4Z6wo00f01JZbHhQAAIDCpc7oVMDaoeyWexqAAEw521; strategyABtestKey=%221772244781.826%22; SelfTabRedDotControl=%5B%7B%22id%22%3A%227577778284943902720%22%2C%22u%22%3A96%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%227582953096754497579%22%2C%22u%22%3A91%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%227400753818725517312%22%2C%22u%22%3A8%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%227463804394544072745%22%2C%22u%22%3A18%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%226994086597562107941%22%2C%22u%22%3A9%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%227327630025904097306%22%2C%22u%22%3A278%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%227149500134621972511%22%2C%22u%22%3A20%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%226814280273610409991%22%2C%22u%22%3A26%2C%22c%22%3A0%7D%5D; ttwid=1%7ChEOV69jlphUalby6XZxFApb0axsNBFgOtcjUByFvDjU%7C1772244782%7C15f3a157fc8f2b38147d070fa2c5df2e18d67d1049360c7110bcdc9f00252c6a; FOLLOW_NUMBER_YELLOW_POINT_INFO=%22MS4wLjABAAAA_Kkth05FIRqJX3J7QGNI70UitzfWIuM1Zv_978aw7qA%2F1772294400000%2F0%2F1772244842896%2F0%22; __ac_nonce=069a250a100c1e44adbe6; stream_recommend_feed_params=%22%7B%5C%22cookie_enabled%5C%22%3Atrue%2C%5C%22screen_width%5C%22%3A1800%2C%5C%22screen_height%5C%22%3A1169%2C%5C%22browser_online%5C%22%3Atrue%2C%5C%22cpu_core_num%5C%22%3A12%2C%5C%22device_memory%5C%22%3A8%2C%5C%22downlink%5C%22%3A0.45%2C%5C%22effective_type%5C%22%3A%5C%224g%5C%22%2C%5C%22round_trip_time%5C%22%3A200%7D%22; home_can_add_dy_2_desktop=%221%22; bd_ticket_guard_client_data=eyJiZC10aWNrZXQtZ3VhcmQtdmVyc2lvbiI6MiwiYmQtdGlja2V0LWd1YXJkLWl0ZXJhdGlvbi12ZXJzaW9uIjoxLCJiZC10aWNrZXQtZ3VhcmQtcmVlLXB1YmxpYy1rZXkiOiJCRHJrUnNCR3RzSGJJZmtyZmQzVmFTR28rV0MwREVaMHZTdUJPK0tpdkc1NG1GR3FhYzR3LzdwWG52NEJxUHZNZGpNSnIwdDRmU1hBaHNXNlEvL0E4SWs9IiwiYmQtdGlja2V0LWd1YXJkLXdlYi12ZXJzaW9uIjoyfQ%3D%3D; FOLLOW_LIVE_POINT_INFO=%22MS4wLjABAAAA_Kkth05FIRqJX3J7QGNI70UitzfWIuM1Zv_978aw7qA%2F1772294400000%2F0%2F1772245737247%2F0%22; odin_tt=735aa27f960525cbad665f29e1f255a1672f9f068b3cef2b8e56078485e1b7085a2955ff5b3a82b2d051daaeca9723b9c47c99d297baaae96e3437c7802360cd; biz_trace_id=939bb00f; sdk_source_info=7e276470716a68645a606960273f276364697660272927676c715a6d6069756077273f276364697660272927666d776a68605a607d71606b766c6a6b5a7666776c7571273f275e58272927666a6b766a69605a696c6061273f27636469766027292762696a6764695a7364776c6467696076273f275e582729277672715a646971273f27717770602729277f6b5a666475273f2763646976602729276d6a6e5a6b6a716c273f2763646976602729276c6b6f5a7f6367273f27636469766027292771273f2737363d36313230313737323234272927676c715a75776a716a666a69273f2763646976602778; bit_env=U-cX6vo5jSEGS4PV7EXlp-j1gIwjEUFnf34YSSCAy77JV5jiOjRqiGtU8Mx5TlMQx0Q4nebTu-77q-K_nUIwTK9WtcBfiW_WSGcCV6PGDh7bjOZDGY0_dmy7M0mH8jFpM9-MdqboTXq0_8kRNiSVh40Ju6fOprJSxsjG4tQv0xk6MVwSiHQwJdN-bdP1f2dlH4EbaPNRUSlZAzeH_d7d_rS8mrllidW4mii--NegBBg1ERF_qMDEQhMgHf3K776MNwNH-H5TDOk8bj6Q7yDA0YuSVOZWbeidT0kX0_nknxxt-0YqyoYzF107pRxkEJLkg1bPdRXHT2pPhNUBKzi7BGMwndc9puv7xEJdHWVVjBLTjaJQOT471T08lWv-toKeGLEwbTaJ4oM6SPQ_SxdItVJS07gOB_jr3vsWLF4ys9PZIFLNpinl-D6GL_7vvzZQrJsGjmDYcT0SKhdgF7mY3RY688SWIJ4tPMlE8QvCiAJFu7LAhoWIu-8z4CfWvBeC5Pb3HB5WwGqZWGk8Zf-Igi7LzMFj43AxuhmrdoM8S_o%3D; gulu_source_res=eyJwX2luIjoiYWNkYjc2M2Q4ZTJiMDUzNDY5NGUzNjE0OThjYzQxODMwMWFlZGJlNmRhZmYxYzNhZmM0ZTdlNzI4ZWM1MjZkMyJ9; passport_auth_mix_state=b6f82cxa6u5k3f6zqlw4r01q4vkvcesc; bd_ticket_guard_client_data_v2=eyJyZWVfcHVibGljX2tleSI6IkJEcmtSc0JHdHNIYklma3JmZDNWYVNHbytXQzBERVowdlN1Qk8rS2l2RzU0bUZHcWFjNHcvN3BYbnY0QnFQdk1kak1KcjB0NGZTWEFoc1c2US8vQThJaz0iLCJ0c19zaWduIjoidHMuMi43ZDU3ZDhjNmYyOTg5OTAyMGIxNDU5ZDRhMzRlZjk1YTc2YTM1MWY2OGY1MzQ1ZTJhNDBiZjdiNzQ1NzMzYTczYzRmYmU4N2QyMzE5Y2YwNTMxODYyNGNlZGExNDkxMWNhNDA2ZGVkYmViZWRkYjJlMzBmY2U4ZDRmYTAyNTc1ZCIsInJlcV9jb250ZW50Ijoic2VjX3RzIiwicmVxX3NpZ24iOiJheDh4QlBBQlcrUFhKeWF1K2NPalhVUmp2Tyt0RkJsdVpjRHVPTjhvQW9FPSIsInNlY190cyI6IiMxY1FSNHRGeHpPb1lPWDZhMEU4SnFoVjdKZUZnRGUzOGl1R0xVVnVRNGpTVVNYVTdPTHl5djU5ZThHOEcifQ%3D%3D; IsDouyinActive=false"
   mode: post                                 # ← 这里指定 post（下载发布的作品）其他可选值：like（点赞的）、collection（收藏的）、music（收藏音乐）
   path: "./download"
-  folderize: false                           # 建子文件夹
-  naming: '{create}_{desc}_{aweme_id}'       # 命名模板，防重
-  music: false                               # 是否下载原声（可选）
-  cover: false                               # 是否下载封面（可选）
-  lyric: false                               # 是否下载歌词（如果有）
-  interval: all                              # 下载所有（或指定时间范围如 30 天）
+  folderize: false
+  naming: '{create}_{desc}_{aweme_id}'
+  music: false
+  cover: false
+  lyric: false
+  interval: all
   max_connections: 10
   max_tasks: 10
   timeout: 10
   max_retries: 3
+  quality: "original"
   # ================== 用户列表 ==================
   users:
-    - link: "https://v.douyin.com/iRJ64xXu/"
-      name: "安妮yoo"
-    - link: "https://v.douyin.com/iRJ6VCSB/"
-      name: "安妮yoo"
-    - link: "https://v.douyin.com/Cei6mybG/"
-      name: "肉很多的大姨"
-    - link: "https://v.douyin.com/7UTt6PHFeRI/"
-      name: "0788"
-    - link: "https://v.douyin.com/iRDgj7Dv/"
-      name: "L61eleven"
-    - link: "https://v.douyin.com/KLm8cc3YHGs/"
-      name: "L61eleven"
-    - link: "https://v.douyin.com/iRtLNH41/"
-      name: "小娘们儿"
-    - link: "https://v.douyin.com/Ulfzrt_k1y8/"
-      name: "美羊羊世界第一美"
-    - link: "https://v.douyin.com/DFM6o08cw3Y/"
-      name: "jk、"
-    - link: "https://v.douyin.com/WoadVMEdmbo/"
-      name: "蔡蔡"
-    - link: "https://v.douyin.com/S1OccDY25vo/"
-      name: "夏至"
-
-
-# 可选：日志级别
-logging:
-  level: INFO
+#    - link: "https://v.douyin.com/omsRM4SqD0s/"
+#      name: "双双鱼"
+    - link: "https://v.douyin.com/uFpR2qMG3DQ/"
+      name: "jadeuly"
 
 tiktok:
   cookie:
@@ -82,16 +62,17 @@ weibo:
   max_counts: 0
   max_tasks: 5
   page_counts: 20
+# Bark 部分（彻底禁用，无报错）
 
 bark:
-  enable: false
-  key:
-  token:
-  mode: get
-  url: "https://f2.wiki/"
+  enable_bark: false
+  key: ""
+  token: ""
+  mode: post
+  url: ""
   retry: 3
   ringtones: 1
-  icon: https://f2.wiki/f2-logo-with-shadow.png
+  icon: ""
   level: active
   volume: 5
   call: 0
