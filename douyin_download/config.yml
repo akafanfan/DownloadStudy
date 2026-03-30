@@ -7,54 +7,45 @@ douyin:
   mode: post                                 # ← 这里指定 post（下载发布的作品）其他可选值：like（点赞的）、collection（收藏的）、music（收藏音乐）
   path: "./download"
   folderize: false
-  naming: '{create}_{desc}_{aweme_id}'
+  naming: '{create}_{create}_{aweme_id}_{desc}'
   music: false
   cover: false
   lyric: false
   interval: all
   max_connections: 10
   max_tasks: 10
-  timeout: 10
+  timeout: 4
   max_retries: 3
   quality: "original"
-  # ================== 用户列表 ==================
+  # ================== 用户列表 ==================  
   users:
-#    - link: "https://v.douyin.com/omsRM4SqD0s/"
-#      name: "双双鱼"
-    - link: "https://v.douyin.com/uFpR2qMG3DQ/"
-      name: "jadeuly"
-
-tiktok:
-  cookie:
-  max_connections: 5
-  max_counts: 0
-  max_retries: 5
-  max_tasks: 5
-  naming: '{create}_{desc}'
-  page_counts: 5
-  path: Download
-  timeout: 10
+    - link: "https://v.douyin.com/omsRM4SqD0s/"
+      name: "双双鱼"
+    - link: "https://v.douyin.com/ukwAr62T5m8/"
+      name: "邪恶kitty"
+    - link: "https://v.douyin.com/eURQ9fqrW5k/"
+      name: "詹詹喜气"
+    - link: "https://v.douyin.com/tNaN1vIFhjA/"
+      name: "Bye's"
+    - link: "https://v.douyin.com/F3MR1a6e3Rk/"
+      name: "黎喜欢"
+    - link: "https://v.douyin.com/cWBiL91jKnI/"
+      name: "白小白"
+    - link: "https://v.douyin.com/Wi0Sj_zzNuU/"
+      name: "Xuu"
 
 twitter:
-  path: Download
-  folderize: yes
-  mode: one
-  naming: '{create}_{desc}'
-  cookie:
-  interval: all
-  timeout: 10
-  max_retries: 5
-  max_connections: 5
-  max_counts: 0
-  max_tasks: 5
-  page_counts: 20
-
-weibo:
-  path: Download
-  folderize: yes
+  path: "./download"
+  folderize: false
   mode: post
-  naming: '{create}_{desc}'
-  cookie:
+  naming: '{nickname}_{create}_{aweme_id}_{tweet_id}_{desc}'
+twitter:
+  headers:
+    User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0
+    Referer: https://x.com/
+    Authorization: Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA
+    X-Csrf-Token: 991a6901149fd35558c1db60fd375cf9749e55f46776e134ba6e49ad4bf86a89098b558c96407d31664cffe3d65817ea7a9f42f7f52134bdc198b6a0f474c55e023892bc6732fdc8f3dfbb360df75992
+  cookie: "__cuid=5b702534599b4dd78af00d858aca5547; kdt=zqzyIP8S9wDqo6BXfzEUKcodCtOMskFKgCHYgS3p; dnt=1; guest_id=v1%3A177262108953289137; guest_id_marketing=v1%3A177262108953289137; guest_id_ads=v1%3A177262108953289137; personalization_id=\"v1_6jSp9u3xC8JnYmoIBzqpcg==\"; g_state={\"i_l\":0,\"i_ll\":1772621094398,\"i_b\":\"fxZuyODgdbOu1uSYww4UHV1kdp0aVhPL/IxKqBPUfzA\",\"i_e\":{\"enable_itp_optimization\":0}}; auth_token=f291960b73f8dd6e71951cc5fea281f7256df2cb; ct0=991a6901149fd35558c1db60fd375cf9749e55f46776e134ba6e49ad4bf86a89098b558c96407d31664cffe3d65817ea7a9f42f7f52134bdc198b6a0f474c55e023892bc6732fdc8f3dfbb360df75992; twid=u%3D742343415791161344; external_referer=8e8t2xd8A2w%3D|0|S38otfNfzYt86Dak8Eqj76tqscUAnK6Lq4vYdCl5zxIvK6QAA8vRkA%3D%3D; __cf_bm=zYRAYn1gUIUasm6basJGZRVFGx2vegv3vlb6CuWzOHo-1774601261.2243168-1.0.1.1-ILTlgLcAYafJJA6cs6bE6nlnTwFMB5S0hgn1Y50tDYXu0Fyv_bEr1GiwIzK8Z9ih6mcSKF53tjYUY.3hsnRXAIpMdq1unEKtFZdDZ0RkA1XkmLxTxwofA0qkfIQ.W980; lang=zh-CN"
   interval: all
   timeout: 10
   max_retries: 5
@@ -62,7 +53,12 @@ weibo:
   max_counts: 0
   max_tasks: 5
   page_counts: 20
-# Bark 部分（彻底禁用，无报错）
+  http_proxy: http://127.0.0.1:7897
+  https_proxy: https://127.0.0.1:7897
+  users:
+    - link: "https://x.com/squishubunny"
+      name: "squishubunny"
+
 
 bark:
   enable_bark: false
