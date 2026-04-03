@@ -7,39 +7,38 @@ douyin:
   mode: post                                 # ← 这里指定 post（下载发布的作品）其他可选值：like（点赞的）、collection（收藏的）、music（收藏音乐）
   path: "./download"
   folderize: false
-  naming: '{create}_{create}_{aweme_id}_{desc}'
+  naming: '{create}_{desc}_{aweme_id}'
   music: false
   cover: false
   lyric: false
-  interval: all
   max_connections: 10
-  max_tasks: 10
+  max_tasks: 20
   timeout: 4
   max_retries: 3
   quality: "original"
+  interval: 2026-03-27|2999-01-01
   # ================== 用户列表 ==================  
   users:
-    - link: "https://v.douyin.com/omsRM4SqD0s/"
-      name: "双双鱼"
-    - link: "https://v.douyin.com/ukwAr62T5m8/"
-      name: "邪恶kitty"
-    - link: "https://v.douyin.com/eURQ9fqrW5k/"
-      name: "詹詹喜气"
-    - link: "https://v.douyin.com/tNaN1vIFhjA/"
-      name: "Bye's"
-    - link: "https://v.douyin.com/F3MR1a6e3Rk/"
-      name: "黎喜欢"
-    - link: "https://v.douyin.com/cWBiL91jKnI/"
-      name: "白小白"
-    - link: "https://v.douyin.com/Wi0Sj_zzNuU/"
-      name: "Xuu"
-
+    - link: https://v.douyin.com/omsRM4SqD0s/
+      name: 双双鱼
+    - link: https://v.douyin.com/ukwAr62T5m8/
+      name: 邪恶kitty
+    - link: https://v.douyin.com/eURQ9fqrW5k/
+      name: 詹詹喜气
+    - link: https://v.douyin.com/tNaN1vIFhjA/
+      name: Byes
+    - link: https://v.douyin.com/F3MR1a6e3Rk/
+      name: 黎喜欢
+    - link: https://v.douyin.com/cWBiL91jKnI/
+      name: 白小白
+    - link: https://v.douyin.com/Wi0Sj_zzNuU/
+      name: Xuu
+      interval: all
 twitter:
   path: "./download"
   folderize: false
   mode: post
   naming: '{nickname}_{create}_{aweme_id}_{tweet_id}_{desc}'
-twitter:
   headers:
     User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0
     Referer: https://x.com/
