@@ -1,8 +1,10 @@
+import re
 import subprocess
 import os
 import json
 import sys
 import time
+from datetime import datetime
 
 # ==================== 默认配置 ====================
 DEFAULT_TDL_PATH = "./tdl_MacOS_arm64/tdl"          # tdl 可执行文件路径
@@ -96,8 +98,9 @@ def download_telegram_files(model_name: str, base_url: str, download_dir: str, j
                 skipped_count += 1
                 continue
 
-        # 构造最终文件名
-        file_name = f"{TELEGRAM_GROUP_ID}_{message_id}_{original_file}"
+        file_name_text = re.sub(r'\s+', ' ', message.get('text', ''))
+        create_time = datetime.fromtimestamp(message.get('date')).strftime('%Y-%m-%d_%H-%M-%S')
+        file_name = f"{model_name}_{file_name_text}_{create_time}"
         full_path = os.path.join(download_dir, file_name)
 
         # 检查是否已存在
@@ -145,6 +148,20 @@ def download_telegram_files(model_name: str, base_url: str, download_dir: str, j
             return_code = process.returncode
             download_time = time.time() - start_time
 
+            # ====================== 关键修改：下载后重命名 ======================
+            # 1. 先找到下载目录里最新的文件（tdl 下载的原始文件）
+            files = [f for f in os.listdir(download_dir) if os.path.isfile(os.path.join(download_dir, f))]
+            files.sort(key=lambda x: os.path.getmtime(os.path.join(download_dir, x)), reverse=True)
+            if files:
+                downloaded_file = files[0]
+                downloaded_path = os.path.join(download_dir, downloaded_file)
+
+                # 2. 重命名为你想要的名字
+                if not os.path.exists(full_path):
+                    os.rename(downloaded_path, full_path)
+                    print(f"[重命名] {downloaded_file} → {file_name}")
+            # ==================================================================
+
             if os.path.exists(full_path):
                 print(f"[成功] 下载完成 → {file_name}")
                 print(f"[统计] 耗时: {download_time:.2f} 秒")
@@ -174,28 +191,43 @@ def main():
     print("欢迎使用 Telegram 文件下载工具（交互版）")
     print("请按提示输入参数，回车使用默认值")
     print("=" * 60)
-
+    # 输入模特名称（用于过滤）
     model_name = input_with_default("请输入要下载的模特名称（用于过滤）", DEFAULT_MODEL_NAME)
-    base_url = input_with_default("请输入基础URL（如 https://t.me/laose_p）", DEFAULT_BASE_URL)
-    download_dir = os.path.abspath(input_with_default("请输入下载目录", DEFAULT_DOWNLOAD_DIR))
-    json_path = os.path.abspath(input_with_default("请输入JSON文件路径", DEFAULT_JSON_PATH))
 
+    # 输入基础URL
+    base_url = input_with_default("请输入基础URL（如 https://t.me/laose_p）", DEFAULT_BASE_URL)
+
+    # ==================== 只提示 JSON 文件路径 ====================
+    json_path_input = input_with_default("请输入JSON文件路径", DEFAULT_JSON_PATH)
+    json_path = os.path.abspath(json_path_input)
+
+    # 下载目录自动设为 JSON 文件所在的目录
+    download_dir = os.path.dirname(json_path)
+    if not download_dir:  # 防止路径异常
+        download_dir = os.path.abspath(DEFAULT_DOWNLOAD_DIR)
+    else:
+        download_dir = os.path.abspath(download_dir)
+
+    # URL 模式选择
     print("\n请选择URL模式：")
-    print("  1. /          → 下载主贴文件（默认）")
-    print("  2. ?comment=  → 下载评论中的文件")
+    print(" 1. / → 下载主贴文件（默认）")
+    print(" 2. ?comment= → 下载评论中的文件")
     type_choice = input("请选择 (1 或 2) [默认: 1]: ").strip() or "1"
     url_type = "/" if type_choice == "1" else "?comment="
 
+    # 参数确认
     print("\n" + "-" * 60)
     print("参数确认：")
-    print(f"   模特名称 → {model_name}")
-    print(f"   基础URL  → {base_url}")
-    print(f"   下载目录 → {download_dir}")
-    print(f"   JSON文件 → {json_path}")
-    print(f"   URL模式  → {url_type}")
+    print(f" 模特名称   → {model_name or '（无过滤）'}")
+    print(f" 基础URL    → {base_url}")
+    print(f" JSON文件   → {json_path}")
+    print(f" 下载目录   → {download_dir}   ←（自动使用JSON所在目录）")
+    print(f" URL模式    → {url_type}")
     print("-" * 60)
+
     input("\n按回车键开始下载...")
 
+    # 开始下载
     download_telegram_files(model_name, base_url, download_dir, json_path, url_type)
 
 

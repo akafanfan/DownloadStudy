@@ -1,6 +1,11 @@
 
 .idea/*
+*.mp4
+**/logs/**
+
 /tai_download/model/*
 **/log/**
 **/logs/**
 **/*.log/**
+/telegram_download/mac/model/**
+/douyin_download/download/douyin/post/*

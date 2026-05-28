@@ -1,0 +1,26 @@
+cookies: "cookies.txt"
+output_dir: "./Downloads/Pornhub"
+filename_template: "%(title)s.%(ext)s"
+
+format: "bestvideo[height<=720]+bestaudio/best[height<=720]"
+
+# 反封锁核心参数
+impersonate: "chrome"
+user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+referer: "https://www.pornhub.com/"
+
+sleep_interval: 10
+concurrent_fragments: 4
+extractor_retries: 10
+retry_sleep: 12
+force_ipv4: true
+
+proxy: "http://127.0.0.1:7897"   # ← 改成你自己的代理端口
+# 时间范围（YYYYMMDD）
+date_after: "20260501"
+date_before: ""
+
+# 下载顺序（推荐 false = 从最新开始）
+playlist_reverse: false
+models:
+  - "https://www.pornhub.com/model/miuzxc"

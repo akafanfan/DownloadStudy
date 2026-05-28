@@ -12,3 +12,4 @@ pycryptodome==3.20.0
 FFmpeg==1.4
 pillow==10.3.0
 f2==0.0.1.7
+yt-dlp

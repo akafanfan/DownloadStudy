@@ -16,7 +16,7 @@ douyin:
   timeout: 4
   max_retries: 3
   quality: "original"
-  interval: 2026-03-27|2999-01-01
+  interval: 2026-05-27|2999-01-01
   # ================== 用户列表 ==================  
   users:
     - link: https://v.douyin.com/omsRM4SqD0s/
@@ -33,6 +33,14 @@ douyin:
       name: 白小白
     - link: https://v.douyin.com/Wi0Sj_zzNuU/
       name: Xuu
+    - link: https://v.douyin.com/GyXWsZM7_vg/
+      name: 米米贾
+    - link: https://v.douyin.com/rbonUOgALkk/
+      name: 小朱
+    - link: https://v.douyin.com/9oQcr3qGIMY/
+      name: 石原奈奈
+    - link: https://v.douyin.com/bArvzxaQQ7I/
+      name: miko酱
       interval: all
 twitter:
   path: "./download"
