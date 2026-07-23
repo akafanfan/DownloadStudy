@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import os
+import shutil
 import traceback
 from datetime import datetime
 from pathlib import Path
@@ -122,7 +123,7 @@ async def download_one_user(link: str, name: str, global_kwargs: dict, interval:
 
 async def main():
     """
-    主函数：加载配置，逐个处理用户列表，实现批量下载。
+    主函数：加载配置，并发处理用户列表，实现批量下载（并发数为5）。
     """
     try:
         config = load_config()
@@ -134,18 +135,27 @@ async def main():
         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [INFO] 根目录: {root_path}")
         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [INFO] 共 {len(users)} 个用户待处理")
 
-        success = 0
-        for user in users:
-            link = user["link"].strip()
-            name = user["name"].strip()
-            interval = user.get("interval", "").strip() if user.get("interval") else ""
-            success_flag = await download_one_user(link, name, douyin_cfg, interval)
-            if success_flag:
-                success += 1
+        # 并发控制：限制最大并发数为 5
+        semaphore = asyncio.Semaphore(5)
+        results = []
 
-            # 防限流：每个用户下载后等待一段时间（可根据实际情况调整）
-            await asyncio.sleep(5)
+        async def task_wrapper(user):
+            async with semaphore:
+                link = user["link"].strip()
+                name = user["name"].strip()
+                interval = user.get("interval", "").strip() if user.get("interval") else ""
+                success_flag = await download_one_user(link, name, douyin_cfg, interval)
+                if success_flag:
+                    results.append(True)
 
+                # 防限流：持有信号量休眠，确保每个并发槽位下载后都有冷却时间
+                await asyncio.sleep(5)
+
+        # 创建所有任务并发执行
+        tasks = [task_wrapper(user) for user in users]
+        await asyncio.gather(*tasks)
+
+        success = len(results)
         print("=" * 70)
         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 全部任务结束！成功处理 {success}/{len(users)} 个用户")
         print("=" * 70)
@@ -154,7 +164,13 @@ async def main():
         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 主程序异常退出: {e}")
         print(traceback.format_exc())
         raise
-
+    finally:
+        log_path = os.path.join("douyin_download", "logs")
+        try:
+            if os.path.exists(log_path):
+                shutil.rmtree(log_path)
+        except Exception:
+            pass
 
 if __name__ == "__main__":
     asyncio.run(main())
