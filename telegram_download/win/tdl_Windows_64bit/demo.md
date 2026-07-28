@@ -29,8 +29,21 @@ https://t.me/siwaheels
 1494500172
 #sexy_yuki
 2025年7月16日 1752595200 - 1765209600
-tdl.exe --proxy http://127.0.0.1:7897 chat export -c 1494500172 -i 1752595200,1765209600 --with-content -o ./sexy_yuki.json
+https://t.me/siwaheels/3000
+https://t.me/siwaheels/12518
 
 xixi
 https://t.me/c/2243736179
 2243736179
+
+
+muchi_tina
+https://t.me/ioopro
+1963450304
+
+https://t.me/ioopro/45317
+
+
+https://t.me/gchtdpymfljrg
+2521494079
+#汐梦瑶

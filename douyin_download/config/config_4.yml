@@ -55,7 +55,7 @@ douyin:
     biz_trace_id=49cd6180; bd_ticket_guard_client_data_v2=eyJyZWVfcHVibGljX2tleSI6IkJEcmtSc0JHdHNIYklma3JmZDNWYVNHbytXQzBERVowdlN1Qk8rS2l2RzU0bUZHcWFjNHcvN3BYbnY0QnFQdk1kak1KcjB0NGZTWEFoc1c2US8vQThJaz0iLCJ0c19zaWduIjoidHMuMi5iMDM3YzJjYzZkMmVkYWFlMzIzNmRmN2JjYmU5ODIyZDVmMzJjODdiMjE0YmFkMzk0ODQxMmUxOWNmODAyYmY0YzRmYmU4N2QyMzE5Y2YwNTMxODYyNGNlZGExNDkxMWNhNDA2ZGVkYmViZWRkYjJlMzBmY2U4ZDRmYTAyNTc1ZCIsInJlcV9jb250ZW50Ijoic2VjX3RzIiwicmVxX3NpZ24iOiIvdXRFYnZxWnRXNzFPSWUvdGxBQzNEQXZ5U1kwNVA2SmhzOCs3YUNLc2xjPSIsInNlY190cyI6IiNQb2pYYmdSK1hFQjlrMlhDKzRvUERoMlBqTWlOUzIvY3o3Zk1jUHFWRjdSUVJCMVZtRU01U1VVUFB1UzMifQ%3D%3D;
     IsDouyinActive=false
   mode: post
-  path: ./download/4
+  path: ../download/4
   folderize: false
   naming: '{create}_{desc}_{aweme_id}'
   music: false
@@ -68,7 +68,7 @@ douyin:
   quality: original
 
 twitter:
-  path: ./download/1
+  path: ../download/1
   folderize: false
   mode: post
   naming: '{nickname}_{create}_{aweme_id}_{tweet_id}_{desc}'
