@@ -146,30 +146,54 @@ def export_telegram_chat(chat_id: int, start_time: int, end_time: int, output_pa
 def main():
     print("=" * 60)
     print("欢迎使用 Telegram 聊天记录导出工具")
-    print("请按提示输入参数，回车使用默认值")
+    print("参数格式（英文逗号分隔，顺序不可变）：")
+    print("聊天数字ID,开始日期(YYYY-MM-DD),结束日期(YYYY-MM-DD),输出JSON路径")
+    print("示例：2521494079,2026-01-01,2026-07-29,./tg_export.json")
     print("=" * 60)
 
-    # 交互输入
-    chat_id_input = input_with_default("请输入聊天/频道 ID", str(DEFAULT_CHAT_ID))
-    try:
-        chat_id = int(chat_id_input)
-    except ValueError:
-        print("[错误] 聊天 ID 必须是数字！")
+    # 单行输入，逗号分割所有参数
+    raw_input_str = input("\n请一次性输入全部参数：").strip()
+    while not raw_input_str:
+        raw_input_str = input("输入不能为空，请重新输入：").strip()
+
+    # 分割、清除每个参数前后空格
+    args_list = [arg.strip() for arg in raw_input_str.split(",")]
+    # 校验必须4个参数
+    if len(args_list) != 4:
+        print(f"[错误] 参数数量错误！需要4个参数，当前输入{len(args_list)}个")
         sys.exit(1)
 
-    start_time = input_date("请输入开始日期", DEFAULT_START_DATE)
-    end_time = input_date("请输入结束日期", DEFAULT_END_DATE)
+    # 按顺序拆分
+    chat_id_str, start_date_str, end_date_str, output_input = args_list
 
+    # 1. 转换chat_id为数字
+    try:
+        chat_id = int(chat_id_str)
+    except ValueError:
+        print("[错误] 聊天 ID 必须是纯数字！")
+        sys.exit(1)
+
+    # 2. 日期解析（沿用你原有 input_date 函数）
+    start_time = input_date("开始日期", start_date_str)
+    end_time = input_date("结束日期", end_date_str)
+
+    # 校验日期先后
     if start_time >= end_time:
         print("[错误] 开始日期不能晚于或等于结束日期！")
         sys.exit(1)
 
-    default_output_path = os.path.join(DEFAULT_OUTPUT_DIR, DEFAULT_OUTPUT_FILE)
-    output_input = input_with_default("请输入输出 JSON 文件路径", default_output_path)
+    # 3. 输出路径绝对化
     output_path = os.path.abspath(output_input)
 
+    # 参数确认打印
     print("\n" + "-" * 60)
-    print("参数确认完成，即将开始导出...")
+    print("参数确认完成：")
+    print(f"   聊天ID     → {chat_id}")
+    print(f"   开始日期   → {start_date_str}")
+    print(f"   结束日期   → {end_date_str}")
+    print(f"   输出JSON路径 → {output_path}")
+    print("-" * 60)
+    print("即将开始导出...")
     time.sleep(1)
 
     export_telegram_chat(chat_id, start_time, end_time, output_path)

@@ -12,14 +12,14 @@ DEFAULT_BASE_URL = "https://t.me/laose_p"
 DEFAULT_DOWNLOAD_DIR = os.path.abspath(".\\model\\Linxiaoting\\")
 DEFAULT_JSON_PATH = os.path.abspath(".\\model\\Linxiaoting\\Linxiaoting.json")
 DEFAULT_TYPE = "/"                                  # / 或 ?comment=
-TELEGRAM_GROUP_ID = 2751077071                      # 用于构造文件名，可修改
+TELEGRAM_GROUP_ID = 2521494079                      # 用于构造文件名，可修改
 # ===============================================
 
 def input_with_default(prompt: str, default: str) -> str:
     """带默认值的输入提示"""
     return input(f"{prompt} [默认: {default}]: ").strip() or default
 
-def download_telegram_files(model_name: str, base_url: str, download_dir: str, json_file_path: str, url_type: str):
+def download_telegram_files(model_name: str, base_url: str, group_id:str ,download_dir: str, json_file_path: str, url_type: str):
     """下载Telegram文件（核心函数）"""
     print("=" * 60)
     print("[启动] Telegram 文件批量下载器")
@@ -27,6 +27,7 @@ def download_telegram_files(model_name: str, base_url: str, download_dir: str, j
 
     print(f"[配置] 模特过滤名称: {model_name}")
     print(f"[配置] 基础URL: {base_url}")
+    print(f"[配置] 组ID: {group_id}")
     print(f"[配置] 下载目录: {download_dir}")
     print(f"[配置] JSON文件: {json_file_path}")
     print(f"[配置] URL模式: {url_type}")
@@ -67,6 +68,7 @@ def download_telegram_files(model_name: str, base_url: str, download_dir: str, j
     downloaded_count = 0
     skipped_count = 0
 
+    #开始循环
     for index, message in enumerate(messages, 1):
         message_id = message.get('id')
         if not message_id:
@@ -95,15 +97,19 @@ def download_telegram_files(model_name: str, base_url: str, download_dir: str, j
                 skipped_count += 1
                 continue
 
-        # 构造最终文件名
-        file_name = f"{TELEGRAM_GROUP_ID}_{message_id}_{original_file}"
-        full_path = os.path.join(download_dir, file_name)
-
-        # 检查是否已存在
-        if os.path.exists(full_path):
-            print(f"[跳过] 文件已存在: {file_name}")
-            skipped_count += 1
-            continue
+        # 固定模板片段，原样输出 {{filenamify .FileName}}
+        file_tpl = "{{filenamify .FileName}}"
+        # 判断text是否为空，动态拼接中间文本部分
+        if text.strip():
+            template_text = f"{model_name}_{text}_{file_tpl}"
+        else:
+            template_text = f"{model_name}_{file_tpl}"
+        full_path = os.path.join(download_dir, template_text)
+        # # 检查是否已存在
+        # if os.path.exists(full_path):
+        #     print(f"[跳过] 文件已存在: {template_text}")
+        #     skipped_count += 1
+        #     continue
 
         # 构建完整 URL
         full_url = f"{base_url}{url_type}{message_id}"
@@ -114,6 +120,8 @@ def download_telegram_files(model_name: str, base_url: str, download_dir: str, j
             DEFAULT_TDL_PATH,
             '--proxy', DEFAULT_PROXY,
             'dl',
+            '--template', template_text,
+            '--skip-same',
             '-u', full_url,
             '-d', download_dir
         ]
@@ -146,7 +154,7 @@ def download_telegram_files(model_name: str, base_url: str, download_dir: str, j
             download_time = time.time() - start_time
 
             if return_code == 0 and os.path.exists(full_path):
-                print(f"[成功] 下载完成 → {file_name}")
+                print(f"[成功] 下载完成 → {template_text}")
                 print(f"[统计] 耗时: {download_time:.2f} 秒")
                 downloaded_count += 1
             else:
@@ -171,32 +179,47 @@ def download_telegram_files(model_name: str, base_url: str, download_dir: str, j
 
 def main():
     print("=" * 60)
-    print("欢迎使用 Telegram 文件下载工具（交互版）")
-    print("请按提示输入参数，回车使用默认值")
+    print("欢迎使用 Telegram 文件下载工具（批量参数版）")
+    print("参数格式（逗号分隔，顺序不能变）：")
+    print("模特名称,基础URL,群组ID,下载目录,JSON路径,模式(1主贴/2评论)")
+    print("示例：xiaohong,https://t.me/test,2521494079,./tg_down,./save.json,1")
     print("=" * 60)
 
-    model_name = input_with_default("请输入要下载的模特名称（用于过滤）", DEFAULT_MODEL_NAME)
-    base_url = input_with_default("请输入基础URL（如 https://t.me/laose_p）", DEFAULT_BASE_URL)
-    download_dir = os.path.abspath(input_with_default("请输入下载目录", DEFAULT_DOWNLOAD_DIR))
-    json_path = os.path.abspath(input_with_default("请输入JSON文件路径", DEFAULT_JSON_PATH))
+    # 读取一行输入，逗号分割
+    raw_input_str = input("\n请一次性输入全部参数，逗号分隔：").strip()
+    while not raw_input_str:
+        raw_input_str = input("输入不能为空，请重新输入：").strip()
 
-    print("\n请选择URL模式：")
-    print("  1. /          → 下载主贴文件（默认）")
-    print("  2. ?comment=  → 下载评论中的文件")
-    type_choice = input("请选择 (1 或 2) [默认: 1]: ").strip() or "1"
+    # 分割参数，去除每个参数前后空格
+    args_list = [arg.strip() for arg in raw_input_str.split(",")]
+    if len(args_list) != 6:
+        print(f"参数数量错误！需要6个参数，你输入了{len(args_list)}个")
+        return
+
+    # 按顺序拆分6个参数
+    model_name, base_url, group_id, raw_download_dir, raw_json_path, type_choice = args_list
+
+    # 处理路径绝对化
+    download_dir = os.path.abspath(raw_download_dir)
+    json_path = os.path.abspath(raw_json_path)
+
+    # 转换url类型
     url_type = "/" if type_choice == "1" else "?comment="
 
+    # 参数确认输出
     print("\n" + "-" * 60)
     print("参数确认：")
     print(f"   模特名称 → {model_name}")
     print(f"   基础URL  → {base_url}")
-    print(f"   下载目录 → {download_dir}")
-    print(f"   JSON文件 → {json_path}")
-    print(f"   URL模式  → {url_type}")
+    print(f"   组ID      → {group_id}")
+    print(f"   下载目录  → {download_dir}")
+    print(f"   JSON文件  → {json_path}")
+    print(f"   URL模式   → {url_type}")
     print("-" * 60)
     input("\n按回车键开始下载...")
 
-    download_telegram_files(model_name, base_url, download_dir, json_path, url_type)
+    download_telegram_files(model_name, base_url, group_id, download_dir, json_path, url_type)
+
 
 
 if __name__ == "__main__":

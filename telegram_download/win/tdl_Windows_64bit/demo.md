@@ -28,7 +28,9 @@ tdl.exe --proxy http://127.0.0.1:7897 chat export -c 2446446630 --reply 47203 --
 https://t.me/siwaheels
 1494500172
 #sexy_yuki
-2025年7月16日 1752595200 - 1765209600
+2025-7-16 2026-7-28
+sexy_yuki,https://t.me/siwaheels,1494500172,D:\Documents\GitHub\DownloadStudy\telegram_download\win\model\sexy_yuki\new,D:\Documents\GitHub\DownloadStudy\telegram_download\win\model\sexy_yuki\new\1.json,1
+
 https://t.me/siwaheels/3000
 https://t.me/siwaheels/12518
 
