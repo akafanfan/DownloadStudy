@@ -1,23 +1,7 @@
 f2:
   enable_bark: false
 douyin:
-  db_path: "./download_records.db"  # 自定义数据库路径
-  # 全局下载设置（参考你之前提供的，全部统一在这里）
-  cookie: "enter_pc_once=1; UIFID_TEMP=4a6f79d53a9eb34097631580ea9ea3ff3a17eaf36e45654c72ea19224fc01912c29d9bff3e36612d7da282b5b52eb7395b00a69fe2c0167bc12a8f44eb196ade0e0a640e936b448faee6513fb5cc7db96a58d3fd60d0a7d4874da02f7d7c844ea55e7f16e40c94ae9196e9b3bb72c22f; hevc_supported=true; fpk1=U2FsdGVkX19G2wlnlbXCoiXWA8b//VJNMfMPuSarMC6R52eF3n8BbujKaPT4iEXOxdEqed6evP3Ea3pYtC1vOg==; fpk2=684fac3d8e595845640e507a9122bd55; bd_ticket_guard_client_web_domain=2; d_ticket=481ab21b589b1d1c638e5673bdd57dc85e794; UIFID=4a6f79d53a9eb34097631580ea9ea3ff3a17eaf36e45654c72ea19224fc01912c29d9bff3e36612d7da282b5b52eb7395b00a69fe2c0167bc12a8f44eb196ade14184159ed43f90ce29ffd83f59acd8f9dcff625f7eb4fa1de848a21c5b030193c0803997a76f6f3a5697c60f9a51a43af783aa6e2d527099804aca60b18a6b50a2c708f118efed9357c6a91a13eee4124f0fbc854e4354a99caa0f815476fd6153ec95df91412f352235bcf860bcf94; my_rd=2; __ac_signature=_02B4Z6wo00f01OlzSTAAAIDC2ua.coQeomDpU02AAFBQ3d; s_v_web_id=verify_mpot7okf_uVkCd96G_4wpO_4HL6_8Ebs_TakKsg1UWRfJ; __security_mc_1_s_sdk_crypt_sdk=1870bb5e-4046-8192; __security_mc_1_s_sdk_cert_key=3f6d9ff1-4fd1-adac; passport_csrf_token=6134169cf7ccc764bd14338dccb98a7a; passport_csrf_token_default=6134169cf7ccc764bd14338dccb98a7a; __ac_nonce=06a6211d100995195a8f8; douyin.com; device_web_cpu_core=12; device_web_memory_size=16; is_support_rtm_web_ts=1; dy_swidth=1800; dy_sheight=1169; strategyABtestKey=%221784811996.068%22; is_staff_user=false; is_dash_user=1; ttwid=1%7ChEOV69jlphUalby6XZxFApb0axsNBFgOtcjUByFvDjU%7C1784812019%7C7e635af031cfb5287a2f261d83d919c7c7b63f1a5e289b9b47ae297d2bd82fca; sdk_source_info=7e276470716a68645a606960273f276364697660272927676c715a6d6069756077273f276364697660272927666d776a68605a607d71606b766c6a6b5a7666776c7571273f275e58272927666a6b766a69605a696c6061273f27636469766027292762696a6764695a7364776c6467696076273f275e582729277672715a646971273f27717770602729277f6b5a666475273f2763646976602729276d6a6e5a6b6a716c273f2763646976602729276c6b6f5a7f6367273f27636469766027292771273f273633353c343537343d313d3234272927676c715a75776a716a666a69273f2763646976602778; bit_env=8L19NNub5lOqjLFE1jadkmJhfnoUV6xsFZzjlzcF3P9Nlyyo3c8Fn8dwqMmD0eaPrIPQm0BfSWWUFPGzkuvtNvPEVnVt0QJJKv3UZLwq5nA37MeQQZ3wB06KzCr-9Y9aChPhTR_by669AJ8142KGicftRv5GGm8s2PQ5LLVRHUfDVVAf5xufjOVaVXURTZhpK6Z_fOdGRv-zsJI9LTi425xAUGcdJhlVWkYF4Xe5K_ccSWRRHP-DZP4Y8ioZUfOUxMsdTC0xUlt0quT40rgd_Pg1lpo069iaSjL_ksbuieD4ddPSNM57mR5klAlCpfvE87zodhfOu0CtKf5g1zgWjuxSGtyVS9CzPajfvg9DNIhtC30g7wF5yxAoeaDwJPqp9CAPBith6C7ELWgAHlZ04-fMMfrsD7IU100pA9CnO-176ytuB5Z80EALtREujgNrY5-G2I1TLBmKnsPp3yOXPw3wmVzrc9MYM5AH_AGRyeUeAG0e3koOahuL0YGXLw9weaJ62xPlxryOdCifFb0JI8i-ScRMUL4cb2MWru7Pi4M%3D; gulu_source_res=eyJwX2luIjoiOGNjNTVmMWNlMjRmYWNlYjQ4OWEzNGZlMjg3OTQ4ZWJlNzUyZTIyN2RjYzkwZjBmMjdiYzU0NDM0YmY0ZGJlMSJ9; passport_auth_mix_state=y87i51wc3pwn8invnqagygx804ttzac3; passport_assist_user=Cjy60DrotGvCShAEsg5m63C2j_VMlM2CpGnPDyxfWIsZAAaloSeQdKtGdx60tWhkgByMe5wNOQgYNvDKqhsaSgo8AAAAAAAAAAAAAFCxN86rOOgzYriVoJrnvqGoS37v_0cAiEepxMLI--Bknf8hcF0DZmi3NeF5uoMCbtBrEL3Mlw4Yia_WVCABIgED5I6BWQ%3D%3D; n_mh=-tAF7qk-LcS_Fl7_pZXdQEaPg_l92hMfMy_vXWN8uT4; sid_guard=6af2f5ded7f580274b63b48a551b909b%7C1784812022%7C5184000%7CMon%2C+21-Sep-2026+13%3A07%3A02+GMT; uid_tt=d5995f732fff070ce25ea2fa1dd4cdc7; uid_tt_ss=d5995f732fff070ce25ea2fa1dd4cdc7; sid_tt=6af2f5ded7f580274b63b48a551b909b; sessionid=6af2f5ded7f580274b63b48a551b909b; sessionid_ss=6af2f5ded7f580274b63b48a551b909b; session_tlb_tag=sttt%7C6%7CavL13tf1gCdLY7SKVRuQm_________-l0xVzo9PKPJjsjOJlWAOeHzf19bIspErqSmr8urnMiV8%3D; has_biz_token=false; sid_ucp_v1=1.0.0-KGM4MGQ2MmQ1N2MwNGVkODU5MzNhOWJhMWI1N2NmYmNlNTFlYWIzOGIKHwjn8PbtlwIQ9qOI0wYY7zEgDDD6j4zQBTgFQPsHSAQaAmhsIiA2YWYyZjVkZWQ3ZjU4MDI3NGI2M2I0OGE1NTFiOTA5Yg; ssid_ucp_v1=1.0.0-KGM4MGQ2MmQ1N2MwNGVkODU5MzNhOWJhMWI1N2NmYmNlNTFlYWIzOGIKHwjn8PbtlwIQ9qOI0wYY7zEgDDD6j4zQBTgFQPsHSAQaAmhsIiA2YWYyZjVkZWQ3ZjU4MDI3NGI2M2I0OGE1NTFiOTA5Yg; bd_ticket_guard_ts_sign_id=b037c2cc6d2edaae3236; __security_mc_1_s_sdk_sign_data_key_web_protect=51603039-4ecb-afb0; _bd_ticket_crypt_cookie=9680252d28287a4f0cca3b2893315684; login_time=1784812020103; DiscoverFeedExposedAd=%7B%7D; stream_recommend_feed_params=%22%7B%5C%22cookie_enabled%5C%22%3Atrue%2C%5C%22screen_width%5C%22%3A1800%2C%5C%22screen_height%5C%22%3A1169%2C%5C%22browser_online%5C%22%3Atrue%2C%5C%22cpu_core_num%5C%22%3A12%2C%5C%22device_memory%5C%22%3A16%2C%5C%22downlink%5C%22%3A10%2C%5C%22effective_type%5C%22%3A%5C%224g%5C%22%2C%5C%22round_trip_time%5C%22%3A100%7D%22; SelfTabRedDotControl=%5B%7B%22id%22%3A%227601745238306064427%22%2C%22u%22%3A154%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%227033715681103202312%22%2C%22u%22%3A22%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%227638836994985953316%22%2C%22u%22%3A11%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%226814280273610409991%22%2C%22u%22%3A27%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%227553298627444082742%22%2C%22u%22%3A79%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%227400753818725517312%22%2C%22u%22%3A9%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%227599610246172313636%22%2C%22u%22%3A5%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%227577778284943902720%22%2C%22u%22%3A92%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%227463804394544072745%22%2C%22u%22%3A18%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%226994086597562107941%22%2C%22u%22%3A9%2C%22c%22%3A0%7D%5D; home_can_add_dy_2_desktop=%221%22; bd_ticket_guard_client_data=eyJiZC10aWNrZXQtZ3VhcmQtdmVyc2lvbiI6MiwiYmQtdGlja2V0LWd1YXJkLWl0ZXJhdGlvbi12ZXJzaW9uIjoxLCJiZC10aWNrZXQtZ3VhcmQtcmVlLXB1YmxpYy1rZXkiOiJCRHJrUnNCR3RzSGJJZmtyZmQzVmFTR28rV0MwREVaMHZTdUJPK0tpdkc1NG1GR3FhYzR3LzdwWG52NEJxUHZNZGpNSnIwdDRmU1hBaHNXNlEvL0E4SWs9IiwiYmQtdGlja2V0LWd1YXJkLXdlYi12ZXJzaW9uIjoyfQ%3D%3D; publish_badge_show_info=%220%2C0%2C0%2C1784812021638%22; odin_tt=9aeb55db13f82e9f29c9e276c90a4e9121a5226261dfbd003107ecf6ae55b89d6e0a919ea6b391822cadaaf9c6f461e6a4fb5d54376b8577a454b6893e22bdd4fe3d8635c9a90934b2caa3bb4a65048d; biz_trace_id=49cd6180; bd_ticket_guard_client_data_v2=eyJyZWVfcHVibGljX2tleSI6IkJEcmtSc0JHdHNIYklma3JmZDNWYVNHbytXQzBERVowdlN1Qk8rS2l2RzU0bUZHcWFjNHcvN3BYbnY0QnFQdk1kak1KcjB0NGZTWEFoc1c2US8vQThJaz0iLCJ0c19zaWduIjoidHMuMi5iMDM3YzJjYzZkMmVkYWFlMzIzNmRmN2JjYmU5ODIyZDVmMzJjODdiMjE0YmFkMzk0ODQxMmUxOWNmODAyYmY0YzRmYmU4N2QyMzE5Y2YwNTMxODYyNGNlZGExNDkxMWNhNDA2ZGVkYmViZWRkYjJlMzBmY2U4ZDRmYTAyNTc1ZCIsInJlcV9jb250ZW50Ijoic2VjX3RzIiwicmVxX3NpZ24iOiIvdXRFYnZxWnRXNzFPSWUvdGxBQzNEQXZ5U1kwNVA2SmhzOCs3YUNLc2xjPSIsInNlY190cyI6IiNQb2pYYmdSK1hFQjlrMlhDKzRvUERoMlBqTWlOUzIvY3o3Zk1jUHFWRjdSUVJCMVZtRU01U1VVUFB1UzMifQ%3D%3D; IsDouyinActive=false"
-  mode: post
-  path: "./download"
-  folderize: false
-  naming: '{create}_{desc}_{aweme_id}'
-  music: false
-  cover: false
-  lyric: false
-  max_connections: 10
-  max_tasks: 20
-  timeout: 4
-  max_retries: 3
-  quality: "original"
-  interval: 2026-07-22|2999-01-01
-  # ================== 用户列表 ==================  
+  interval: 2026-07-27|2999-01-01
   users:
   - link: https://v.douyin.com/An5PGQKx6Ho/
     name: 油炸小可爱
@@ -36,7 +20,7 @@ douyin:
   - link: https://v.douyin.com/cWBiL91jKnI/
     name: 白小白
   - link: https://v.douyin.com/Wi0Sj_zzNuU/
-    name: Xuu
+    name: 双双鱼
   - link: https://v.douyin.com/GyXWsZM7_vg/
     name: 米米贾
   - link: https://v.douyin.com/rbonUOgALkk/
@@ -49,17 +33,73 @@ douyin:
     name: 六十六
   - link: https://v.douyin.com/yo1OnOkvDLw/
     name: 石原奈奈
+  - link: https://v.douyin.com/jfjwfAQKtJM/
+    name: 春日野猫
+  - link: https://v.douyin.com/oeElq3D8bjw/
+    name: 1不1
+  - link: https://v.douyin.com/7WN6_xRoBjA/
+    name: 韩七七
+  db_path: ./download_records.db
+  cookie: enter_pc_once=1; UIFID_TEMP=4a6f79d53a9eb34097631580ea9ea3ff3a17eaf36e45654c72ea19224fc01912c29d9bff3e36612d7da282b5b52eb7395b00a69fe2c0167bc12a8f44eb196ade0e0a640e936b448faee6513fb5cc7db96a58d3fd60d0a7d4874da02f7d7c844ea55e7f16e40c94ae9196e9b3bb72c22f;
+    hevc_supported=true; fpk1=U2FsdGVkX19G2wlnlbXCoiXWA8b//VJNMfMPuSarMC6R52eF3n8BbujKaPT4iEXOxdEqed6evP3Ea3pYtC1vOg==;
+    fpk2=684fac3d8e595845640e507a9122bd55; bd_ticket_guard_client_web_domain=2; d_ticket=481ab21b589b1d1c638e5673bdd57dc85e794;
+    UIFID=4a6f79d53a9eb34097631580ea9ea3ff3a17eaf36e45654c72ea19224fc01912c29d9bff3e36612d7da282b5b52eb7395b00a69fe2c0167bc12a8f44eb196ade14184159ed43f90ce29ffd83f59acd8f9dcff625f7eb4fa1de848a21c5b030193c0803997a76f6f3a5697c60f9a51a43af783aa6e2d527099804aca60b18a6b50a2c708f118efed9357c6a91a13eee4124f0fbc854e4354a99caa0f815476fd6153ec95df91412f352235bcf860bcf94;
+    my_rd=2; __ac_signature=_02B4Z6wo00f01OlzSTAAAIDC2ua.coQeomDpU02AAFBQ3d; s_v_web_id=verify_mpot7okf_uVkCd96G_4wpO_4HL6_8Ebs_TakKsg1UWRfJ;
+    __security_mc_1_s_sdk_crypt_sdk=1870bb5e-4046-8192; __security_mc_1_s_sdk_cert_key=3f6d9ff1-4fd1-adac;
+    passport_csrf_token=6134169cf7ccc764bd14338dccb98a7a; passport_csrf_token_default=6134169cf7ccc764bd14338dccb98a7a;
+    __ac_nonce=06a6211d100995195a8f8; douyin.com; device_web_cpu_core=12; device_web_memory_size=16;
+    is_support_rtm_web_ts=1; dy_swidth=1800; dy_sheight=1169; strategyABtestKey=%221784811996.068%22;
+    is_staff_user=false; is_dash_user=1; ttwid=1%7ChEOV69jlphUalby6XZxFApb0axsNBFgOtcjUByFvDjU%7C1784812019%7C7e635af031cfb5287a2f261d83d919c7c7b63f1a5e289b9b47ae297d2bd82fca;
+    sdk_source_info=7e276470716a68645a606960273f276364697660272927676c715a6d6069756077273f276364697660272927666d776a68605a607d71606b766c6a6b5a7666776c7571273f275e58272927666a6b766a69605a696c6061273f27636469766027292762696a6764695a7364776c6467696076273f275e582729277672715a646971273f27717770602729277f6b5a666475273f2763646976602729276d6a6e5a6b6a716c273f2763646976602729276c6b6f5a7f6367273f27636469766027292771273f273633353c343537343d313d3234272927676c715a75776a716a666a69273f2763646976602778;
+    bit_env=8L19NNub5lOqjLFE1jadkmJhfnoUV6xsFZzjlzcF3P9Nlyyo3c8Fn8dwqMmD0eaPrIPQm0BfSWWUFPGzkuvtNvPEVnVt0QJJKv3UZLwq5nA37MeQQZ3wB06KzCr-9Y9aChPhTR_by669AJ8142KGicftRv5GGm8s2PQ5LLVRHUfDVVAf5xufjOVaVXURTZhpK6Z_fOdGRv-zsJI9LTi425xAUGcdJhlVWkYF4Xe5K_ccSWRRHP-DZP4Y8ioZUfOUxMsdTC0xUlt0quT40rgd_Pg1lpo069iaSjL_ksbuieD4ddPSNM57mR5klAlCpfvE87zodhfOu0CtKf5g1zgWjuxSGtyVS9CzPajfvg9DNIhtC30g7wF5yxAoeaDwJPqp9CAPBith6C7ELWgAHlZ04-fMMfrsD7IU100pA9CnO-176ytuB5Z80EALtREujgNrY5-G2I1TLBmKnsPp3yOXPw3wmVzrc9MYM5AH_AGRyeUeAG0e3koOahuL0YGXLw9weaJ62xPlxryOdCifFb0JI8i-ScRMUL4cb2MWru7Pi4M%3D;
+    gulu_source_res=eyJwX2luIjoiOGNjNTVmMWNlMjRmYWNlYjQ4OWEzNGZlMjg3OTQ4ZWJlNzUyZTIyN2RjYzkwZjBmMjdiYzU0NDM0YmY0ZGJlMSJ9;
+    passport_auth_mix_state=y87i51wc3pwn8invnqagygx804ttzac3; passport_assist_user=Cjy60DrotGvCShAEsg5m63C2j_VMlM2CpGnPDyxfWIsZAAaloSeQdKtGdx60tWhkgByMe5wNOQgYNvDKqhsaSgo8AAAAAAAAAAAAAFCxN86rOOgzYriVoJrnvqGoS37v_0cAiEepxMLI--Bknf8hcF0DZmi3NeF5uoMCbtBrEL3Mlw4Yia_WVCABIgED5I6BWQ%3D%3D;
+    n_mh=-tAF7qk-LcS_Fl7_pZXdQEaPg_l92hMfMy_vXWN8uT4; sid_guard=6af2f5ded7f580274b63b48a551b909b%7C1784812022%7C5184000%7CMon%2C+21-Sep-2026+13%3A07%3A02+GMT;
+    uid_tt=d5995f732fff070ce25ea2fa1dd4cdc7; uid_tt_ss=d5995f732fff070ce25ea2fa1dd4cdc7;
+    sid_tt=6af2f5ded7f580274b63b48a551b909b; sessionid=6af2f5ded7f580274b63b48a551b909b;
+    sessionid_ss=6af2f5ded7f580274b63b48a551b909b; session_tlb_tag=sttt%7C6%7CavL13tf1gCdLY7SKVRuQm_________-l0xVzo9PKPJjsjOJlWAOeHzf19bIspErqSmr8urnMiV8%3D;
+    has_biz_token=false; sid_ucp_v1=1.0.0-KGM4MGQ2MmQ1N2MwNGVkODU5MzNhOWJhMWI1N2NmYmNlNTFlYWIzOGIKHwjn8PbtlwIQ9qOI0wYY7zEgDDD6j4zQBTgFQPsHSAQaAmhsIiA2YWYyZjVkZWQ3ZjU4MDI3NGI2M2I0OGE1NTFiOTA5Yg;
+    ssid_ucp_v1=1.0.0-KGM4MGQ2MmQ1N2MwNGVkODU5MzNhOWJhMWI1N2NmYmNlNTFlYWIzOGIKHwjn8PbtlwIQ9qOI0wYY7zEgDDD6j4zQBTgFQPsHSAQaAmhsIiA2YWYyZjVkZWQ3ZjU4MDI3NGI2M2I0OGE1NTFiOTA5Yg;
+    bd_ticket_guard_ts_sign_id=b037c2cc6d2edaae3236; __security_mc_1_s_sdk_sign_data_key_web_protect=51603039-4ecb-afb0;
+    _bd_ticket_crypt_cookie=9680252d28287a4f0cca3b2893315684; login_time=1784812020103;
+    DiscoverFeedExposedAd=%7B%7D; stream_recommend_feed_params=%22%7B%5C%22cookie_enabled%5C%22%3Atrue%2C%5C%22screen_width%5C%22%3A1800%2C%5C%22screen_height%5C%22%3A1169%2C%5C%22browser_online%5C%22%3Atrue%2C%5C%22cpu_core_num%5C%22%3A12%2C%5C%22device_memory%5C%22%3A16%2C%5C%22downlink%5C%22%3A10%2C%5C%22effective_type%5C%22%3A%5C%224g%5C%22%2C%5C%22round_trip_time%5C%22%3A100%7D%22;
+    SelfTabRedDotControl=%5B%7B%22id%22%3A%227601745238306064427%22%2C%22u%22%3A154%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%227033715681103202312%22%2C%22u%22%3A22%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%227638836994985953316%22%2C%22u%22%3A11%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%226814280273610409991%22%2C%22u%22%3A27%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%227553298627444082742%22%2C%22u%22%3A79%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%227400753818725517312%22%2C%22u%22%3A9%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%227599610246172313636%22%2C%22u%22%3A5%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%227577778284943902720%22%2C%22u%22%3A92%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%227463804394544072745%22%2C%22u%22%3A18%2C%22c%22%3A0%7D%2C%7B%22id%22%3A%226994086597562107941%22%2C%22u%22%3A9%2C%22c%22%3A0%7D%5D;
+    home_can_add_dy_2_desktop=%221%22; bd_ticket_guard_client_data=eyJiZC10aWNrZXQtZ3VhcmQtdmVyc2lvbiI6MiwiYmQtdGlja2V0LWd1YXJkLWl0ZXJhdGlvbi12ZXJzaW9uIjoxLCJiZC10aWNrZXQtZ3VhcmQtcmVlLXB1YmxpYy1rZXkiOiJCRHJrUnNCR3RzSGJJZmtyZmQzVmFTR28rV0MwREVaMHZTdUJPK0tpdkc1NG1GR3FhYzR3LzdwWG52NEJxUHZNZGpNSnIwdDRmU1hBaHNXNlEvL0E4SWs9IiwiYmQtdGlja2V0LWd1YXJkLXdlYi12ZXJzaW9uIjoyfQ%3D%3D;
+    publish_badge_show_info=%220%2C0%2C0%2C1784812021638%22; odin_tt=9aeb55db13f82e9f29c9e276c90a4e9121a5226261dfbd003107ecf6ae55b89d6e0a919ea6b391822cadaaf9c6f461e6a4fb5d54376b8577a454b6893e22bdd4fe3d8635c9a90934b2caa3bb4a65048d;
+    biz_trace_id=49cd6180; bd_ticket_guard_client_data_v2=eyJyZWVfcHVibGljX2tleSI6IkJEcmtSc0JHdHNIYklma3JmZDNWYVNHbytXQzBERVowdlN1Qk8rS2l2RzU0bUZHcWFjNHcvN3BYbnY0QnFQdk1kak1KcjB0NGZTWEFoc1c2US8vQThJaz0iLCJ0c19zaWduIjoidHMuMi5iMDM3YzJjYzZkMmVkYWFlMzIzNmRmN2JjYmU5ODIyZDVmMzJjODdiMjE0YmFkMzk0ODQxMmUxOWNmODAyYmY0YzRmYmU4N2QyMzE5Y2YwNTMxODYyNGNlZGExNDkxMWNhNDA2ZGVkYmViZWRkYjJlMzBmY2U4ZDRmYTAyNTc1ZCIsInJlcV9jb250ZW50Ijoic2VjX3RzIiwicmVxX3NpZ24iOiIvdXRFYnZxWnRXNzFPSWUvdGxBQzNEQXZ5U1kwNVA2SmhzOCs3YUNLc2xjPSIsInNlY190cyI6IiNQb2pYYmdSK1hFQjlrMlhDKzRvUERoMlBqTWlOUzIvY3o3Zk1jUHFWRjdSUVJCMVZtRU01U1VVUFB1UzMifQ%3D%3D;
+    IsDouyinActive=false
+  mode: post
+  path: ./download/0
+  folderize: false
+  naming: '{create}_{desc}_{aweme_id}'
+  music: false
+  cover: false
+  lyric: false
+  max_connections: 10
+  max_tasks: 20
+  timeout: 4
+  max_retries: 3
+  quality: original
+
 twitter:
-  path: "./download"
+  path: ./download/0
   folderize: false
   mode: post
   naming: '{nickname}_{create}_{aweme_id}_{tweet_id}_{desc}'
   headers:
-    User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0
+    User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36
+      (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0
     Referer: https://x.com/
     Authorization: Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA
     X-Csrf-Token: 991a6901149fd35558c1db60fd375cf9749e55f46776e134ba6e49ad4bf86a89098b558c96407d31664cffe3d65817ea7a9f42f7f52134bdc198b6a0f474c55e023892bc6732fdc8f3dfbb360df75992
-  cookie: "__cuid=5b702534599b4dd78af00d858aca5547; kdt=zqzyIP8S9wDqo6BXfzEUKcodCtOMskFKgCHYgS3p; dnt=1; guest_id=v1%3A177262108953289137; guest_id_marketing=v1%3A177262108953289137; guest_id_ads=v1%3A177262108953289137; personalization_id=\"v1_6jSp9u3xC8JnYmoIBzqpcg==\"; g_state={\"i_l\":0,\"i_ll\":1772621094398,\"i_b\":\"fxZuyODgdbOu1uSYww4UHV1kdp0aVhPL/IxKqBPUfzA\",\"i_e\":{\"enable_itp_optimization\":0}}; auth_token=f291960b73f8dd6e71951cc5fea281f7256df2cb; ct0=991a6901149fd35558c1db60fd375cf9749e55f46776e134ba6e49ad4bf86a89098b558c96407d31664cffe3d65817ea7a9f42f7f52134bdc198b6a0f474c55e023892bc6732fdc8f3dfbb360df75992; twid=u%3D742343415791161344; external_referer=8e8t2xd8A2w%3D|0|S38otfNfzYt86Dak8Eqj76tqscUAnK6Lq4vYdCl5zxIvK6QAA8vRkA%3D%3D; __cf_bm=zYRAYn1gUIUasm6basJGZRVFGx2vegv3vlb6CuWzOHo-1774601261.2243168-1.0.1.1-ILTlgLcAYafJJA6cs6bE6nlnTwFMB5S0hgn1Y50tDYXu0Fyv_bEr1GiwIzK8Z9ih6mcSKF53tjYUY.3hsnRXAIpMdq1unEKtFZdDZ0RkA1XkmLxTxwofA0qkfIQ.W980; lang=zh-CN"
+  cookie: __cuid=5b702534599b4dd78af00d858aca5547; kdt=zqzyIP8S9wDqo6BXfzEUKcodCtOMskFKgCHYgS3p;
+    dnt=1; guest_id=v1%3A177262108953289137; guest_id_marketing=v1%3A177262108953289137;
+    guest_id_ads=v1%3A177262108953289137; personalization_id="v1_6jSp9u3xC8JnYmoIBzqpcg==";
+    g_state={"i_l":0,"i_ll":1772621094398,"i_b":"fxZuyODgdbOu1uSYww4UHV1kdp0aVhPL/IxKqBPUfzA","i_e":{"enable_itp_optimization":0}};
+    auth_token=f291960b73f8dd6e71951cc5fea281f7256df2cb; ct0=991a6901149fd35558c1db60fd375cf9749e55f46776e134ba6e49ad4bf86a89098b558c96407d31664cffe3d65817ea7a9f42f7f52134bdc198b6a0f474c55e023892bc6732fdc8f3dfbb360df75992;
+    twid=u%3D742343415791161344; external_referer=8e8t2xd8A2w%3D|0|S38otfNfzYt86Dak8Eqj76tqscUAnK6Lq4vYdCl5zxIvK6QAA8vRkA%3D%3D;
+    __cf_bm=zYRAYn1gUIUasm6basJGZRVFGx2vegv3vlb6CuWzOHo-1774601261.2243168-1.0.1.1-ILTlgLcAYafJJA6cs6bE6nlnTwFMB5S0hgn1Y50tDYXu0Fyv_bEr1GiwIzK8Z9ih6mcSKF53tjYUY.3hsnRXAIpMdq1unEKtFZdDZ0RkA1XkmLxTxwofA0qkfIQ.W980;
+    lang=zh-CN
   interval: all
   timeout: 10
   max_retries: 5
@@ -70,19 +110,17 @@ twitter:
   http_proxy: http://127.0.0.1:7897
   https_proxy: https://127.0.0.1:7897
   users:
-    - link: "https://x.com/squishubunny"
-      name: "squishubunny"
-
-
+  - link: https://x.com/squishubunny
+    name: squishubunny
 bark:
   enable_bark: false
-  key: ""
-  token: ""
+  key: ''
+  token: ''
   mode: post
-  url: ""
+  url: ''
   retry: 3
   ringtones: 1
-  icon: ""
+  icon: ''
   level: active
   volume: 5
   call: 0
@@ -90,7 +128,7 @@ bark:
   sound: birdsong
   autoCopy: 1
   title: F2
-  body: ""
-  copy: ""
+  body: ''
+  copy: ''
   group: F2下载统计
   badge: 1

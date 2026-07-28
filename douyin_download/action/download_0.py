@@ -4,10 +4,10 @@ import asyncio
 import os
 import shutil
 import traceback
-from datetime import datetime
 from pathlib import Path
 from typing import Union
-
+from datetime import datetime, timedelta
+import re
 import yaml
 from f2.apps.bark.utils import ClientConfManager
 from f2.apps.douyin.filter import UserPostFilter
@@ -49,14 +49,16 @@ print("[PATCH] f2库原生 create_user_folder 已替换为扁平单层路径")
 # ------------------ 补丁结束 ------------------
 
 
-def load_config(config_path: str = "config_1.yml"):
+def load_config(config_path: str = "config.yml"):
     """加载 YAML 配置文件。"""
     if not os.path.exists(config_path):
         print(f"[ERROR] 配置文件不存在: {config_path}")
         raise FileNotFoundError(f"配置文件不存在: {config_path}")
 
     with open(config_path, "r", encoding="utf-8") as f:
-        return yaml.safe_load(f)
+        cfg_data = yaml.safe_load(f)
+    # 返回 配置内容 + 文件路径
+    return cfg_data, config_path
 
 
 async def download_one_user(link: str, name: str, global_kwargs: dict, interval: str = ""):
@@ -122,7 +124,7 @@ utils.create_user_folder = fake_create_user_folder
 async def main():
     """主函数：批量并发下载"""
     try:
-        config = load_config()
+        config, config_file_path = load_config()
         douyin_cfg = config["douyin"]
         users = douyin_cfg["users"]
         root_path = Path(douyin_cfg["path"])
@@ -131,7 +133,7 @@ async def main():
         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [INFO] 根目录: {root_path}")
         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] [INFO] 共 {len(users)} 个用户待处理")
 
-        semaphore = asyncio.Semaphore(5)
+        semaphore = asyncio.Semaphore(3)
         results = []
 
         async def task_wrapper(user):
@@ -142,7 +144,7 @@ async def main():
                 success_flag = await download_one_user(link, name, douyin_cfg, interval)
                 if success_flag:
                     results.append(True)
-                await asyncio.sleep(5)
+                await asyncio.sleep(1)
 
         tasks = [task_wrapper(user) for user in users]
         await asyncio.gather(*tasks)
@@ -151,6 +153,24 @@ async def main():
         print("=" * 70)
         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 全部任务结束！成功处理 {success}/{len(users)} 个用户")
         print("=" * 70)
+
+
+        print(f"✅ 开始更新开始时间>>>>>>>>>>>>>>>")
+        # 计算昨天日期 YYYY-MM-DD
+        yesterday_date = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+        target_interval = f"{yesterday_date}|2999-01-01"
+
+        # 读取配置文件
+        with open(config_file_path, "r", encoding="utf-8") as f:
+            file_text = f.read()
+
+        # 全局匹配替换 interval 行
+        match_rule = r"interval:\s*\d{4}-\d{2}-\d{2}\|2999-01-01"
+        new_text = re.sub(match_rule, f"interval: {target_interval}", file_text)
+        # 写入修改后内容
+        with open(config_file_path, "w", encoding="utf-8") as f:
+            f.write(new_text)
+        print(f"✅ 修改完成，当前interval：{target_interval}")
 
     except Exception as e:
         print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 主程序异常退出: {e}")
