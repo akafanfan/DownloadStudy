@@ -49,7 +49,7 @@ print("[PATCH] f2库原生 create_user_folder 已替换为扁平单层路径")
 # ------------------ 补丁结束 ------------------
 
 
-def load_config(config_path: str = "config_0.yml"):
+def load_config(config_path: str = "config_3.yml"):
     """加载 YAML 配置文件。"""
     if not os.path.exists(config_path):
         print(f"[ERROR] 配置文件不存在: {config_path}")
