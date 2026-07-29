@@ -27,6 +27,8 @@ douyin:
     name: 迷你迪
   - link: https://v.douyin.com/iMZXfGEX-oI/
     name: 小栗栗
+  - link: https://v.douyin.com/7UTt6PHFeRI/
+    name: 0788
 
   db_path: ./download_records.db
   cookie: enter_pc_once=1; UIFID_TEMP=4a6f79d53a9eb34097631580ea9ea3ff3a17eaf36e45654c72ea19224fc01912c29d9bff3e36612d7da282b5b52eb7395b00a69fe2c0167bc12a8f44eb196ade0e0a640e936b448faee6513fb5cc7db96a58d3fd60d0a7d4874da02f7d7c844ea55e7f16e40c94ae9196e9b3bb72c22f;

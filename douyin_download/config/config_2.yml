@@ -5,31 +5,20 @@ douyin:
   users:
   - link: https://v.douyin.com/iRJ64xXu/
     name: 安妮yoo
-    interval: 2026-06-26|2999-01-01
   - link: https://v.douyin.com/iRJ6VCSB/
     name: 安妮yoo
-    interval: 2026-06-26|2999-01-01
   - link: https://v.douyin.com/Cei6mybG/
     name: 肉很多的大姨
-    interval: 2026-07-14|2999-01-01
-  - link: https://v.douyin.com/7UTt6PHFeRI/
-    name: 0788
-    interval: 2026-07-16|2999-01-01
   - link: https://v.douyin.com/iRDgj7Dv/
     name: L61eleven
-    interval: 2026-07-16|2999-01-01
   - link: https://v.douyin.com/KLm8cc3YHGs/
     name: L61eleven
-    interval: 2026-07-16|2999-01-01
   - link: https://v.douyin.com/iRtLNH41/
     name: 小娘们儿
-    interval: 2025-04-19|2999-01-01
   - link: https://v.douyin.com/Ulfzrt_k1y8/
     name: 美羊羊世界第一美
-    interval: 2026-07-04|2999-01-01
   - link: https://v.douyin.com/DFM6o08cw3Y/
     name: jk
-    interval: 2026-04-16|2999-01-01
 
   db_path: ./download_records.db
   cookie: enter_pc_once=1; UIFID_TEMP=4a6f79d53a9eb34097631580ea9ea3ff3a17eaf36e45654c72ea19224fc01912c29d9bff3e36612d7da282b5b52eb7395b00a69fe2c0167bc12a8f44eb196ade0e0a640e936b448faee6513fb5cc7db96a58d3fd60d0a7d4874da02f7d7c844ea55e7f16e40c94ae9196e9b3bb72c22f;
