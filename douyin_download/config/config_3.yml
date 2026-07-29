@@ -5,37 +5,37 @@ douyin:
   users:
   - link: https://v.douyin.com/Pgg9dt4TxNQ/
     name: katya
-    interval: 2026-07-26|2999-01-01
+    interval: 2026-07-15|2999-01-01
   - link: https://v.douyin.com/i2x2mSua/
     name: 33x俏小妈3
-    interval: 2026-07-26|2999-01-01
+    interval: 2026-07-11|2999-01-01
   - link: https://v.douyin.com/ijF6etv7/
     name: 间桐樱
-    interval: 2026-07-26|2999-01-01
+    interval: 2026-07-13|2999-01-01
   - link: https://v.douyin.com/ijGPakK9/
     name: 木里人鱼
-    interval: 2026-07-26|2999-01-01
+    interval: 2026-01-22|2999-01-01
   - link: https://v.douyin.com/i66meC7N/
     name: kyy
-    interval: 2026-07-26|2999-01-01
+    interval: 2025-05-18|2999-01-01
   - link: https://v.douyin.com/iMALQCpS/
     name: kshdhus
-    interval: 2026-07-26|2999-01-01
+    interval: 2026-04-16|2999-01-01
   - link: https://v.douyin.com/ifk7evNQ/
     name: Fss思思
-    interval: 2026-07-26|2999-01-01
+    interval: 2026-06-23|2999-01-01
   - link: https://v.douyin.com/CeiYqJNS/
     name: 臭豆腐
-    interval: 2026-07-26|2999-01-01
+    interval: 2026-07-16|2999-01-01
   - link: https://v.douyin.com/Cei2S4P1/
     name: 她的名字叫小美
-    interval: 2026-07-26|2999-01-01
+    interval: 2026-07-10|2999-01-01
   - link: https://v.douyin.com/AkOfyT2f6-g/
     name: 鹤鹤
-    interval: 2026-07-26|2999-01-01
+    interval: 2026-07-06|2999-01-01
   - link: https://v.douyin.com/S1OccDY25vo/
     name: 夏至
-    interval: 2026-07-26|2999-01-01
+    interval: 2026-07-14|2999-01-01
   db_path: ./download_records.db
   cookie: enter_pc_once=1; UIFID_TEMP=4a6f79d53a9eb34097631580ea9ea3ff3a17eaf36e45654c72ea19224fc01912c29d9bff3e36612d7da282b5b52eb7395b00a69fe2c0167bc12a8f44eb196ade0e0a640e936b448faee6513fb5cc7db96a58d3fd60d0a7d4874da02f7d7c844ea55e7f16e40c94ae9196e9b3bb72c22f;
     hevc_supported=true; fpk1=U2FsdGVkX19G2wlnlbXCoiXWA8b//VJNMfMPuSarMC6R52eF3n8BbujKaPT4iEXOxdEqed6evP3Ea3pYtC1vOg==;
