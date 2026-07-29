@@ -3,28 +3,27 @@ f2:
 douyin:
   interval: 2026-07-26|2999-01-01
   users:
-  - link: https://v.douyin.com/Ceiyyorn/
-    name: 要听杰尼的话
-  - link: https://v.douyin.com/F6Ij-gKL0O0/
-    name: 一个1
-  - link: https://v.douyin.com/D9SjAWv/
-    name: 只想炫饭不锻炼
-  - link: https://v.douyin.com/U6Vhpbx/
-    name: 你的vv
-  - link: https://v.douyin.com/iFVHEkS4/
-    name: Jadeuly
-  - link: https://v.douyin.com/iFVR11jR/
-    name: 不会游泳的深海鱼油
-  - link: https://v.douyin.com/MkSqLYw8ZlM/
-    name: Baya
-  - link: https://v.douyin.com/C4N3gSCNLTs/
-    name: 不吃哈密瓜
-  - link: https://v.douyin.com/iPWhRfCs/
-    name: 小灿
-  - link: https://v.douyin.com/iNQm4YDr/
-    name: 迷你迪
-  - link: https://v.douyin.com/i2BXxQem/
-    name: 迷你迪
+  - link: https://v.douyin.com/CeiUSuoe/
+    name: 耀眼
+    interval: 2026-07-26|2999-01-01
+  - link: https://v.douyin.com/CeiQbtby/
+    name: YWangTT
+    interval: 2026-07-26|2999-01-01
+  - link: https://v.douyin.com/CeifPtFW/
+    name: YWangTT
+    interval: 2026-07-26|2999-01-01
+  - link: https://v.douyin.com/ifkpo9j7/
+    name: pancake
+    interval: 2026-07-26|2999-01-01
+  - link: https://v.douyin.com/ifknVUqy/
+    name: 是伊梦呀
+    interval: 2026-07-26|2999-01-01
+  - link: https://v.douyin.com/iP5kLKte/
+    name: 伤感d欣
+    interval: 2026-07-26|2999-01-01
+  - link: https://v.douyin.com/oikGPeHkb8Y/
+    name: 香菜香菜
+    interval: 2026-07-26|2999-01-01
   db_path: ./download_records.db
   cookie: enter_pc_once=1; UIFID_TEMP=4a6f79d53a9eb34097631580ea9ea3ff3a17eaf36e45654c72ea19224fc01912c29d9bff3e36612d7da282b5b52eb7395b00a69fe2c0167bc12a8f44eb196ade0e0a640e936b448faee6513fb5cc7db96a58d3fd60d0a7d4874da02f7d7c844ea55e7f16e40c94ae9196e9b3bb72c22f;
     hevc_supported=true; fpk1=U2FsdGVkX19G2wlnlbXCoiXWA8b//VJNMfMPuSarMC6R52eF3n8BbujKaPT4iEXOxdEqed6evP3Ea3pYtC1vOg==;
