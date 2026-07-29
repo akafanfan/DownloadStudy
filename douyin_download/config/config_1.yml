@@ -1,7 +1,7 @@
 f2:
   enable_bark: false
 douyin:
-  interval: 2026-07-26|2999-01-01
+  interval: 2026-07-28|2999-01-01
   users:
   - link: https://v.douyin.com/Ceiyyorn/
     name: 要听杰尼的话
@@ -27,7 +27,7 @@ douyin:
     name: 迷你迪
   - link: https://v.douyin.com/iMZXfGEX-oI/
     name: 小栗栗
-    interval: all
+
   db_path: ./download_records.db
   cookie: enter_pc_once=1; UIFID_TEMP=4a6f79d53a9eb34097631580ea9ea3ff3a17eaf36e45654c72ea19224fc01912c29d9bff3e36612d7da282b5b52eb7395b00a69fe2c0167bc12a8f44eb196ade0e0a640e936b448faee6513fb5cc7db96a58d3fd60d0a7d4874da02f7d7c844ea55e7f16e40c94ae9196e9b3bb72c22f;
     hevc_supported=true; fpk1=U2FsdGVkX19G2wlnlbXCoiXWA8b//VJNMfMPuSarMC6R52eF3n8BbujKaPT4iEXOxdEqed6evP3Ea3pYtC1vOg==;
