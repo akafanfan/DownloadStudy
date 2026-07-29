@@ -165,7 +165,8 @@ async def main():
             file_text = f.read()
 
         # 全局匹配替换 interval 行
-        match_rule = r"interval:\s*\d{4}-\d{2}-\d{2}\|2999-01-01"
+        # 正则规则：同时匹配 interval: all  和  interval: 日期|2999-01-01
+        match_rule = r"interval:\s*(all|\d{4}-\d{2}-\d{2}\|2999-01-01)"
         new_text = re.sub(match_rule, f"interval: {target_interval}", file_text)
         # 写入修改后内容
         with open(config_file_path, "w", encoding="utf-8") as f:
