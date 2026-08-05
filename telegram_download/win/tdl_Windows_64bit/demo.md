@@ -31,6 +31,14 @@ https://t.me/siwaheels
 2025-7-16 2026-7-28
 sexy_yuki,https://t.me/siwaheels,1494500172,D:\Documents\GitHub\DownloadStudy\telegram_download\win\model\sexy_yuki\new,D:\Documents\GitHub\DownloadStudy\telegram_download\win\model\sexy_yuki\new\1.json,1
 
+https://t.me/siwaheels
+1494500172
+#九九橙
+2026-3-6 2026-8-4
+1494500172,2026-3-6,2026-8-4,D:\Documents\GitHub\DownloadStudy\telegram_download\win\model\jjc\1.json
+九九橙,https://t.me/siwaheels,1494500172,D:\Documents\GitHub\DownloadStudy\telegram_download\win\model\jjc,D:\Documents\GitHub\DownloadStudy\telegram_download\win\model\jjc\1.json,1
+
+
 https://t.me/siwaheels/3000
 https://t.me/siwaheels/12518
 
@@ -49,3 +57,11 @@ https://t.me/ioopro/45317
 https://t.me/gchtdpymfljrg
 2521494079
 #汐梦瑶
+
+
+https://t.me/yujiezy
+3113925518
+#yooheejade
+
+3113925518,2026-07-18,2026-07-19,D:\Documents\GitHub\DownloadStudy\telegram_download\win\model\yooheejade\1.json
+yooheejade,https://t.me/yujiezy,3113925518,D:\Documents\GitHub\DownloadStudy\telegram_download\win\model\yooheejade,D:\Documents\GitHub\DownloadStudy\telegram_download\win\model\yooheejade\1.json,1

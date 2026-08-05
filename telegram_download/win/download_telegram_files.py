@@ -78,7 +78,7 @@ def download_telegram_files(model_name: str, base_url: str, group_id:str ,downlo
         text = message.get('text', '')  # 获取text内容
 
         if not original_file:
-            print(f"[跳过] 消息ID {message_id} 无文件名")
+            # print(f"[跳过] 消息ID {message_id} 无文件名")
             skipped_count += 1
             continue
 
@@ -93,23 +93,20 @@ def download_telegram_files(model_name: str, base_url: str, group_id:str ,downlo
             file_match = model_name.lower() in original_file.lower()
             text_match = model_name.lower() in text.lower()
             if not (file_match or text_match):  # 文件名和文本都不包含model_name时才跳过
-                print(f"[跳过] 文件名不包含 '{model_name}'，跳过")
+                # print(f"[跳过] 文件名不包含 '{model_name}'，跳过")
                 skipped_count += 1
                 continue
 
-        # 固定模板片段，原样输出 {{filenamify .FileName}}
+        # 清洗
+        safe_model = clean_name(model_name)
+        safe_text = clean_name(text)
         file_tpl = "{{filenamify .FileName}}"
-        # 判断text是否为空，动态拼接中间文本部分
-        if text.strip():
-            template_text = f"{model_name}_{text}_{file_tpl}"
+
+        # 拼接模板，不会再出现换行、#等非法字符
+        if safe_text != "unknown":
+            template_text = f"{safe_model}_{safe_text}_{file_tpl}"
         else:
-            template_text = f"{model_name}_{file_tpl}"
-        full_path = os.path.join(download_dir, template_text)
-        # # 检查是否已存在
-        # if os.path.exists(full_path):
-        #     print(f"[跳过] 文件已存在: {template_text}")
-        #     skipped_count += 1
-        #     continue
+            template_text = f"{safe_model}_{file_tpl}"
 
         # 构建完整 URL
         full_url = f"{base_url}{url_type}{message_id}"
@@ -122,6 +119,7 @@ def download_telegram_files(model_name: str, base_url: str, group_id:str ,downlo
             'dl',
             '--template', template_text,
             '--skip-same',
+            '--continue',
             '-u', full_url,
             '-d', download_dir
         ]
@@ -142,30 +140,39 @@ def download_telegram_files(model_name: str, base_url: str, group_id:str ,downlo
                 encoding='utf-8'
             )
 
-            # 实时输出
+            output_logs = []
+            # 实时输出并收集日志
             while True:
                 output = process.stdout.readline()
                 if output == '' and process.poll() is not None:
                     break
                 if output:
-                    print(f"[tdl] {output.strip()}")
+                    line = output.strip()
+                    output_logs.append(line)
+                    print(f"[tdl] {line}")
 
             return_code = process.returncode
             download_time = time.time() - start_time
+            error_output = process.stderr.read().strip()
 
-            if return_code == 0 and os.path.exists(full_path):
-                print(f"[成功] 下载完成 → {template_text}")
-                print(f"[统计] 耗时: {download_time:.2f} 秒")
-                downloaded_count += 1
+            # 判断是否触发skip-same
+            is_skip = any("skip same" in line.lower() for line in output_logs)
+
+            if return_code == 0:
+                if is_skip:
+                    print(f"[跳过] 文件已存在，无需重复下载")
+                    skipped_count += 1
+                else:
+                    print(f"[成功] 下载完成，耗时: {download_time:.2f} 秒")
+                    downloaded_count += 1
             else:
-                error_output = process.stderr.read()
                 print(f"[失败] 下载失败（返回码: {return_code}）")
-                if error_output.strip():
-                    print(f"[错误] {error_output.strip()}")
+                if error_output:
+                    print(f"[错误详情] {error_output}")
                 skipped_count += 1
 
         except Exception as e:
-            print(f"[错误] 下载异常: {str(e)}")
+            print(f"[程序异常] 下载异常: {str(e)}")
             skipped_count += 1
             continue
 
@@ -176,6 +183,20 @@ def download_telegram_files(model_name: str, base_url: str, group_id:str ,downlo
     print(f"[统计] 总处理: {total_messages} 条消息")
     print("=" * 60)
 
+
+def clean_name(s: str) -> str:
+    if not s:
+        return "unknown"
+    # 先清除换行、回车
+    s = s.replace("\n", "_").replace("\r", "_")
+    # Windows禁止符号
+    illegal_chars = r'\/:*?"<>|@#&'
+    for char in illegal_chars:
+        s = s.replace(char, "_")
+    # 连续下划线合并
+    while "__" in s:
+        s = s.replace("__", "_")
+    return s.strip("_")
 
 def main():
     print("=" * 60)
