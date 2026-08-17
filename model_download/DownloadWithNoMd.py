@@ -32,7 +32,7 @@ USER_AGENTS = [
 # %E8%89%BE%E7%86%99 艾熙
 # %E6%9D%8E%E8%93%89%E8%93%89.html 李蓉蓉
 def main(page):
-    base_url = (url_head + '/index.php/vod/search/page/{}/wd/汐梦瑶.html')
+    base_url = (url_head + '/index.php/vod/search/page/{}/wd/艾熙.html')
 
     url = base_url.format(page)
     print(f"\n正在采集第 {page} 页: {url}")
@@ -175,5 +175,5 @@ def parse_m3u8(script_content):
 
 if __name__ == '__main__':
 
-    # main(1)
-    create_m3u8_list(['口交时候给亲妈打电话吃龟头的边缘居然教女儿吃鸡吧-汐梦瑶+https://91md.me/index.php/vod/play/id/22763/sid/1/nid/1.html', '瑶瑶的学生时代-汐梦瑶+https://91md.me/index.php/vod/play/id/22587/sid/1/nid/1.html', 'COS歌姬-汐梦瑶+https://91md.me/index.php/vod/play/id/21985/sid/1/nid/1.html', '在外偷情给老公打电话-汐梦瑶+https://91md.me/index.php/vod/play/id/21659/sid/1/nid/1.html', '做爱时给老爸打电话-汐梦瑶+https://91md.me/index.php/vod/play/id/21621/sid/1/nid/1.html', '老公你鸡巴太大了戴着套子做一点都不爽-汐梦瑶+https://91md.me/index.php/vod/play/id/21580/sid/1/nid/1.html', '狗姿做爱精液猕猴桃-汐梦瑶+https://91md.me/index.php/vod/play/id/21520/sid/1/nid/1.html', '阴茎检察官闺蜜与瑶瑶为犯人检查阴茎-汐梦瑶+https://91md.me/index.php/vod/play/id/21360/sid/1/nid/1.html', '新娘的忏悔-汐梦瑶+https://91md.me/index.php/vod/play/id/21240/sid/1/nid/1.html'])
+    main(2)
+    # create_m3u8_list(['口交时候给亲妈打电话吃龟头的边缘居然教女儿吃鸡吧-汐梦瑶+https://91md.me/index.php/vod/play/id/22763/sid/1/nid/1.html'])

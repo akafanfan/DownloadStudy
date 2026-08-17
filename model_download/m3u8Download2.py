@@ -132,7 +132,7 @@ def ready_download(model_name, url, title, page):
     video_file = down_path + '.mp4'
     # 判断文件是否存在
     if os.path.exists(video_file):
-        print('\033[31m' + '文件已经存在不用重复下载:' + '\033[0m')
+        print('\033[31m' + '文件' + video_file + ' 已经存在不用重复下载:' + '\033[0m')
         return
 
     # 禁止安全谁提示信息
@@ -205,12 +205,12 @@ def download_list(model_name, m3u8_list, page):
 
 # 使用示例
 def main():
-    m3u8_list = ['https://t33.cdn2020.com/video/m3u8/2025/05/02/9a8f785b/index.m3u8,麻豆传媒映画.MDSR-0008-1.艾熙.艾悠.蓝天航空公司的空姐EP1.升迁下的性爱调教', 'https://t33.cdn2020.com/video/m3u8/2025/04/02/fe203cb9/index.m3u8,蜜桃影像传媒.EMX-079.艾熙.极欲女大生的桌底秘密.偷偷的在你身边自慰.要的就是你能操我', 'https://t33.cdn2020.com/video/m3u8/2025/02/07/4ce48e2d/index.m3u8,麻豆传媒映画.MDL-0010-2.艾熙.夏晴子.鲍鱼游戏2.轮奸真假间谍.潮吹爆喷', 'https://t33.cdn2020.com/video/m3u8/2025/02/02/232e8cca/index.m3u8,蜜桃影像传媒.PM-096.艾熙.淫荡女回家过年.性欲来了怎么办', 'https://t0.97img.com/a1000939/a.m3u8,麻豆传媒映画.MDL-0010-1.夏晴子.李蓉蓉.艾熙.苏樱花.吴梦梦.孟若羽.优娜.蕾·利尔·布莱克.鲍鱼游戏2.第一集.黑人26公分巨屌.疯狂抽插', 'https://t27.cdn2020.com/video/m3u8/2024/12/14/1de777c9/index.m3u8,和艾熙的两女性器关-吴梦梦', 'https://t33.cdn2020.com/video/m3u8/2024/12/11/fd2dd82e/index.m3u8,蜜桃影像传媒.EMX-069.艾熙.性感小姨对我性治疗小姨风骚又性感的身体才能治疗我的肿胀', 'https://t33.cdn2020.com/video/m3u8/2024/11/17/4a56ce36/index.m3u8,麻豆传媒映画.BLX-0072.艾熙.重精惩罚拜金女.情欲游戏一试上淫', 'https://t33.cdn2020.com/video/m3u8/2024/10/04/485a4db7/index.m3u8,麻豆传媒映画.MDSR-0005-4.李蓉蓉.艾熙.少妇白洁.第四章.一路风流的新婚少妇', 'https://t0.97img.com/a1000438/a.m3u8,麻豆传媒映画.MDSR-0005-3.苏畅与艾熙.少妇白洁-第三章.风情万种的少妇', 'https://t33.cdn2020.com/video/m3u8/2024/09/22/12af8a0d/index.m3u8,蜜桃影像传媒.PM-077.艾熙.我跟小妈在老爸的眼皮下偷情', 'https://t0.97img.com/a1000294/a.m3u8,麻豆传媒映画.BLX-0064.艾熙.纯情男酒吧遇海后.一湿足成千屌含', 'https://t0.97img.com/a1000234/a.m3u8,麻豆传媒映画x这个面试有点硬.MDHG-0013.艾熙.专吃学生的补教淫师', 'https://t0.97img.com/a1000200/a.m3u8,麻豆传媒映画.MDSJ-0008.艾熙.性犯罪者牢房.强制凌辱欧洲杯女球迷', 'https://t33.cdn2020.com/video/m3u8/2024/06/17/0022466c/index.m3u8,麻豆传媒映画.MDSR-0006-2.艾熙.小凤新婚下.高冷新妻性奴调教', 'https://t33.cdn2020.com/video/m3u8/2024/04/19/bdfca091/index.m3u8,麻豆传媒映画.MDCM-0011.艾熙.国风按摩院.抛妻登楼染新妾.淫妻不复骚姨更甚', 'https://t33.cdn2020.com/video/m3u8/2024/06/22/473aedc3/index.m3u8,蜜桃影像传媒.PME-288.艾熙.健身教练的赤裸私密课程.在课程里我将用骚逼锻炼你的持久力', 'https://t27.cdn2020.com/video/m3u8/2024/06/19/519a3557/index.m3u8,学完情欲按摩到艾熙一带实操', 'https://t33.cdn2020.com/video/m3u8/2024/05/23/87683760/index.m3u8,蜜桃影像传媒.EMX-053.艾熙.性事不顺的小姨求我指导.用玩具训练敏感小穴享受高潮愉悦', 'https://t33.cdn2020.com/video/m3u8/2024/05/18/6edb5681/index.m3u8,蜜桃影像传媒.QY-001.艾熙.强欲OL末班车上忍不住高潮.镜头前被窥视的快感让我下体湿了一天', 'https://t33.cdn2020.com/video/m3u8/2024/05/10/c8cc0179/index.m3u8,蜜桃影像传媒.PMC-477.艾熙.强奸性感长发女警', 'https://t33.cdn2020.com/video/m3u8/2024/04/06/8723747a/index.m3u8,爱神传媒.EMTC-023.艾熙.同城约啪之瞒着哥哥爽干嫂子.嫂子的骚劲让我想操她很久了', 'https://t33.cdn2020.com/video/m3u8/2024/03/17/acca0564/index.m3u8,果冻传媒.GDCM-065.艾熙.鑫东方甄选', 'https://t33.cdn2020.com/video/m3u8/2024/01/28/227e4ab8/index.m3u8,麻豆传媒映画.BLX-0061.艾熙.手机订餐订到海陆大餐.冬日狂骚曲']
-    download_list('艾熙',m3u8_list,2)
+    m3u8_list = ['https://t33.cdn2020.com/video/m3u8/2023/06/06/85dcef26/index.m3u8,麻豆传媒映画.MPG-0073.项子甯.不可告人的性癖.爆操巨乱亲妈', 'https://t33.cdn2020.com/video/m3u8/2022/12/14/62803290/index.m3u8,麻豆传媒映画.MCY-0107.项子甯.荒淫家庭纵欲职场.爆操我的淫荡小野猫嫩妻', 'https://t33.cdn2020.com/video/m3u8/2022/09/26/9c8bf9ef/index.m3u8,麻豆传媒映画.MDX-0250.项子甯.香汗蜜穴足球宝贝', 'https://t33.cdn2020.com/video/m3u8/2022/09/19/6e3c34fd/index.m3u8,麻豆传媒映画.MD-0247.项子甯.酒醉乱伦的继母', 'https://t33.cdn2020.com/video/m3u8/2022/07/31/c945797b/index.m3u8,麻豆传媒映画.MD-0252.徐蕾 项子甯.守寡母女的安慰', 'https://t33.cdn2020.com/video/m3u8/2022/07/27/3e85bb98/index.m3u8,麻豆传媒映画.MKY-SL-013.项子甯.停电后特别寂寞', 'https://t33.cdn2020.com/video/m3u8/2022/06/07/10bc8d39/index.m3u8,麻豆传媒映画.MTVQ17.EP4.项子甯.寻宝吧女神.EP4.AV篇.超激困綁地獄', 'https://t33.cdn2020.com/video/m3u8/2022/06/07/3f1a4076/index.m3u8,麻豆传媒映画.MTVQ17.EP4.韩棠 项子甯.寻宝吧女神.EP4.AV篇.女神们的阴道压力测试', 'https://t33.cdn2020.com/video/m3u8/2022/06/05/7da793ec/index.m3u8,麻豆传媒映画.MTVQ17.EP4.韩棠 项子甯.寻宝吧女神.EP4.性爱猎人的淫乱惩罚']
+    download_list('项子甯',m3u8_list,1)
 
 if __name__ == "__main__":
     i = 1
-    while i <= 5:
+    while i <= 3:
         print(f'>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
         print(f'第{i}次运行下载')
         print(f'>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')

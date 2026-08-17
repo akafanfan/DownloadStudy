@@ -1,0 +1,25 @@
+userlist:
+- name: nina_loveu
+  interval: '2026-08-18 00:00:00'
+  model_start_page: 1
+  model_end_page: 1
+- name: kitty
+  interval: '2026-08-18 00:00:00'
+  model_start_page: 1
+  model_end_page: 1
+- name: li-rongrong
+  interval: '2026-08-18 00:00:00'
+  model_start_page: 1
+  model_end_page: 1
+- name: ai-xi
+  interval: '2026-08-18 00:00:00'
+  model_start_page: 1
+  model_end_page: 1
+- name: ssr-peach
+  interval: '2026-08-18 00:00:00'
+  model_start_page: 1
+  model_end_page: 9
+- name: dj-sakura
+  interval: '2000-08-17 00:00:00'
+  model_start_page: 1
+  model_end_page: 2
