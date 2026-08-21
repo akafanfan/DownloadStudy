@@ -46,6 +46,19 @@ from f2.apps.douyin import utils
 utils.create_user_folder = fake_create_user_folder
 print("[PATCH] f2库原生 create_user_folder 已替换为扁平单层路径")
 
+# ==========【新增关键补丁：禁用自动昵称重命名】==========
+def fake_rename_user_folder(old_path: Path, new_nickname: str) -> Path:
+    """
+    屏蔽f2自动根据线上博主昵称修改本地文件夹名
+    直接返回旧路径，不执行任何重命名操作
+    保证：永远使用yml配置写死的custom_nickname文件夹，抖音博主改名不会动本地目录
+    """
+    print(f"[PATCH-SKIP-RENAME] 跳过目录重命名，保持目录名：{old_path}，线上新昵称：{new_nickname}")
+    return old_path
+
+# 覆盖库里面的改名函数，直接废掉自动改名逻辑
+utils.rename_user_folder = fake_rename_user_folder
+print("[PATCH] f2库原生 rename_user_folder 已禁用，不会因博主昵称变更修改本地文件夹")
 # ------------------ 补丁结束 ------------------
 
 
