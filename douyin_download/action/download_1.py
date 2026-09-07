@@ -61,8 +61,21 @@ utils.rename_user_folder = fake_rename_user_folder
 print("[PATCH] f2库原生 rename_user_folder 已禁用，不会因博主昵称变更修改本地文件夹")
 # ------------------ 补丁结束 ------------------
 
+def extract_uifid(cookie: str) -> str:
+    """从 Cookie 中提取 uifid（优先 UIFID，其次 UIFID_TEMP）"""
+    if not cookie:
+        return ""
+    # 优先匹配 UIFID
+    match = re.search(r'(?:^|;\s*)UIFID=([^;]+)', cookie, re.IGNORECASE)
+    if match:
+        return match.group(1).strip()
+    # 其次匹配 UIFID_TEMP
+    match = re.search(r'(?:^|;\s*)UIFID_TEMP=([^;]+)', cookie, re.IGNORECASE)
+    if match:
+        return match.group(1).strip()
+    return ""
 
-def load_config(config_path: str = "../config/config_1.yml"):
+def load_config(config_path: str = "/Users/yangfan/PycharmProjects/DownloadStudy/douyin_download/config/config_0.yml"):
     """加载 YAML 配置文件。"""
     if not os.path.exists(config_path):
         print(f"[ERROR] 配置文件不存在: {config_path}")
@@ -75,21 +88,32 @@ def load_config(config_path: str = "../config/config_1.yml"):
 
 
 async def download_one_user(link: str, name: str, global_kwargs: dict, interval: str = ""):
-    """下载单个用户，强制使用yml自定义name作为文件夹名"""
-    # ==========【关键修复】新增自定义名称标记，底层强制读取 ==========
+    """下载单个用户，强制使用 yml 自定义 name 作为文件夹名"""
     kwargs = {**global_kwargs, "url": link, "custom_nickname": name}
 
-    # 设置 headers
-    kwargs["headers"] = {
+    # ========== 构建 headers（已集成 uifid + x-tt-argus）==========
+    headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0",
         "Referer": "https://www.douyin.com/",
         "Accept": "application/json",
     }
 
-    # 合并cookie
-    if "cookie" in global_kwargs and global_kwargs["cookie"]:
-        kwargs["headers"]["Cookie"] = global_kwargs["cookie"]
+    cookie = global_kwargs.get("cookie", "")
+    if cookie:
+        headers["Cookie"] = cookie
 
+        # 提取并添加 uifid
+        uifid = extract_uifid(cookie)
+        if uifid:
+            headers["uifid"] = uifid
+            print(f"[{name}] 已添加 uifid: {uifid[:30]}...")
+        else:
+            print(f"[{name}] 警告：Cookie 中未找到 UIFID / UIFID_TEMP")
+
+        # 社区验证有效的临时方案（目前可传任意值）
+        headers["x-tt-argus"] = "1"
+
+    kwargs["headers"] = headers
     # interval 逻辑不变
     if interval:
         kwargs["interval"] = interval
